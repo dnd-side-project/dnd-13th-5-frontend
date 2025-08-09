@@ -1,12 +1,12 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import globals from 'globals';
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
-import importPlugin from 'eslint-plugin-import';
-import unusedImports from 'eslint-plugin-unused-imports';
 import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
+import pluginReact from 'eslint-plugin-react';
+import unusedImports from 'eslint-plugin-unused-imports';
+import globals from 'globals';
+import path from 'path';
+import tseslint from 'typescript-eslint';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -84,6 +84,27 @@ export default [
     rules: {
       'no-underscore-dangle': 'off',
       'import/no-extraneous-dependencies': ['error', { packageDir: __dirname }],
+    },
+  },
+
+  // tailwind config 파일 허용
+  {
+    files: [
+      'tailwind.config.js',
+      'tailwind.config.cjs',
+      'tailwind.config.mjs',
+      'tailwind.config.ts',
+      'postcss.config.js',
+      'postcss.config.cjs',
+      'postcss.config.mjs',
+      'postcss.config.ts',
+    ],
+    rules: {
+      // devDependencies 허용
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      // (선택) config 파일에선 함수 네이밍/콜백 강제 규칙 완화
+      'prefer-arrow-callback': 'off',
+      'func-names': 'off',
     },
   },
 
