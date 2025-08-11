@@ -3,9 +3,9 @@ name: PR Labeler
 
 # 워크플로우가 실행될 시점을 정의
 on:
-  # Pull Request가 열릴떄 실행
+  # Pull Request가 열릴때, 편집될때 실행
   pull_request:
-    types: [opened]
+    types: [opened, edited]
 
 jobs:
   label:
