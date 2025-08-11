@@ -1,0 +1,9 @@
+code_review:
+  comment_severity_threshold: 'MEDIUM'
+  disable: false
+ignore_patterns:
+  - 'dist/**'
+  - 'node_modules/**'
+  - '*.config.js'
+have_fun: true # PR 요약에 재미 요소 추가
+출처: https://goddaehee.tistory.com/373 [갓대희의 작은공간:티스토리]
