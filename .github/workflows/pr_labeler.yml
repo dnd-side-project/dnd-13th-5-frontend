@@ -16,9 +16,11 @@ jobs:
       pull-requests: write
 
     steps:
+      # GitHub Actions에서 코드를 체크아웃하는 표준 액션
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # actions/labeler 액션을 사용하여 라벨링 작업을 수행
       - name: Add Labels to PR
         uses: actions/labeler@v5
         with:
