@@ -1,0 +1,39 @@
+- name: '✨ Feature'
+  color: 'a2eeef'
+  description: '기능 개발'
+
+- name: '🐛 BugFix'
+  color: 'd73a4a'
+  description: "Something isn't working"
+
+- name: '🔧 Refactor'
+  color: 'e4e669'
+  description: '코드 리팩토링'
+
+- name: '🎨 Html&css'
+  color: 'bfd4f2'
+  description: '마크업 & 스타일링'
+
+- name: '📨 Api'
+  color: 'c0b8d5'
+  description: '서버 Api 통신'
+
+- name: '🧪 Test'
+  color: 'f9c80d'
+  description: 'test 관련'
+
+- name: '📚 Docs'
+  color: '0075ca'
+  description: '문서 작성 및 수정'
+
+- name: '🌐 Accessibility'
+  color: '0075ca'
+  description: '웹접근성 관련'
+
+- name: '⚙️ Setting'
+  color: 'd1c3a6'
+  description: '개발 환경 세팅'
+
+- name: '🌎 Deploy'
+  color: '207de5'
+  description: '배포 관련'
