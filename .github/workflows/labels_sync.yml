@@ -1,7 +1,5 @@
-# 워크플로우의 이름을 정의합니다.
 name: Label Sync
 
-# 워크플로우가 실행될 시점을 정의합니다.
 on:
   push:
     branches:
@@ -12,7 +10,6 @@ on:
 
   workflow_dispatch:
 
-# 워크플로우에서 실행될 작업을 정의합니다.
 jobs:
   sync:
     runs-on: ubuntu-latest
