@@ -1,0 +1,33 @@
+# 워크플로우의 이름을 정의합니다.
+name: Label Sync
+
+# 워크플로우가 실행될 시점을 정의합니다.
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      # 이 파일이 변경될 때만 워크플로우 실행
+      - '.github/labels.yml'
+
+  # 워크플로우를 수동으로 실행할 수 있도록 합니다.
+  workflow_dispatch:
+
+# 워크플로우에서 실행될 작업을 정의합니다.
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 코드를 체크아웃하여 라벨 정의 파일에 접근합니다.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # micnnc/label-sync 액션을 사용해 라벨을 동기화합니다.
+      - name: Sync GitHub Labels
+        uses: micnnc/label-sync@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: .github/labels.yml
+          delete-labels: true
