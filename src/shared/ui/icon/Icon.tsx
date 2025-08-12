@@ -31,8 +31,7 @@ const Icon = (props: IconProps) => {
   } = props;
 
   const { width, height } = sizeToWH(size);
-  const wrapper =
-    `inline-flex items-center justify-center ${bgClass ?? ''} ${className}`.trim();
+  const wrapper = `inline-flex items-center justify-center ${bgClass ?? ''} ${className}`.trim();
 
   if ('component' in props && props.component) {
     const SvgCmp = props.component;
