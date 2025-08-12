@@ -1,30 +1,18 @@
-# 레이블
-'🐛 BugFix':
-  include:
-    - '\bfix\b:'
-'🧪 Test':
-  include:
-    - '\btest\b:'
 '✨ Feature':
-  include:
-    - '\bfeat\b:'
-'📚 Docs':
-  include:
-    - '\bdocs\b:'
+  - '^feat\s*:'
+'🐛 BugFix':
+  - '^fix\s*:'
 '🔧 Refactor':
-  include:
-    - '\brefactor\b:'
+  - '^refactor\s*:'
+'🧪 Test':
+  - '^test\s*:'
+'📚 Docs':
+  - '^docs\s*:'
 '🎨 Html&css':
-  include:
-    - '\bdesign\b:'
+  - '^design\s*:'
 '⚙️ Setting':
-  include:
-    - '\bchore\b:'
+  - '^chore\s*:'
 '🌎 Deploy':
-  include:
-    - '\bci\/cd\b:'
-    - '\bci\b:'
-    - '\bcd\b:'
+  - '^(ci\/cd|ci|cd)\s*:'
 '📨 Api':
-  include:
-    - '\bapi\b'
+  - '\bapi\b'
