@@ -1,5 +1,5 @@
 import { Icon, IconProps } from '@/shared/ui/icon';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export interface IconButtonProps {
   icon: IconProps;
@@ -13,13 +13,22 @@ const IconButton = ({
 }: IconButtonProps) => {
   const navigate = useNavigate();
 
+  if (typeof href === 'string') {
+    return (
+      <Link
+        to={href}
+        onClick={onClick}
+        aria-label={ariaLabel}
+        className="inline-flex items-center justify-center"
+      >
+        <Icon {...icon} />
+      </Link>
+    );
+  }
+
   const handleClick = () => {
     onClick?.();
-    if (href == null) return;
-
     if (typeof href === 'number') {
-      navigate(href);
-    } else {
       navigate(href);
     }
   };
