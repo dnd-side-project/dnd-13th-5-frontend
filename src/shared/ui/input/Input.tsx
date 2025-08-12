@@ -1,4 +1,5 @@
-'use client';
+import type { ComponentProps, ReactNode } from 'react';
+import { forwardRef, useId } from 'react';
 
 /**
  * Input primitive + InputBox preset (React + Tailwind)
@@ -7,9 +8,7 @@
  * - Next 종속 없음. 디자인 토큰은 className으로 오버라이드
  */
 
-import { forwardRef, useId, type ComponentProps, type ReactNode } from 'react';
-
-/* cx: 경량 class join (필요 시 tailwind-merge로 교체 가능) */
+/* cx dialog랑 중복되니까 추후 수정 요함 */
 type ClassValue = string | false | null | undefined;
 const cx = (...args: ClassValue[]) => args.filter(Boolean).join(' ');
 
@@ -32,11 +31,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-500',
         // invalid (aria-invalid=true 일 때)
         'aria-invalid:border-primary-700',
-        className
+        className,
       )}
       {...props}
     />
-  )
+  ),
 );
 Input.displayName = 'Input';
 
@@ -78,15 +77,14 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
       required, // Input의 표준 prop(별표 표시에 사용)
       ...inputProps
     },
-    ref
+    ref,
   ) => {
     const autoId = useId();
     const inputId = id ?? `inp-${autoId}`;
 
     const helperId = helperText ? `${inputId}-help` : undefined;
     const errorId = typeof error === 'string' ? `${inputId}-err` : undefined;
-    const describedBy =
-      [helperId, errorId].filter(Boolean).join(' ') || undefined;
+    const describedBy = [helperId, errorId].filter(Boolean).join(' ') || undefined;
 
     const invalid = Boolean(error);
 
@@ -99,7 +97,7 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
             className={cx(
               'mb-2 ml-2 block typo-body-s-medium text-gray-700',
               disabled && 'text-gray-400',
-              labelClassName
+              labelClassName,
             )}
           >
             {label}
@@ -121,11 +119,7 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
             disabled={disabled}
             readOnly={readOnly}
             required={required}
-            className={cx(
-              inputClassName,
-              suffix ? 'pr-10' : '',
-              invalid && 'border-primary-700'
-            )}
+            className={cx(inputClassName, suffix ? 'pr-10' : '', invalid && 'border-primary-700')}
             {...inputProps}
           />
 
@@ -134,7 +128,7 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
             <div
               className={cx(
                 'absolute inset-y-0 right-5 flex items-center',
-                disabled ? 'text-gray-300' : 'text-gray-500'
+                disabled ? 'text-gray-300' : 'text-gray-500',
               )}
             >
               {suffix}
@@ -143,23 +137,18 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
         </div>
 
         {/* helper / error */}
-        {typeof error === 'string' ? (
-          <p
-            id={errorId}
-            className="mt-2 ml-2 typo-body-s-medium text-primary-600"
-          >
+        {typeof error === 'string' && (
+          <p id={errorId} className="mt-2 ml-2 typo-body-s-medium text-primary-600">
             {error}
           </p>
-        ) : helperText ? (
-          <p
-            id={helperId}
-            className="mt-2 ml-2 typo-body-s-medium text-gray-500"
-          >
+        )}
+        {!error && helperText && (
+          <p id={helperId} className="mt-2 ml-2 typo-body-s-medium text-gray-500">
             {helperText}
           </p>
-        ) : null}
+        )}
       </div>
     );
-  }
+  },
 );
 InputBox.displayName = 'InputBox';
