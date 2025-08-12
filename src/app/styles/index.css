@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@layer components {
+  .app-shell {
+    @apply mx-auto w-full max-w-sm shadow-sm;
+  }
+
+  .app-body {
+    @apply px-5;
+    padding-top: max(var(--safe-top), 0px); /* = safe-top 전역 기본 */
+    padding-bottom: max(var(--safe-bottom), 16px); /* = safe-bottom 전역 기본 */
+  }
+
+  .fixed-top-safe {
+    padding-top: max(var(--safe-top), 0px);
+  }
+  .fixed-bottom-safe {
+    padding-bottom: max(var(--safe-bottom), 16px);
+  }
+
+  .cols-6 {
+    @apply grid grid-cols-6;
+  }
+}
