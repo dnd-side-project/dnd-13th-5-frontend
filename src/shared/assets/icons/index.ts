@@ -9,7 +9,7 @@ import CloseIcon from './close.svg?react';
 import ComparisonIcon from './comparison.svg?react';
 import HomeIcon from './home.svg?react';
 import PlusIcon from './plus.svg?react';
-import QuestionIcon from './question-circle.svg';
+import QuestionIcon from './question-circle.svg?react';
 import StarIcon from './star.svg?react';
 import SubIcon from './sub.svg?react';
 import UserIcon from './user-profile.svg?react';
