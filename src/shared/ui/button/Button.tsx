@@ -33,6 +33,7 @@ const Button = ({
 
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-label={ariaLabel}
       disabled={disabled}
