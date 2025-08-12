@@ -21,6 +21,10 @@
   include:
     - '\bchore\b:'
 '🌎 Deploy':
-  include: ['\bci\/cd\b:', '\bci\b:', '\bcd\b:']
+  include:
+    - '\bci\/cd\b:'
+    - '\bci\b:'
+    - '\bcd\b:'
 '📨 Api':
-  include: '\bapi\b'
+  include:
+    - '\bapi\b'
