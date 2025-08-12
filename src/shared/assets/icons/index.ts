@@ -1,5 +1,5 @@
 import AlarmIcon from './alarm.svg?react';
-import CalendarIcon from './calender.svg?react';
+import CalendarIcon from './calendar.svg?react';
 import CheckIcon from './check.svg?react';
 import DoubleUpIcon from './chevron-double-up.svg?react';
 import DownIcon from './chevron-down.svg?react';
