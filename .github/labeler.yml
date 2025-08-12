@@ -5,18 +5,20 @@
 '🔧 Refactor':
   - head-branch: ['^refactor', 'refactor']
 '🧪 Test':
-  - '**/*.{spec,test}.{js,jsx,ts,tsx}'
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.{spec,test}.{js,jsx,ts,tsx}']
 '📚 Docs':
-  - '**/*.md'
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.md']
 '🎨 Html&css':
   - head-branch: ['^design', 'design']
-  - '**/*.{html,css}'
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.{html,css}']
 '⚙️ Setting':
-  - 'package-lock.json'
-  - '.github/workflows/**'
+  - changed-files:
+      - any-glob-to-any-file: ['package-lock.json', '.github/workflows/**']
 '🌎 Deploy':
-  - '^ci\/cd\s*:'
-  - '^ci\s*:'
-  - '^cd\s*:'
+  - head-branch: ['^ci(?:/|-)cd', '^ci$', '^cd$', '^deploy', '^release']
 '📨 Api':
-  - 'src/**/api/**'
+  - changed-files:
+      - any-glob-to-any-file: ['src/**/api/**']
