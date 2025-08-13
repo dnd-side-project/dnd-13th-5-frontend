@@ -9,7 +9,7 @@
 
 @layer components {
   .app-shell {
-    @apply mx-auto w-full max-w-sm shadow-sm;
+    @apply mx-auto w-full max-w-md shadow-sm;
   }
 
   .app-body {
