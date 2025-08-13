@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { IconProps, IconSize } from '@/shared/ui/icon/types';
 
 const sizeToWH = (size: IconSize) => {
@@ -31,7 +32,7 @@ const Icon = (props: IconProps) => {
   } = props;
 
   const { width, height } = sizeToWH(size);
-  const wrapper = `inline-flex items-center justify-center ${bgClass ?? ''} ${className}`.trim();
+  const wrapper = `inline-flex items-center justify-center  ${bgClass ?? ''}`.trim();
 
   if ('component' in props && props.component) {
     const SvgCmp = props.component;
@@ -40,7 +41,11 @@ const Icon = (props: IconProps) => {
       <span className={wrapper} aria-label={ariaLabel}>
         <SvgCmp
           style={{ width, height }}
-          className={`${colorClass} ${nonScalingStroke ? '[vector-effect:non-scaling-stroke]' : ''}`}
+          className={cn(
+            colorClass,
+            className,
+            nonScalingStroke ? '[vector-effect:non-scaling-stroke]' : '',
+          )}
           stroke={variant === 'stroke' ? 'currentColor' : 'none'}
           fill={variant === 'fill' ? 'currentColor' : 'none'}
           strokeWidth={variant === 'stroke' ? strokeWidth : undefined}
