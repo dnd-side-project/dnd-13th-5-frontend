@@ -1,9 +1,7 @@
 import * as React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 import { twMerge } from 'tailwind-merge';
-import { clsx, type ClassValue } from 'clsx';
-
-const cn = (...args: ClassValue[]) => twMerge(clsx(args));
+import { cn } from '@/lib/utils';
 
 // Tabs.Root
 export const Tabs = ({
