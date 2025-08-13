@@ -8,6 +8,10 @@ export default {
     './src/app/styles/index.css',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '20px',
+    },
     extend: {
       fontFamily: { sans: ['Pretendard', 'system-ui', 'sans-serif'] },
       letterSpacing: { 'tight-2': '-0.02em' },
