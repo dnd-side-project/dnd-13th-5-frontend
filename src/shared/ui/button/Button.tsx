@@ -1,12 +1,12 @@
 export interface ButtonProps {
   variant: 'primary-stroke' | 'primary-fill';
-  ariaLabel: string;
   title: string;
   onClick: () => void;
   disabled?: boolean;
 }
 
-const baseClasses = 'w-full px-5 py-4 h-12 flex items-center justify-center rounded-xl typo-body-m-medium transition-colors duration-200';
+const baseClasses =
+  'w-full px-5 py-4 h-12 flex items-center justify-center rounded-xl typo-body-m-medium transition-colors duration-200';
 
 const buttonStyles = {
   'primary-stroke': {
@@ -19,13 +19,7 @@ const buttonStyles = {
   },
 };
 
-const Button = ({
-  variant,
-  ariaLabel,
-  title,
-  onClick,
-  disabled = false,
-}: ButtonProps) => {
+const Button = ({ variant, title, onClick, disabled = false }: ButtonProps) => {
   const currentVariant = buttonStyles[variant];
   const stateClasses = disabled
     ? currentVariant.disabled
@@ -35,7 +29,6 @@ const Button = ({
     <button
       type="button"
       onClick={onClick}
-      aria-label={ariaLabel}
       disabled={disabled}
       className={`${baseClasses} ${stateClasses}`}
     >
