@@ -1,15 +1,17 @@
 import * as React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
+import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from 'clsx';
 
-type ClassValue = string | false | null | undefined;
-const cx = (...args: ClassValue[]) => args.filter(Boolean).join(' ');
+const cn = (...args: ClassValue[]) => twMerge(clsx(args));
 
 // Tabs.Root
-export const Tabs = (
-  props: React.ComponentProps<typeof TabsPrimitive.Root>,
-) => (
+export const Tabs = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Root>) => (
   <TabsPrimitive.Root
-    className="flex flex-col flex-grow"
+    className={cn('flex flex-col flex-grow', className)}
     data-slot="tabs"
     {...props}
   />
@@ -22,7 +24,7 @@ export const TabsList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={cx('flex', className)} // cx로 기본 스타일 적용
+    className={cn('flex', className)} // cx로 기본 스타일 적용
     {...props}
   />
 ));
@@ -35,8 +37,9 @@ export const TabsTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
-    className={cx(
+    className={cn(
       'px-4 py-2 border-b text-gray-500 typo-body-m-medium', // 기본 스타일
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
       'data-[state=active]:border-b-2 data-[state=active]:text-gray-800 data-[state=active]:border-gray-800', // 활성화 상태 스타일
       className,
     )}
@@ -52,7 +55,7 @@ export const TabsContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={cx('flex-grow p-5', className)} // 기본 스타일
+    className={cn('flex-grow p-5', className)} // 기본 스타일
     {...props}
   />
 ));
