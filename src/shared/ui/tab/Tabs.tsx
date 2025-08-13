@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '@/lib/utils';
 
 // Tabs.Root
