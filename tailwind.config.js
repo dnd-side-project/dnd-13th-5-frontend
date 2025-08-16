@@ -48,6 +48,7 @@ export default {
           800: '#222222',
           900: '#121212',
         },
+        kakao: '#FAE100',
       },
       fontSize: {
         'title-xl': [
