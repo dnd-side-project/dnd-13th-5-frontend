@@ -1,0 +1,1 @@
+export { AlarmPage } from './AlarmPage';
