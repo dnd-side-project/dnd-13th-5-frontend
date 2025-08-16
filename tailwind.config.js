@@ -33,8 +33,6 @@ export default {
           700: '#E83A4F',
           800: '#D62845',
           900: '#971A36',
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
           50: '#BEFFF1',
@@ -47,8 +45,6 @@ export default {
           700: '#107573',
           800: '#0D6161',
           900: '#094345',
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
         },
         gray: {
           50: '#FAFAFA',
