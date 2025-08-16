@@ -1,8 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { Icons } from '@/shared/assets/icons';
 import IconButton from '@/shared/ui/button/IconButton';
+import { ROUTES } from '@/shared/config/routes';
 
-const AlarmButton = ({ tone = 'default' as 'default' | 'white' }) => {
+interface AlarmButtonProps {
+  tone?: 'default' | 'white';
+}
+
+const AlarmButton = ({ tone = 'default' }: AlarmButtonProps) => {
   const navigate = useNavigate();
 
   return (
@@ -17,7 +22,7 @@ const AlarmButton = ({ tone = 'default' as 'default' | 'white' }) => {
           : { component: Icons.Alarm }
       }
       ariaLabel="알림"
-      onClick={() => navigate('/alarm')}
+      onClick={() => navigate(ROUTES.ALARM)}
     />
   );
 };

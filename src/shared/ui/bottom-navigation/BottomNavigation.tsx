@@ -51,6 +51,7 @@ const BottomNavigation = () => (
           <li key={id}>
             <NavLink
               to={href}
+              end={href === ROUTES.HOME}
               className={({ isActive }) => linkClass(isActive)}
               aria-label={label}
             >
