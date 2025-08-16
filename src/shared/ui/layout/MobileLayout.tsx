@@ -1,0 +1,44 @@
+import BottomNavigation from '@/shared/ui/bottom-navigation/BottomNavigation';
+import Header, { HeaderProps } from '@/shared/ui/header/Header';
+import { ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
+
+type BodyVariant = 'white' | 'gray';
+
+interface MobileLayoutProps {
+  children?: ReactNode;
+  showHeader?: boolean;
+  showBottom?: boolean;
+  headerProps?: HeaderProps;
+  bodyVariant?: BodyVariant;
+}
+
+const MobileLayout = ({
+  children,
+  showHeader = true,
+  showBottom = true,
+  headerProps,
+  bodyVariant = 'white',
+}: MobileLayoutProps) => {
+  const bodyColor = bodyVariant === 'gray' ? 'bg-gray-50' : 'bg-white';
+
+  return (
+    <div className="min-h-dvh bg-gray-200 flex flex-col">
+      <div className="app-shell flex flex-col flex-grow">
+        {showHeader && <Header {...headerProps} />}
+
+        <main
+          className={`app-body flex-grow py-4 ${bodyColor} ${showBottom ? 'pb-[calc(56px+env(safe-area-inset-bottom))]' : ''}`}
+        >
+          <section className="cols-6 gap-2">
+            <div className="col-span-6">{children ?? <Outlet />}</div>
+          </section>
+        </main>
+
+        {showBottom && <BottomNavigation />}
+      </div>
+    </div>
+  );
+};
+
+export default MobileLayout;
