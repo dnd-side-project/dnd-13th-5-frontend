@@ -29,7 +29,7 @@ export const ChipGroup = ({
   const [uncontrolled, setUncontrolled] = useState<string | null>(
     defaultValue ?? null
   );
-  const current = isControlled ? controlled! : uncontrolled;
+  const current = isControlled ? controlled : uncontrolled;
 
   const setValue = (v: string | null) => {
     if (!isControlled) setUncontrolled(v);
