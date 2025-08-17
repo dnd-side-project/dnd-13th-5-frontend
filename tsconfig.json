@@ -16,5 +16,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src", "eslint.config.js"]
+  "include": ["src", "eslint.config.js", "src/shared/types/svg.d.ts"]
 }
