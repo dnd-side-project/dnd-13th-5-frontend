@@ -1,3 +1,4 @@
+import { cn } from '@/shared/lib/utils';
 import {
   Close as RadixClose,
   Content as RadixContent,
@@ -7,6 +8,8 @@ import {
   Root as RadixRoot,
   Title as RadixTitle,
   Trigger as RadixTrigger,
+  type EscapeKeyDownEvent,
+  type PointerDownOutsideEvent,
 } from '@radix-ui/react-dialog';
 import { ComponentProps, forwardRef } from 'react';
 
@@ -17,10 +20,6 @@ import { ComponentProps, forwardRef } from 'react';
  * - 생성형 ai를 통한 a11y 보강: ESC/바깥클릭 차단 옵션, ariaLabel/aria-describedby 지원, motion-reduce 대응
  * - how to는 PR참고.
  */
-
-// 경량 class join 유틸
-type ClassValue = string | false | null | undefined;
-const cx = (...args: ClassValue[]) => args.filter(Boolean).join(' ');
 
 /* ----------------------------------------------------------------------------
  * Root / Trigger / Portal / Close
@@ -52,7 +51,7 @@ export const DialogOverlay = ({
 }: ComponentProps<typeof RadixOverlay>) => (
   <RadixOverlay
     data-slot="dialog-overlay"
-    className={cx(
+    className={cn(
       'fixed inset-0 z-50 bg-black/50',
       'data-[state=open]:animate-in data-[state=closed]:animate-out',
       'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
@@ -74,9 +73,9 @@ type Intent = 'default' | 'success' | 'danger';
 type Scroll = 'auto' | 'none';
 
 const sizeMap: Record<Size, string> = {
-  sm: 'sm:max-w-sm',
-  md: 'sm:max-w-md',
-  lg: 'sm:max-w-lg',
+  sm: 'max-w-[calc(100%-2.5rem)] sm:max-w-sm',
+  md: 'max-w-[calc(100%-2.5rem)] sm:max-w-md',
+  lg: 'max-w-[calc(100%-2.5rem)] sm:max-w-lg',
 };
 
 const alignMap: Record<Align, string> = {
@@ -143,27 +142,25 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         data-slot="dialog-content"
         aria-label={ariaLabel}
         aria-describedby={describedById}
-        onPointerDownOutside={(e) => {
+        onPointerDownOutside={(e: PointerDownOutsideEvent) => {
           if (disableOutsideClose) e.preventDefault();
           props.onPointerDownOutside?.(e);
         }}
-        onEscapeKeyDown={(e) => {
+        onEscapeKeyDown={(e: EscapeKeyDownEvent) => {
           if (disableEscClose) e.preventDefault();
           props.onEscapeKeyDown?.(e);
         }}
-        className={cx(
+        className={cn(
           // 공통 레이아웃/애니메이션
-          'fixed left-1/2 z-50 grid w-full max-w-[calc(100%-2.5rem)] -translate-x-1/2 rounded-xl p-5 duration-200 bg-white gap-3',
+          'fixed left-1/2 z-50 grid w-full -translate-x-1/2 rounded-xl p-5 duration-200 bg-white gap-3',
           'data-[state=open]:animate-in data-[state=closed]:animate-out',
           'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
           'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
           // variants
-          sizeMap[size],
-          alignMap[align],
-          intentMap[intent],
-          scrollMap[scroll],
-          // 모바일 기본 너비, sm 이상에서 sizeMap으로 제어
-          'sm:max-w-lg',
+          sizeMap[size as Size],
+          alignMap[align as Align],
+          intentMap[intent as Intent],
+          scrollMap[scroll as Scroll],
           // 모션 민감 사용자 배려
           'motion-reduce:transition-none',
           className,
@@ -176,7 +173,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
           <RadixClose
             data-slot="dialog-close"
             aria-label="Close"
-            className={cx(
+            className={cn(
               'absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-xs',
               'opacity-70 transition-opacity hover:opacity-100',
               'focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2',
@@ -202,7 +199,7 @@ export const DialogHeader = ({
 }: ComponentProps<'div'>) => (
   <div
     data-slot="dialog-header"
-    className={cx('flex flex-col gap-2 text-center', className)}
+    className={cn('flex flex-col gap-2 text-center', className)}
     {...props}
   />
 );
@@ -213,7 +210,7 @@ export const DialogFooter = ({
 }: ComponentProps<'div'>) => (
   <div
     data-slot="dialog-footer"
-    className={cx('flex w-full gap-2', className)}
+    className={cn('flex w-full gap-2', className)}
     {...props}
   />
 );
@@ -224,7 +221,7 @@ export const DialogTitle = ({
 }: ComponentProps<typeof RadixTitle>) => (
   <RadixTitle
     data-slot="dialog-title"
-    className={cx('typo-body-m-bold', className)}
+    className={cn('typo-body-m-bold', className)}
     {...props}
   />
 );
@@ -235,7 +232,7 @@ export const DialogDescription = ({
 }: ComponentProps<typeof RadixDescription>) => (
   <RadixDescription
     data-slot="dialog-description"
-    className={cx('typo-body-m-medium', className)}
+    className={cn('typo-body-m-medium', className)}
     {...props}
   />
 );
@@ -251,7 +248,7 @@ export const DialogBody = ({
   // id를 부여하고, Content의 describedById로 연결하면 스크린리더가 본문을 읽음
   <div
     data-slot="dialog-body"
-    className={cx('mt-1 space-y-3 text-sm', className)}
+    className={cn('mt-1 space-y-3 text-sm', className)}
     {...props}
   />
 );
@@ -271,7 +268,7 @@ export const DialogActions = ({
     between: 'justify-between',
   };
   return (
-    <DialogFooter className={cx(map[align], className)} {...props}>
+    <DialogFooter className={cn(map[align], className)} {...props}>
       {children}
     </DialogFooter>
   );
