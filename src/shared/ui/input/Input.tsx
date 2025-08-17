@@ -1,3 +1,4 @@
+import { cn } from '@/shared/lib/utils';
 import type { ComponentProps, ReactNode } from 'react';
 import { forwardRef, useId } from 'react';
 
@@ -7,10 +8,6 @@ import { forwardRef, useId } from 'react';
  * - Preset(InputBox): label/suffix/error/helper + a11y 연결
  * - Next 종속 없음. 디자인 토큰은 className으로 오버라이드
  */
-
-/* cx dialog랑 중복되니까 추후 수정 요함 */
-type ClassValue = string | false | null | undefined;
-const cx = (...args: ClassValue[]) => args.filter(Boolean).join(' ');
 
 /* -------------------------------------------------------------------------- */
 /* Primitive: Input (얇게 유지)                                               */
@@ -23,7 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       ref={ref}
       type={type}
       data-slot="input"
-      className={cx(
+      className={cn(
         // base
         'flex w-full min-w-0 rounded-xl border bg-white px-5 py-3 typo-body-s-medium outline-none transition-[color,box-shadow,border-color]',
         'placeholder:text-gray-500',
@@ -31,11 +28,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-500',
         // invalid (aria-invalid=true 일 때)
         'aria-invalid:border-primary-700',
-        className,
+        className
       )}
       {...props}
     />
-  ),
+  )
 );
 Input.displayName = 'Input';
 
@@ -77,27 +74,29 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
       required, // Input의 표준 prop(별표 표시에 사용)
       ...inputProps
     },
-    ref,
+    ref
   ) => {
     const autoId = useId();
     const inputId = id ?? `inp-${autoId}`;
 
     const helperId = helperText ? `${inputId}-help` : undefined;
-    const errorId = typeof error === 'string' ? `${inputId}-err` : undefined;
-    const describedBy = [helperId, errorId].filter(Boolean).join(' ') || undefined;
+    const hasErrorText = typeof error === 'string' && error.trim().length > 0;
+    const errorId = hasErrorText ? `${inputId}-err` : undefined;
+    const describedBy =
+      [helperId, errorId].filter(Boolean).join(' ') || undefined;
 
-    const invalid = Boolean(error);
+    const invalid = error === true || hasErrorText;
 
     return (
-      <div className={cx('w-full', className)}>
+      <div className={cn('w-full', className)}>
         {/* label */}
         {label && (
           <label
             htmlFor={inputId}
-            className={cx(
+            className={cn(
               'mb-2 ml-2 block typo-body-s-medium text-gray-700',
               disabled && 'text-gray-400',
-              labelClassName,
+              labelClassName
             )}
           >
             {label}
@@ -119,16 +118,20 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
             disabled={disabled}
             readOnly={readOnly}
             required={required}
-            className={cx(inputClassName, suffix ? 'pr-10' : '', invalid && 'border-primary-700')}
+            className={cn(
+              inputClassName,
+              suffix ? 'pr-10' : '',
+              invalid && 'border-primary-700'
+            )}
             {...inputProps}
           />
 
           {/* suffix */}
           {suffix && (
             <div
-              className={cx(
+              className={cn(
                 'absolute inset-y-0 right-5 flex items-center',
-                disabled ? 'text-gray-300' : 'text-gray-500',
+                disabled ? 'text-gray-300' : 'text-gray-500'
               )}
             >
               {suffix}
@@ -138,17 +141,23 @@ export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(
 
         {/* helper / error */}
         {typeof error === 'string' && (
-          <p id={errorId} className="mt-2 ml-2 typo-body-s-medium text-primary-600">
+          <p
+            id={errorId}
+            className="mt-2 ml-2 typo-body-s-medium text-primary-600"
+          >
             {error}
           </p>
         )}
         {!error && helperText && (
-          <p id={helperId} className="mt-2 ml-2 typo-body-s-medium text-gray-500">
+          <p
+            id={helperId}
+            className="mt-2 ml-2 typo-body-s-medium text-gray-500"
+          >
             {helperText}
           </p>
         )}
       </div>
     );
-  },
+  }
 );
 InputBox.displayName = 'InputBox';
