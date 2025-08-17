@@ -50,7 +50,10 @@ export const ChipGroup = ({
     >
       {Children.map(children, (child) =>
         isValidElement(child)
-          ? cloneElement(child as any, { __group: bridge })
+          ? cloneElement(
+              child as React.ReactElement<{ __group?: _ChipInternalBridge }>,
+              { __group: bridge }
+            )
           : child
       )}
     </div>
