@@ -15,7 +15,7 @@ import { ComponentProps, forwardRef } from 'react';
  * - cva/cn 일단 미사용: 경량 cx 유틸 + 매핑 객체
  * - 컴파운드 패턴 + 최소 프리셋을 염두
  * - 생성형 ai를 통한 a11y 보강: ESC/바깥클릭 차단 옵션, ariaLabel/aria-describedby 지원, motion-reduce 대응
- * - how to는 PR참고
+ * - how to는 PR참고.
  */
 
 // 경량 class join 유틸
