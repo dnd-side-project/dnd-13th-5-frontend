@@ -11,7 +11,7 @@ import type {
 /** 라벨은 시각만 담당, 포커스 링은 input 포커스(:focus-within)로 노출 */
 const baseLabel =
   'inline-flex items-center justify-center rounded-[20px] border whitespace-nowrap select-none ' +
-  'transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-black/20';
+  'transition-colors outline-none';
 
 const sizeClass: Record<ChipSize, string> = {
   sm: 'px-4 py-1 typo-body-s-medium',
