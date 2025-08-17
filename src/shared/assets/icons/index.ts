@@ -18,7 +18,7 @@ export const Icons = {
   Alarm: AlarmIcon,
   Calendar: CalendarIcon,
   Check: CheckIcon,
-  Doubleup: DoubleUpIcon,
+  DoubleUp: DoubleUpIcon,
   Down: DownIcon,
   Left: LeftIcon,
   Right: RightIcon,
