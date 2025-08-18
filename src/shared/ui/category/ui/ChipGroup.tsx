@@ -1,12 +1,5 @@
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  useId,
-  useMemo,
-  useState,
-} from 'react';
 import type { ReactElement } from 'react';
+import { Children, cloneElement, isValidElement, useId, useMemo, useState } from 'react';
 
 import { cn } from '@/shared/lib/utils';
 
@@ -29,9 +22,7 @@ export const ChipGroup = ({
 
   // 제어/비제어 모두 지원
   const isControlled = controlled !== undefined;
-  const [uncontrolled, setUncontrolled] = useState<string | null>(
-    defaultValue ?? null
-  );
+  const [uncontrolled, setUncontrolled] = useState<string | null>(defaultValue ?? null);
   const current = isControlled ? controlled : uncontrolled;
 
   const setValue = (v: string | null) => {
@@ -51,14 +42,14 @@ export const ChipGroup = ({
       aria-orientation="horizontal"
       className={cn('flex gap-2 overflow-x-auto', className)}
     >
-      {Children.map(children, (child) =>
-        (isValidElement(child)
-          ? cloneElement(
-              child as ReactElement<{ __group?: _ChipInternalBridge }>,
-              { __group: bridge }
-            )
-          : child)
-      )}
+      {Children.map(children, child => {
+        if (isValidElement(child)) {
+          return cloneElement(child as ReactElement<{ __group?: _ChipInternalBridge }>, {
+            __group: bridge,
+          });
+        }
+        return child;
+      })}
     </div>
   );
 };

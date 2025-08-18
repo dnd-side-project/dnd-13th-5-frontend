@@ -22,7 +22,7 @@ export default [
   ...tseslint.configs.recommended,
 
   // Airbnb 설정 (포맷팅 규칙 제외)
-  ...compat.extends('airbnb-base').map((config) => ({
+  ...compat.extends('airbnb-base').map(config => ({
     ...config,
     rules: {
       ...config.rules,
@@ -33,6 +33,7 @@ export default [
       'operator-linebreak': 'off',
       'implicit-arrow-linebreak': 'off',
       'function-paren-newline': 'off',
+      'arrow-parens': 'off',
       indent: 'off',
       quotes: 'off',
       semi: 'off',
