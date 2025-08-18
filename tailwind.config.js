@@ -1,16 +1,26 @@
 import plugin from 'tailwindcss/plugin';
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ['class'],
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     './src/app/styles/index.css',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '20px',
+    },
     extend: {
-      fontFamily: { sans: ['Pretendard', 'system-ui', 'sans-serif'] },
-      letterSpacing: { 'tight-2': '-0.02em' },
+      fontFamily: {
+        sans: ['Pretendard', 'system-ui', 'sans-serif'],
+      },
+      letterSpacing: {
+        'tight-2': '-0.02em',
+      },
       colors: {
         primary: {
           50: '#FDEBED',
@@ -23,6 +33,8 @@ export default {
           700: '#E83A4F',
           800: '#D62845',
           900: '#971A36',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
           50: '#BEFFF1',
@@ -35,6 +47,8 @@ export default {
           700: '#107573',
           800: '#0D6161',
           900: '#094345',
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         gray: {
           50: '#FAFAFA',
@@ -53,25 +67,51 @@ export default {
       fontSize: {
         'title-xl': [
           '1.5rem',
-          { lineHeight: '34px', letterSpacing: '-0.02em' },
+          {
+            lineHeight: '34px',
+            letterSpacing: '-0.02em',
+          },
         ],
         'title-l': [
           '1.25rem',
-          { lineHeight: '30px', letterSpacing: '-0.02em' },
+          {
+            lineHeight: '30px',
+            letterSpacing: '-0.02em',
+          },
         ],
         'title-m': [
           '1.125rem',
-          { lineHeight: '27px', letterSpacing: '-0.02em' },
+          {
+            lineHeight: '27px',
+            letterSpacing: '-0.02em',
+          },
         ],
-        'body-m': ['1rem', { lineHeight: '24px', letterSpacing: '-0.02em' }],
+        'body-m': [
+          '1rem',
+          {
+            lineHeight: '24px',
+            letterSpacing: '-0.02em',
+          },
+        ],
         'body-s': [
           '0.875rem',
-          { lineHeight: '21px', letterSpacing: '-0.02em' },
+          {
+            lineHeight: '21px',
+            letterSpacing: '-0.02em',
+          },
         ],
         'label-s': [
           '0.75rem',
-          { lineHeight: '17px', letterSpacing: '-0.02em' },
+          {
+            lineHeight: '17px',
+            letterSpacing: '-0.02em',
+          },
         ],
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
@@ -123,5 +163,6 @@ export default {
         ...mk('typo-label-s-medium', 'medium', 'label-s'),
       });
     }),
+    tailwindcssAnimate,
   ],
 };

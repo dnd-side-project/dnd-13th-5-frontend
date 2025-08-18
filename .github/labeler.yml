@@ -1,26 +1,24 @@
-# 레이블
-'🐛 BugFix':
-  include:
-    - '\bfix\b:'
-'🧪 Test':
-  include:
-    - '\btest\b:'
 '✨ Feature':
-  include:
-    - '\bfeat\b:'
-'📚 Docs':
-  include:
-    - '\bdocs\b:'
+  - head-branch: ['^feature', 'feature']
+'🐛 BugFix':
+  - head-branch: ['^hotfix', 'hotfix', '^fix', 'fix']
 '🔧 Refactor':
-  include:
-    - '\brefactor\b:'
+  - head-branch: ['^refactor', 'refactor']
+'🧪 Test':
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.{spec,test}.{js,jsx,ts,tsx}']
+'📚 Docs':
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.md']
 '🎨 Html&css':
-  include:
-    - '\bdesign\b:'
+  - head-branch: ['^design', 'design']
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.{html,css}']
 '⚙️ Setting':
-  include:
-    - '\bchore\b:'
+  - changed-files:
+      - any-glob-to-any-file: ['package-lock.json', '.github/workflows/**']
 '🌎 Deploy':
-  include: ['\bci\/cd\b:', '\bci\b:', '\bcd\b:']
+  - head-branch: ['^ci(?:/|-)cd', '^ci$', '^cd$', '^deploy', '^release']
 '📨 Api':
-  include: '\bapi\b'
+  - changed-files:
+      - any-glob-to-any-file: ['src/**/api/**']

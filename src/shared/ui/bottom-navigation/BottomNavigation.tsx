@@ -37,9 +37,11 @@ const navItems: NavItem[] = [
   },
 ];
 
-const linkClass = (active: boolean) => `flex flex-col items-center gap-1 typo-label-s-medium ${
-  active ? 'text-primary-700' : 'text-gray-500'
-}`;
+
+const linkClass = (active: boolean) =>
+  `flex flex-col items-center gap-1 typo-label-s-medium ${
+    active ? 'text-primary-700' : 'text-gray-500'
+  }`;
 
 const BottomNavigation = () => (
   <nav className="fixed bottom-0 z-50 inset-x-0 bg-white max-w-md w-full mx-auto">
