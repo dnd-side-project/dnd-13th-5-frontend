@@ -81,6 +81,8 @@ export default [
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
       },
+      // '@/*' alias를 internal로 분류 (import/order 정렬 일관성)
+      'import/internal-regex': '^@/',
     },
     rules: {
       // 사용하지 않는 import 정리
