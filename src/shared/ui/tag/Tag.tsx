@@ -1,6 +1,7 @@
-import { cn } from '@/shared/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
+
+import { cn } from '@/shared/lib/utils';
 
 /** 디자인 토큰 타입 */
 export type TagAppearance = 'soft' | 'outline';

@@ -1,6 +1,8 @@
-import { Icons } from '@/shared/assets/icons';
-import { Icon, IconProps } from '@/shared/ui/icon';
 import { NavLink } from 'react-router-dom';
+
+import { Icons } from '@/shared/assets/icons';
+import type { IconProps } from '@/shared/ui/icon';
+import { Icon } from '@/shared/ui/icon';
 
 interface NavItem {
   id: string;

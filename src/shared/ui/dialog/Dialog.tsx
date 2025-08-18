@@ -1,4 +1,3 @@
-import { cn } from '@/shared/lib/utils';
 import {
   Close as RadixClose,
   Content as RadixContent,
@@ -11,7 +10,10 @@ import {
   type EscapeKeyDownEvent,
   type PointerDownOutsideEvent,
 } from '@radix-ui/react-dialog';
-import { ComponentProps, forwardRef } from 'react';
+import type { ComponentProps } from 'react';
+import { forwardRef } from 'react';
+
+import { cn } from '@/shared/lib/utils';
 
 /**
  * 공통 Dialog 컴포넌트

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { IconProps, IconSize } from '@/shared/ui/icon/types';
+import type { IconProps, IconSize } from '@/shared/ui/icon/types';
 
 const sizeToWH = (size: IconSize) => {
   if (typeof size === 'number') return { width: size, height: size };
