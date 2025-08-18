@@ -1,5 +1,6 @@
+import { useState } from 'react';
+
 import { Icons } from '@/shared/assets/icons';
-import { Icon } from '@/shared/ui/icon';
 import {
   Dropdown,
   DropdownContent,
@@ -7,7 +8,7 @@ import {
   DropdownSeparator,
   DropdownTrigger,
 } from '@/shared/ui/dropdown';
-import { useState } from 'react';
+import { Icon } from '@/shared/ui/icon';
 
 interface FilterOption {
   key: string;

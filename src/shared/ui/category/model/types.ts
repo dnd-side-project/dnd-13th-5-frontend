@@ -7,7 +7,7 @@ export type ChipSize = 'sm' | 'md';
 export type ChipGroupProps = {
   value?: string | null; // 제어형 값
   defaultValue?: string | null; // 비제어 초기값
-  onValueChange?: (v: string | null) => void;
+  onValueChange?: (value: string | null) => void;
   name?: string; // 라디오 name (없으면 자동 생성)
   className?: string;
   children: ReactNode;
@@ -29,5 +29,5 @@ export type ChipItemProps = {
 export type _ChipInternalBridge = {
   radioName: string;
   current: string | null;
-  setValue: (v: string | null) => void;
+  setValue: (value: string | null) => void;
 };

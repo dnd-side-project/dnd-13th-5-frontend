@@ -1,4 +1,3 @@
-import { cn } from '@/shared/lib/utils';
 import {
   Children,
   cloneElement,
@@ -7,6 +6,10 @@ import {
   useMemo,
   useState,
 } from 'react';
+import type { ReactElement } from 'react';
+
+import { cn } from '@/shared/lib/utils';
+
 import type { ChipGroupProps, _ChipInternalBridge } from '../model/types';
 
 /**
@@ -49,12 +52,12 @@ export const ChipGroup = ({
       className={cn('flex gap-2 overflow-x-auto', className)}
     >
       {Children.map(children, (child) =>
-        isValidElement(child)
+        (isValidElement(child)
           ? cloneElement(
-              child as React.ReactElement<{ __group?: _ChipInternalBridge }>,
+              child as ReactElement<{ __group?: _ChipInternalBridge }>,
               { __group: bridge }
             )
-          : child
+          : child)
       )}
     </div>
   );

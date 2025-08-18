@@ -5,7 +5,9 @@
   "tabWidth": 2,
   "useTabs": false,
   "trailingComma": "all",
-  "printWidth": 80,
+  "printWidth": 100,
   "bracketSpacing": true,
-  "arrowParens": "always"
+  "arrowParens": "avoid",
+  "bracketSameLine": false,
+  "quoteProps": "as-needed"
 }
