@@ -30,15 +30,23 @@ export default [
       'comma-dangle': 'off',
       'max-len': 'off',
       'object-curly-newline': 'off',
+      'object-curly-spacing': 'off',
       'operator-linebreak': 'off',
       'implicit-arrow-linebreak': 'off',
       'function-paren-newline': 'off',
       'arrow-parens': 'off',
+      'brace-style': 'off',
+      'space-before-function-paren': 'off',
+      'multiline-ternary': 'off',
+      'newline-per-chained-call': 'off',
       indent: 'off',
       quotes: 'off',
       semi: 'off',
     },
   })),
+
+  // Prettier 충돌 방지 (모든 포맷팅 규칙 자동 비활성화)
+  ...compat.extends('prettier'),
 
   // 프로젝트별 설정
   {
