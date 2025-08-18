@@ -1,7 +1,9 @@
-import BottomNavigation from '@/shared/ui/bottom-navigation/BottomNavigation';
-import Header, { HeaderProps } from '@/shared/ui/header/Header';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
+
+import BottomNavigation from '@/shared/ui/bottom-navigation/BottomNavigation';
+import type { HeaderProps } from '@/shared/ui/header/Header';
+import Header from '@/shared/ui/header/Header';
 
 type BodyVariant = 'white' | 'gray';
 

@@ -11,4 +11,4 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
-} from './dialog';
+} from './Dialog';

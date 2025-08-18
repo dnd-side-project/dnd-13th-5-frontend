@@ -1,6 +1,7 @@
-import { cn } from '@/shared/lib/utils';
 import type { ComponentProps, ReactNode } from 'react';
 import { forwardRef, useId } from 'react';
+
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Input primitive + InputBox preset (React + Tailwind)

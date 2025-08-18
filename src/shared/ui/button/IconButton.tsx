@@ -1,4 +1,5 @@
-import { Icon, IconProps } from '@/shared/ui/icon';
+import type { IconProps } from '@/shared/ui/icon';
+import { Icon } from '@/shared/ui/icon';
 
 export interface IconButtonProps {
   icon: IconProps;

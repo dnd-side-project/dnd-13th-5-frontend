@@ -1,5 +1,7 @@
-import { cn } from '@/shared/lib/utils';
 import { useId } from 'react';
+
+import { cn } from '@/shared/lib/utils';
+
 import type {
   ChipColor,
   ChipItemProps,

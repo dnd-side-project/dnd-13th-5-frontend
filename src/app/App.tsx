@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
+
 import { AppRouter } from './providers/AppRouter';
 import './styles/index.css';
 
