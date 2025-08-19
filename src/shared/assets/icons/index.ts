@@ -4,6 +4,7 @@ import CheckIcon from './check.svg?react';
 import DoubleUpIcon from './chevron-double-up.svg?react';
 import DownIcon from './chevron-down.svg?react';
 import LeftIcon from './chevron-left.svg?react';
+import ChevronRightWhiteIcon from './chevron-right-white.svg?react';
 import RightIcon from './chevron-right.svg?react';
 import CloseIcon from './close.svg?react';
 import ComparisonIcon from './comparison.svg?react';
@@ -30,4 +31,5 @@ export const Icons = {
   Star: StarIcon,
   Sub: SubIcon,
   User: UserIcon,
+  ChevronRight: ChevronRightWhiteIcon,
 };
