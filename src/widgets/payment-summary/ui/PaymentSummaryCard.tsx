@@ -15,50 +15,50 @@ export const PaymentSummaryCard = ({
   monthLimit,
   progressPercent = 0, // 기본값 설정
 }: PaymentSummaryCardProps) => (
-    <section aria-label="이번달 결제 요약" className="px-5 py-3">
-      {title && <h2 className="typo-title-l-bold mb-10">{title}</h2>}
+  <section aria-label="이번달 결제 요약">
+    {title && <h2 className="typo-title-l-bold mb-10">{title}</h2>}
 
-      <article
-        className="relative rounded-[20px] bg-white px-5 pt-5 pb-3"
-        style={{ boxShadow: '2px 2px 20px 0 rgba(0, 0, 0, 0.08)' }}
-      >
-        <Tag color="gray" className="absolute -top-4 left-5 z-10">
-          {dateText}
-        </Tag>
+    <article
+      className="relative rounded-[20px] bg-white px-5 pt-5 pb-3"
+      style={{ boxShadow: '2px 2px 20px 0 rgba(0, 0, 0, 0.08)' }}
+    >
+      <Tag color="gray" className="absolute -top-4 left-5 z-10">
+        {dateText}
+      </Tag>
 
-        {/* 서비스 아이콘 (우측) */}
-        {/* <img
+      {/* 서비스 아이콘 (우측) */}
+      {/* <img
           src={iconUrl}
           alt={`${serviceName} 아이콘`}
           width={67}
           height={67}
           className="absolute -top-4 right-5 z-10 rounded-xl object-cover"
         /> */}
-        {/* 임시 아이콘 대체 TODO: 교체 */}
-        <div className="h-[67px] w-[67px] absolute -top-8 right-5 z-10 rounded-xl bg-green-200" />
+      {/* 임시 아이콘 대체 TODO: 교체 */}
+      <div className="h-[67px] w-[67px] absolute -top-8 right-5 z-10 rounded-xl bg-green-200" />
 
-        {/* 카드 내부 컨텐츠 */}
-        <div>
-          <p className="typo-body-s-medium text-gray-600">이번달 남은 결제</p>
+      {/* 카드 내부 컨텐츠 */}
+      <div>
+        <p className="typo-body-s-medium text-gray-600">이번달 남은 결제</p>
 
-          {/* 금액 */}
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="typo-title-l-bold text-primary-700">{formatKRW(monthUsed)}</span>
-            <span className="typo-body-m-medium text-gray-500">/</span>
-            <span className="typo-body-m-medium text-gray-500">{formatKRW(monthLimit)}</span>
-          </div>
-
-          {/* 진행 바 + 퍼센트 */}
-          <div className="mt-[6px] flex items-center justify-between gap-6">
-            <ProgressBar
-              value={progressPercent}
-              className="flex-1 bg-gray-100"
-              barClassName="bg-primary-700"
-              srLabel="이번달 사용률"
-            />
-            <span className="typo-title-l-bold text-primary-800">{progressPercent}%</span>
-          </div>
+        {/* 금액 */}
+        <div className="mt-2 flex items-baseline gap-2">
+          <span className="typo-title-l-bold text-primary-700">{formatKRW(monthUsed)}</span>
+          <span className="typo-body-m-medium text-gray-500">/</span>
+          <span className="typo-body-m-medium text-gray-500">{formatKRW(monthLimit)}</span>
         </div>
-      </article>
-    </section>
-  );
+
+        {/* 진행 바 + 퍼센트 */}
+        <div className="mt-[6px] flex items-center justify-between gap-6">
+          <ProgressBar
+            value={progressPercent}
+            className="flex-1 bg-gray-100"
+            barClassName="bg-primary-700"
+            srLabel="이번달 사용률"
+          />
+          <span className="typo-title-l-bold text-primary-800">{progressPercent}%</span>
+        </div>
+      </div>
+    </article>
+  </section>
+);
