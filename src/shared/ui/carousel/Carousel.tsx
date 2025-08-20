@@ -31,7 +31,7 @@ export const Carousel = ({
   // 스크롤 컨테이너와 각 슬라이드 DOM 참조
   const containerRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<HTMLDivElement[]>([]);
-  itemRefs.current = [];
+  // itemRefs.current = [];
 
   // 현재 활성 인덱스 (점 네비 연동)
   const [active, setActive] = useState(0);
