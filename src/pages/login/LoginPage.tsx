@@ -9,10 +9,12 @@ export const LoginPage = () => {
   const handleLookAround = () => {
     navigate(ROUTES.HOME);
   };
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    navigate('/signup');
+  };
 
   return (
-    <div className="min-h-dvh max-w-md m-auto flex flex-col justify-between px-5">
+    <div className="min-h-dvh max-w-md m-auto flex flex-col justify-between">
       <Header
         rightSlot={<button onClick={handleLookAround}>둘러보기</button>}
       />
@@ -31,7 +33,7 @@ export const LoginPage = () => {
         </div>
       </main>
 
-      <footer className="pb-[calc(56px+env(safe-area-inset-bottom))]">
+      <footer className="pb-[calc(56px+env(safe-area-inset-bottom))] px-5">
         <LoginButton onClick={handleLogin} />
       </footer>
     </div>
