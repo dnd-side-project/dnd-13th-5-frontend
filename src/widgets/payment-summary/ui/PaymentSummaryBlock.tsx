@@ -59,8 +59,8 @@ export const PaymentSummaryBlock = () => {
       <PaymentSummaryCard
         title={title}
         dateText={formatKoreanDate()} // 임시: 오늘 날짜. API 연결되면 변경
-        iconUrl={FALLBACK_ICON}
-        serviceName={FALLBACK_SERVICE}
+        // iconUrl={FALLBACK_ICON}
+        // serviceName={FALLBACK_SERVICE}
         // 네이밍 모호 — 현재 UI 문구가 "이번달 남은 결제"라 그대로 표기
         monthUsed={data.remainingRate}
         monthLimit={data.totalAmount}
