@@ -70,6 +70,7 @@ export const PaymentSummaryBlock = () => {
         <Carousel ariaLabel="다가오는 결제 목록 캐러셀">
           {items.map(it => (
             <ContentsCard
+              // TODO: 추후 api 명세에 따라 key 수정
               key={it.serviceName}
               left={
                 <>
