@@ -1,15 +1,13 @@
 import AlarmButton from '@/shared/ui/button/AlarmButton';
 import { MobileLayout } from '@/shared/ui/layout';
 
-export const HomePage = () => (
+export const SubscriptionsPage = () => (
   <MobileLayout
     headerProps={{
-      leftSlot: 'Logo',
+      centerSlot: '내 구독',
       rightSlot: <AlarmButton />,
-      colorVariant: 'gray',
     }}
-    bodyVariant="gray"
   >
-    HomePage
+    SubscriptionsPage
   </MobileLayout>
 );

@@ -1,15 +1,13 @@
 import AlarmButton from '@/shared/ui/button/AlarmButton';
 import { MobileLayout } from '@/shared/ui/layout';
 
-export const HomePage = () => (
+export const ComparisonPage = () => (
   <MobileLayout
     headerProps={{
-      leftSlot: 'Logo',
+      centerSlot: '비교하기',
       rightSlot: <AlarmButton />,
-      colorVariant: 'gray',
     }}
-    bodyVariant="gray"
   >
-    HomePage
+    ComparisonPage
   </MobileLayout>
 );
