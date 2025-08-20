@@ -2,17 +2,12 @@ import { useId } from 'react';
 
 import { cn } from '@/shared/lib/utils';
 
-import type {
-  ChipColor,
-  ChipItemProps,
-  ChipSize,
-  _ChipInternalBridge,
-} from '../model/types';
+import type { ChipColor, ChipItemProps, ChipSize, _ChipInternalBridge } from '../model/types';
 
 /* --------------------------- 스타일 토큰 (간단) --------------------------- */
 /** 라벨은 시각만 담당, 포커스 링은 input 포커스(:focus-within)로 노출 */
 const baseLabel =
-  'inline-flex items-center justify-center rounded-[20px] border whitespace-nowrap select-none ' +
+  'inline-flex items-center justify-center rounded-[20px] whitespace-nowrap select-none ' +
   'transition-colors outline-none';
 
 const sizeClass: Record<ChipSize, string> = {
@@ -21,11 +16,11 @@ const sizeClass: Record<ChipSize, string> = {
 };
 
 const selectedClass: Record<ChipColor, string> = {
-  red: 'bg-primary-700 text-white border-transparent',
+  default: 'bg-white text-gray-800',
   black: 'bg-gray-800 text-white border-transparent',
 };
 
-const unselectedClass = 'bg-transparent text-gray-500 border-transparent';
+const unselectedClass = 'bg-transparent text-gray-500';
 
 const disabledClass = 'pointer-events-none text-gray-300';
 
@@ -37,7 +32,7 @@ const disabledClass = 'pointer-events-none text-gray-300';
 export const ChipItem = ({
   value,
   children,
-  color = 'red',
+  color = 'default',
   size = 'md',
   disabled,
   id,
@@ -77,7 +72,7 @@ export const ChipItem = ({
           sizeClass[size],
           checked ? selectedClass[color] : unselectedClass,
           disabled && disabledClass,
-          labelClassName
+          labelClassName,
         )}
       >
         {children}
