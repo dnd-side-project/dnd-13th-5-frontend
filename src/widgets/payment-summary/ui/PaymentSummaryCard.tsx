@@ -18,10 +18,7 @@ export const PaymentSummaryCard = ({
   <section aria-label="이번달 결제 요약">
     {title && <h2 className="typo-title-l-bold mb-10">{title}</h2>}
 
-    <article
-      className="relative rounded-[20px] bg-white px-5 pt-5 pb-3"
-      style={{ boxShadow: '2px 2px 20px 0 rgba(0, 0, 0, 0.08)' }}
-    >
+    <article className="relative rounded-[20px] bg-white px-5 pt-5 pb-3 shadow-[2px_2px_20px_0_rgba(0,0,0,0.08)]">
       <Tag color="gray" className="absolute -top-4 left-5 z-10">
         {dateText}
       </Tag>
