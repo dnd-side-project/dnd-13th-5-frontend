@@ -146,9 +146,9 @@ export const SubscriptionsSection = () => {
   }, [data, tab]);
 
   return (
-    <section className="px-5" aria-label="내 구독 목록">
+    <section aria-label="내 구독 목록">
       {/* 탭(전체/즐겨찾기) — radiogroup 시맨틱 */}
-      <div role="radiogroup" aria-label="보기 선택" className="flex gap-3 py-3">
+      <div role="radiogroup" aria-label="보기 선택" className="flex gap-3 py-3 px-5 bg-white">
         {(['ALL', 'FAVORITES'] as const).map(t => (
           <button
             key={t}
@@ -161,7 +161,7 @@ export const SubscriptionsSection = () => {
           </button>
         ))}
       </div>
-      <div className="flex flex-col py-5 gap-4">
+      <div className="flex flex-col py-5 gap-4 px-5 bg-gray-50">
         {/* 정렬 + 카테고리 (Filter 컴포넌트 적용) */}
         <div className="flex items-center gap-2">
           <Filter
