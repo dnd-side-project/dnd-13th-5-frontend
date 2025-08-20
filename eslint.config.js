@@ -86,6 +86,7 @@ export default [
     },
     rules: {
       // 사용하지 않는 import 정리
+      'no-unused-vars': 'off',
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'warn',
