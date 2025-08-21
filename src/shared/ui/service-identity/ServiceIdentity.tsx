@@ -1,6 +1,7 @@
+import { useId, useState } from 'react';
+
 import { cn } from '@/lib/utils'; // clsx + tailwind-merge 유틸
 import { Tag } from '@/shared/ui/tag';
-import { useId, useState } from 'react';
 
 /**
  * 아이콘 + 서비스명 + 태그 묶음

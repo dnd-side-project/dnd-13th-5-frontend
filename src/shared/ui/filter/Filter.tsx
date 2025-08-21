@@ -19,7 +19,7 @@ interface FilterProps {
   label: string; // 드롭다운 버튼에 표시될 텍스트
   items: FilterOption[]; // 드롭다운 항목 리스트
   initialValue?: string; // 선택된 항목의 초기값
-  // eslint-disable-next-line
+   
   onSelect: (value: string) => void; // 항목 선택 시 호출될 콜백 함수
 }
 

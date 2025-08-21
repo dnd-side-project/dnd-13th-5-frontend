@@ -7,10 +7,6 @@ import { Tag } from '@/shared/ui/tag';
 
 import { PaymentSummaryCard } from './PaymentSummaryCard';
 
-// 임시 아이콘/서비스명(실제 API 나오면 대체)
-const FALLBACK_ICON = '/assets/netflix.png';
-const FALLBACK_SERVICE = 'Netflix';
-
 // 임시 인터페이스
 interface PaymentSummaryData {
   userName: string;

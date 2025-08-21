@@ -1,9 +1,10 @@
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { ROUTES } from '@/shared/config/routes';
 import BackButton from '@/shared/ui/button/BackButton';
 import StarButton from '@/shared/ui/button/StarButton';
 import { MobileLayout } from '@/shared/ui/layout';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
 const SubscriptionRightSlot = () => {
   const [isStarred, setIsStarred] = useState(false);
