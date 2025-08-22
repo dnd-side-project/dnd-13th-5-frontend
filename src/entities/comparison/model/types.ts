@@ -54,7 +54,7 @@ export interface ProductDto {
 
 // 구독 서비스 전체 조회 API 응답 전체
 export interface Products {
-  status: number;
+  statusCode: number;
   code: string;
   message: string;
   data: {
