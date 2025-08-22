@@ -1,17 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
+
+import { AlarmPage } from '@/pages/alarm';
+import { ComparisonAddPage, ComparisonPage } from '@/pages/comparison';
 import { HomePage } from '@/pages/home';
+import { LoginPage } from '@/pages/login';
+import { MyPage } from '@/pages/my';
+import { SignupPage } from '@/pages/signup';
 import {
   SubscriptionDetailPage,
   SubscriptionEditPage,
   SubscriptionsPage,
 } from '@/pages/subscriptions';
-import { ComparisonPage } from '@/pages/comparison';
-import { MyPage } from '@/pages/my';
-import { AlarmPage } from '@/pages/alarm';
-import { LoginPage } from '@/pages/login';
 import { ROUTES } from '@/shared/config/routes';
-import { SignupPage } from '@/pages/signup';
-
 
 export const AppRouter = () => (
   <Routes>
@@ -19,15 +19,11 @@ export const AppRouter = () => (
     <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
     <Route path={ROUTES.HOME} element={<HomePage />} />
     <Route path={ROUTES.SUBSCRIPTIONS} element={<SubscriptionsPage />} />
-    <Route
-      path={ROUTES.SUBSCRIPTION_DETAIL()}
-      element={<SubscriptionDetailPage />}
-    />
-    <Route
-      path={ROUTES.SUBSCRIPTION_EDIT()}
-      element={<SubscriptionEditPage />}
-    />
+    <Route path={ROUTES.SUBSCRIPTION_DETAIL()} element={<SubscriptionDetailPage />} />
+    <Route path={ROUTES.SUBSCRIPTION_EDIT()} element={<SubscriptionEditPage />} />
     <Route path={ROUTES.COMPARISON} element={<ComparisonPage />} />
+    <Route path={ROUTES.COMPARISON_ADD} element={<ComparisonAddPage />} />
+
     <Route path={ROUTES.MY_PAGE} element={<MyPage />} />
     <Route path={ROUTES.ALARM} element={<AlarmPage />} />
 
