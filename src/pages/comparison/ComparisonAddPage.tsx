@@ -19,7 +19,7 @@ export const ComparisonAddPage = () => {
   const [selectedSubs, setSelectedSubs] = useState<number[]>([]);
 
   const totalSelectedSubs = selectedSubs.length;
-  const diasbledButton = selectedSubs.length > 4 || selectedSubs.length < 1;
+  const disabledButton = selectedSubs.length > 4 || selectedSubs.length < 1;
   const selectButtonTitle = `${totalSelectedSubs < 1 ? '서비스를 선택하세요 (최대 4개 가능)' : `비교할 서비스 추가 (${totalSelectedSubs}/4)`}`;
 
   const filteredServicesByCategory = ALL_SERVICES.filter(service => service.category === category);
@@ -59,7 +59,7 @@ export const ComparisonAddPage = () => {
         <Button
           variant="primary-fill"
           title={selectButtonTitle}
-          disabled={diasbledButton}
+          disabled={disabledButton}
           onClick={handleAddService}
         />
       </footer>
