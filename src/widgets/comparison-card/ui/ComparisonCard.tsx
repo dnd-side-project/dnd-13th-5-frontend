@@ -31,6 +31,13 @@ const ComparisonCard = ({
     setIsSelected();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === '') {
+      e.preventDefault();
+      setIsSelected();
+    }
+  };
+
   const notMySubPriceInfo =
     maxPrice === null
       ? `월 ${formatKRW(minPrice)}`
@@ -42,6 +49,10 @@ const ComparisonCard = ({
     <div
       className={`px-5 py-4 border rounded-lg w-full h-[125px] flex flex-col items-center justify-center relative transition-colors duration-200 ease-in-out cursor-pointer ${isSelected ? 'border-primary-700' : 'border-gray-100'}`}
       onClick={handleCardClick}
+      tabIndex={0}
+      role="button"
+      aria-pressed={isSelected}
+      onKeyDown={handleKeyDown}
     >
       {!mySub && (
         <div
@@ -60,7 +71,7 @@ const ComparisonCard = ({
         </div>
       )}
 
-      <img src={imageUrl} alt="logo" className="h-10 w-10 bg-gray-200 rounded-lg mb-1" />
+      <img src={imageUrl} alt={serviceName} className="h-10 w-10 bg-gray-200 rounded-lg mb-1" />
 
       <div className="flex items-center">
         <span className="typo-body-s-bold">{serviceName}</span>
