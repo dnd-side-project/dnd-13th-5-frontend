@@ -29,6 +29,15 @@ export const formatDDay = (dateString: string) => {
 export const hasKoreanLastConsonantLetter = (text: string | null): boolean | undefined => {
   if (text === null) return undefined;
 
-  const english = /[a-zA-Z]/;
-  return (text.charCodeAt(text.length - 1) - '가'.charCodeAt(0)) % 28 !== 0 && !english.test(text);
+  const trimmed = text.trim();
+  if (!trimmed) return undefined;
+
+  const chars = Array.from(trimmed);
+  const last = chars[chars.length - 1];
+  const code = last.codePointAt(0)!;
+  const HANGUL_BASE = 0xac00;
+  const HANGUL_LAST = 0xd7a3;
+
+  if (code < HANGUL_BASE || code > HANGUL_LAST) return false;
+  return (code - HANGUL_BASE) % 28 !== 0;
 };
