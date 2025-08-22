@@ -30,35 +30,35 @@ export const ConfirmDialog = ({
   setIsOpen,
   handleConfirm,
 }: ConfirmDialogProps) => (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogOverlay>
-        <DialogContent
-          size="sm"
-          className="max-w-sm bg-white text-center px-0 pb-0 text-gray-800  border border-gray-100"
-        >
-          <DialogHeader>
-            <DialogTitle className="typo-body-m-bold">{title}</DialogTitle>
-          </DialogHeader>
-          <DialogBody>
-            <div className="bg-white typo-body-m-medium px-5 mb-5">{body}</div>
-          </DialogBody>
+  <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <DialogOverlay>
+      <DialogContent
+        size="sm"
+        className="max-w-sm bg-white text-center px-0 pb-0 text-gray-800  border border-gray-100"
+      >
+        <DialogHeader>
+          <DialogTitle className="typo-body-m-bold">{title}</DialogTitle>
+        </DialogHeader>
+        <DialogBody>
+          <div className="bg-white typo-body-m-medium px-5 mb-5">{body}</div>
+        </DialogBody>
 
-          <DialogActions align="center" className="flex border-t border-gray-100">
-            <DialogClose asChild>
-              <button type="button" className="rounded-xl w-full typo-body-m-medium p-5">
-                {closeName}
-              </button>
-            </DialogClose>
-            <div className="h-full w-px border border-gray-100" />
-            <button
-              type="button"
-              onClick={handleConfirm}
-              className="rounded-xl text-primary-700 w-full typo-body-m-medium p-5"
-            >
-              {confirmName}
+        <DialogActions align="center" className="flex border-t border-gray-100">
+          <DialogClose asChild>
+            <button type="button" className="rounded-xl w-full typo-body-m-medium p-5">
+              {closeName}
             </button>
-          </DialogActions>
-        </DialogContent>
-      </DialogOverlay>
-    </Dialog>
-  );
+          </DialogClose>
+          <div className="h-full w-px bg-gray-100" />
+          <button
+            type="button"
+            onClick={handleConfirm}
+            className="rounded-xl text-primary-700 w-full typo-body-m-medium p-5"
+          >
+            {confirmName}
+          </button>
+        </DialogActions>
+      </DialogContent>
+    </DialogOverlay>
+  </Dialog>
+);
