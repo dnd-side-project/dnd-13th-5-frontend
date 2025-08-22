@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import { cn } from '@/shared/lib';
+
 type colorVariant = 'white' | 'primary';
 
 export interface HeaderProps {
@@ -9,24 +11,22 @@ export interface HeaderProps {
   colorVariant?: colorVariant;
 }
 
-const Header = ({
-  leftSlot,
-  centerSlot,
-  rightSlot,
-  colorVariant = 'white',
-}: HeaderProps) => {
+const Header = ({ leftSlot, centerSlot, rightSlot, colorVariant = 'white' }: HeaderProps) => {
   const backgroundColor = colorVariant === 'white' ? 'bg-white' : 'bg-primary-700';
   const textColor = colorVariant === 'white' ? 'text-gray-800' : 'text-white';
 
   return (
     <header
-      className={`grid grid-cols-3 px-5 py-[14px] typo-body-m-bold ${backgroundColor} ${textColor}`}
+      className={cn(
+        // Flexbox 속성 적용
+        `flex items-center justify-between px-5 py-[14px] typo-body-m-bold`,
+        backgroundColor,
+        textColor,
+      )}
     >
-      <div className="flex items-center justify-start">{leftSlot}</div>
-      <div className="flex-grow flex items-center justify-center">
-        {centerSlot}
-      </div>
-      <div className="flex items-center justify-end">{rightSlot}</div>
+      <div className="flex-1 flex justify-start items-center min-w-0">{leftSlot}</div>
+      <div className="flex-1 flex justify-center items-center min-w-0">{centerSlot}</div>
+      <div className="flex-1 flex justify-end items-center min-w-0">{rightSlot}</div>
     </header>
   );
 };
