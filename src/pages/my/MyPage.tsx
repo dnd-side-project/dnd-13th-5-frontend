@@ -68,7 +68,7 @@ export const MyPage = () => {
             </div>
             <ToggleButton
               enabled={onOffAlarm}
-              setEnabled={() => setOnOffAlarm(!onOffAlarm)}
+              onToggle={() => setOnOffAlarm(!onOffAlarm)}
               ariaLabel="알림 토글 버튼"
             />
           </SettingCard>
