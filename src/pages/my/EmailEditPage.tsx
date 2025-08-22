@@ -13,7 +13,6 @@ export const EmailEditPage = () => {
   const [email, setEmail] = useState<string>('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     setEmail(e.target.value);
   };
 
@@ -41,6 +40,7 @@ export const EmailEditPage = () => {
             <Input
               placeholder="이메일을 입력해주세요"
               onChange={handleInputChange}
+              aria-invalid={isDisabled && email.length > 0}
               className={`focus:ring-0 transition-colors duration-200  ${isDisabled ? 'focus:border-primary-700' : ''}`}
             />
             {isDisabled && email.length > 0 && (
