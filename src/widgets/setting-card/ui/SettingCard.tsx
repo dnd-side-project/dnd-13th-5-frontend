@@ -16,7 +16,14 @@ const SettingCard = ({
       className,
     )}
     onClick={onClick}
-    role={onClick && 'button'}
+    role={onClick ? 'button' : undefined}
+    tabIndex={onClick ? 0 : undefined}
+    onKeyDown={e => {
+      if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        onClick();
+      }
+    }}
   >
     {children}
   </div>
