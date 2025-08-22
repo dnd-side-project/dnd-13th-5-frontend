@@ -6,7 +6,6 @@ import { IconButton } from '@/shared/ui/button';
 import { Icon } from '@/shared/ui/icon';
 import type { ComparisonCardProps } from '@/widgets/comparison-card/model/types';
 
-
 const ComparisonCard = ({
   serviceName,
   imageUrl,
@@ -24,7 +23,7 @@ const ComparisonCard = ({
 
   const handleDetailButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    handleDetail!();
+    handleDetail?.();
   };
 
   const handleCheckboxClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -37,7 +36,7 @@ const ComparisonCard = ({
       ? `월 ${formatKRW(minPrice)}`
       : `월 ${formatKRW(minPrice)} ~ ${formatKRW(maxPrice)}`;
 
-  const mySubPriceInfo = `요금제이름 ${formatKRW(myPrice!)}`;
+  const mySubPriceInfo = myPrice && `요금제이름 ${formatKRW(myPrice)}`;
 
   return (
     <div
