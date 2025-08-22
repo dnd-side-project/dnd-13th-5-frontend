@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { cn } from '@/shared/lib';
 import type { IconProps } from '@/shared/ui/icon';
 import { Icon } from '@/shared/ui/icon';
 
@@ -15,7 +16,7 @@ const IconButton = ({ icon, ariaLabel, onClick, className }: IconButtonProps) =>
     type="button"
     onClick={onClick}
     aria-label={ariaLabel}
-    className={`inline-flex items-center justify-center ${className}`}
+    className={cn('inline-flex items-center justify-center', className)}
   >
     <Icon {...icon} />
   </button>

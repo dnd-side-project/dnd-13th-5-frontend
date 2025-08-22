@@ -1,3 +1,5 @@
+import { cn } from '@/shared/lib';
+
 export interface ButtonProps {
   variant: 'primary-stroke' | 'primary-fill';
   title: string;
@@ -29,7 +31,7 @@ const Button = ({ variant, title, onClick, disabled = false, className }: Button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`${baseClasses} ${stateClasses} ${className}`}
+      className={cn(baseClasses, stateClasses, className)}
     >
       <span>{title}</span>
     </button>
