@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib';
 import type { IconProps, IconSize } from '@/shared/ui/icon/types';
 
 const sizeToWH = (size: IconSize) => {
@@ -60,12 +60,7 @@ const Icon = (props: IconProps) => {
   if ('src' in props) {
     return (
       <span className={wrapper} aria-label={ariaLabel}>
-        <img
-          src={props.src}
-          alt={props.alt ?? ''}
-          style={{ width, height }}
-          className="block"
-        />
+        <img src={props.src} alt={props.alt ?? ''} style={{ width, height }} className="block" />
       </span>
     );
   }

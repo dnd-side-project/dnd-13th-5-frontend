@@ -1,10 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { AlarmPage } from '@/pages/alarm';
-import { ComparisonPage } from '@/pages/comparison';
+
+import { ComparisonAddPage, ComparisonPage } from '@/pages/comparison';
 import { HomePage } from '@/pages/home';
 import { LoginPage } from '@/pages/login';
-import { MyPage } from '@/pages/my';
+import { EmailEditPage, MyPage } from '@/pages/my';
 import { SignupPage } from '@/pages/signup';
 import {
   SubscriptionDetailPage,
@@ -20,17 +21,14 @@ export const AppRouter = () => (
     <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
     <Route path={ROUTES.HOME} element={<HomePage />} />
     <Route path={ROUTES.SUBSCRIPTIONS} element={<SubscriptionsPage />} />
-    <Route
-      path={ROUTES.SUBSCRIPTION_DETAIL()}
-      element={<SubscriptionDetailPage />}
-    />
-    <Route
-      path={ROUTES.SUBSCRIPTION_EDIT()}
-      element={<SubscriptionEditPage />}
-    />
+    <Route path={ROUTES.SUBSCRIPTION_DETAIL()} element={<SubscriptionDetailPage />} />
+    <Route path={ROUTES.SUBSCRIPTION_EDIT()} element={<SubscriptionEditPage />} />
     <Route path={ROUTES.COMPARISON} element={<ComparisonPage />} />
+    <Route path={ROUTES.COMPARISON_ADD} element={<ComparisonAddPage />} />
+
     <Route path={ROUTES.MY_PAGE} element={<MyPage />} />
     <Route path={ROUTES.ALARM} element={<AlarmPage />} />
+    <Route path={ROUTES.EMAIL_EDIT} element={<EmailEditPage />} />
 
     {/* 회원가입 */}
     {/* <Route

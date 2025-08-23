@@ -1,6 +1,6 @@
 import { Children, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib';
 import { PaginationDots } from '@/shared/ui/pagination';
 
 interface CarouselProps {

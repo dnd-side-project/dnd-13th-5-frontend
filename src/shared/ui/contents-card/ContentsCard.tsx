@@ -1,6 +1,6 @@
 import { forwardRef, type KeyboardEvent, type ReactNode } from 'react';
 
-import { cn } from '@/lib/utils'; // clsx + tailwind-merge 유틸 가정
+import { cn } from '@/shared/lib';
 
 export interface ContentsCardProps {
   /** 왼쪽 영역(태그, 타이틀 등 복합 레이아웃 자유) */
