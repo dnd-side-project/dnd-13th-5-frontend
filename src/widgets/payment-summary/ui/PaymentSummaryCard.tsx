@@ -1,4 +1,4 @@
-import { formatKRW } from '@/shared/lib/foramt';
+import { formatKRW } from '@/shared/lib/format';
 import { ProgressBar } from '@/shared/ui/progress';
 import { Tag } from '@/shared/ui/tag';
 

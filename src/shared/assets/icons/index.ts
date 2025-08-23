@@ -11,6 +11,7 @@ import HomeIcon from './home.svg?react';
 import KaKaoIcon from './kakao.svg?react';
 import PlusIcon from './plus.svg?react';
 import QuestionIcon from './question-circle.svg?react';
+import FilledStarIcon from './star-filled.svg?react';
 import StarFilledIcon from './star-solid.svg?react';
 import StarIcon from './star.svg?react';
 import SubIcon from './sub.svg?react';
@@ -30,6 +31,7 @@ export const Icons = {
   Plus: PlusIcon,
   Question: QuestionIcon,
   Star: StarIcon,
+  FilledStar: FilledStarIcon,
   StarFilled: StarFilledIcon,
   Sub: SubIcon,
   User: UserIcon,

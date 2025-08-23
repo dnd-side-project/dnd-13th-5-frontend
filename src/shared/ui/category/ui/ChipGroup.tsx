@@ -40,7 +40,8 @@ export const ChipGroup = ({
     <div
       role="radiogroup"
       aria-orientation="horizontal"
-      className={cn('flex gap-2 overflow-x-auto', className)}
+      className={cn('flex gap-1 overflow-x-auto scrollbar-hide', className)}
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       {Children.map(children, child => {
         if (isValidElement(child)) {
