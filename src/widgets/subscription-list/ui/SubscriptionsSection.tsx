@@ -155,7 +155,7 @@ export const SubscriptionsSection = () => {
             role="radio"
             aria-checked={tab === t}
             onClick={() => setTab(t)}
-            className={` ${tab === t ? 'text-gray-800' : 'text-gray-500'}`}
+            className={tab === t ? 'text-gray-800' : 'text-gray-500'}
           >
             {t === 'ALL' ? '전체' : '즐겨찾기'}
           </button>
