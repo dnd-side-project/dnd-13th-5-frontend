@@ -94,7 +94,7 @@ export const SubscriptionDetailWidget = ({ subscriptionId }: Props) => {
               className="pb-2"
             />
 
-            <ContentsCardStacked.Row label="결제금액" value={formatKRW(14900)} />
+            <ContentsCardStacked.Row label="결제금액" value={formatKRW(data.price)} />
           </ContentsCardStacked>
 
           {/* 항목들: 공통 ContentsCard 재사용 */}
