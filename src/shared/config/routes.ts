@@ -8,5 +8,6 @@ export const ROUTES = {
   COMPARISON: '/comparison',
   COMPARISON_ADD: `/add/comparison`,
   MY_PAGE: '/my',
+  EMAIL_EDIT: '/edit/email',
   ALARM: '/alarm',
 };

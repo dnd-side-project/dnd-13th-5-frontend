@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib';
 
 export interface ButtonProps {
   variant: 'primary-stroke' | 'primary-fill';
+  type?: 'button' | 'submit' | 'reset';
   title: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -22,13 +23,20 @@ const buttonStyles = {
   },
 };
 
-const Button = ({ variant, title, onClick, disabled = false, className }: ButtonProps) => {
+const Button = ({
+  variant,
+  type = 'button',
+  title,
+  onClick,
+  disabled = false,
+  className,
+}: ButtonProps) => {
   const currentVariant = buttonStyles[variant];
   const stateClasses = disabled ? currentVariant.disabled : currentVariant.enabled;
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className={cn(baseClasses, stateClasses, className)}

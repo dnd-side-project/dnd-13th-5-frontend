@@ -4,7 +4,7 @@ import { AlarmPage } from '@/pages/alarm';
 import { ComparisonAddPage, ComparisonPage } from '@/pages/comparison';
 import { HomePage } from '@/pages/home';
 import { LoginPage } from '@/pages/login';
-import { MyPage } from '@/pages/my';
+import { EmailEditPage, MyPage } from '@/pages/my';
 import { SignupPage } from '@/pages/signup';
 import {
   SubscriptionDetailPage,
@@ -26,6 +26,7 @@ export const AppRouter = () => (
 
     <Route path={ROUTES.MY_PAGE} element={<MyPage />} />
     <Route path={ROUTES.ALARM} element={<AlarmPage />} />
+    <Route path={ROUTES.EMAIL_EDIT} element={<EmailEditPage />} />
 
     {/* 회원가입 */}
     {/* <Route
