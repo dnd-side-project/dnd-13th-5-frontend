@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+
 import { Icons } from '@/shared/assets/icons';
-import IconButton from '@/shared/ui/button/IconButton';
 import { ROUTES } from '@/shared/config/routes';
+import IconButton from '@/shared/ui/button/IconButton';
 
 interface AlarmButtonProps {
   tone?: 'default' | 'white';

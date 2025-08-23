@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { AlarmPage } from '@/pages/alarm';
+
 import { ComparisonAddPage, ComparisonPage } from '@/pages/comparison';
 import { HomePage } from '@/pages/home';
 import { LoginPage } from '@/pages/login';
@@ -12,6 +13,7 @@ import {
   SubscriptionsPage,
 } from '@/pages/subscriptions';
 import { ROUTES } from '@/shared/config/routes';
+
 
 export const AppRouter = () => (
   <Routes>
