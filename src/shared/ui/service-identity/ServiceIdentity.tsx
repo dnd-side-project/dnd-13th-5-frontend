@@ -27,8 +27,8 @@ export interface ServiceIdentityProps {
 }
 
 const ICON_SIZE = {
-  md: 'size-16 rounded-xl',
-  lg: 'size-24 rounded-2xl',
+  md: 'size-12 rounded-xl',
+  lg: 'size-16 rounded-2xl',
   xl: 'size-[82px] rounded-2xl',
 } as const;
 
@@ -69,8 +69,8 @@ export const ServiceIdentity = ({
           src={imageUrl}
           alt={`${serviceName} 아이콘`}
           loading="lazy"
-          width={82}
-          height={82}
+          width={{ md: 48, lg: 64, xl: 82 }[size]}
+          height={{ md: 64, lg: 64, xl: 82 }[size]}
           className={cn('object-cover', ICON_SIZE[size])}
           onError={() => setImgError(true)}
         />
