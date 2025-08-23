@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 import { cn } from '@/lib/utils'; // clsx + tailwind-merge 유틸
 import { Tag } from '@/shared/ui/tag';
@@ -42,6 +42,11 @@ export const ServiceIdentity = ({
 }: ServiceIdentityProps) => {
   const titleId = useId();
   const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    // 이미지 URL이 바뀌면 에러 상태 초기화
+    setImgError(false);
+  }, [imageUrl]);
 
   return (
     // figure/figcaption 시맨틱으로 제목과 시각자료를 묶음
