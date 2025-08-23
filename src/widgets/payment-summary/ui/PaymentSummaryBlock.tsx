@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { formatDDay, formatKoreanDate, formatKRW } from '@/shared/lib/foramt';
+import { formatDDay, formatKoreanDate, formatKRW } from '@/shared/lib/format';
 import { Carousel } from '@/shared/ui/carousel/Carousel';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import { Tag } from '@/shared/ui/tag';
 
 import { PaymentSummaryCard } from './PaymentSummaryCard';
-
-// 임시 아이콘/서비스명(실제 API 나오면 대체)
-const FALLBACK_ICON = '/assets/netflix.png';
-const FALLBACK_SERVICE = 'Netflix';
 
 // 임시 인터페이스
 interface PaymentSummaryData {
@@ -55,7 +51,7 @@ export const PaymentSummaryBlock = () => {
   );
 
   return (
-    <div className="px-5 py-3">
+    <div className="px-5 py-3 bg-white">
       <PaymentSummaryCard
         title={title}
         dateText={formatKoreanDate()} // 임시: 오늘 날짜. API 연결되면 변경

@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib';
 
 interface PaginationDotsProps {
   total: number; // 총 개수

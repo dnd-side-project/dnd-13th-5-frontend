@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type ChipColor = 'red' | 'black';
+export type ChipColor = 'default' | 'black';
 export type ChipSize = 'sm' | 'md';
 
 /** 그룹(컨테이너) 공개 API — 단일 선택 전용 */

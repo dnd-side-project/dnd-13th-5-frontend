@@ -12,3 +12,5 @@ export {
   DialogTitle,
   DialogTrigger,
 } from './Dialog';
+
+export { ConfirmDialog } from './ConfirmDialog';

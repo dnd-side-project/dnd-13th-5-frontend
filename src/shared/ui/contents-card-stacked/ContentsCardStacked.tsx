@@ -1,7 +1,7 @@
 import type { KeyboardEvent, ReactNode } from 'react';
 import { forwardRef } from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * 여러 줄(Row)로 쌓아 쓰는 콘텐츠 카드
