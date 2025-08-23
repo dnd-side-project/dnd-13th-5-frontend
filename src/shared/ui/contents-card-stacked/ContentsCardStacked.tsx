@@ -22,9 +22,9 @@ export type StackedProps = {
 export const ContentsCardStacked = ({ children, className, bleedShadow }: StackedProps) => (
   <section
     className={cn(
-      'relative rounded-2xl bg-white shadow-[0_4px_16px_rgba(0,0,0,0.06)]',
+      'relative rounded-2xl bg-white',
       bleedShadow &&
-        "before:content-[''] before:absolute before:-inset-x-3 before:inset-y-1 before:rounded-[20px] before:shadow-[0_10px_28px_rgba(0,0,0,0.08)] before:-z-10",
+        "shadow-[0_4px_16px_rgba(0,0,0,0.06)] before:content-[''] before:absolute before:-inset-x-3 before:inset-y-1 before:rounded-[20px] before:shadow-[0_10px_28px_rgba(0,0,0,0.08)] before:-z-10",
       className,
     )}
   >
