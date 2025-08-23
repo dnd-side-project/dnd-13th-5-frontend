@@ -97,7 +97,7 @@ export const SubscriptionsSection = () => {
   // const { data, isLoading } = useMySubscriptions(category, sort);
 
   const handleCategoryChange = (value: string | null) => {
-    setCategory(value as CategoryParam);
+    setCategory((value ?? 'all') as CategoryParam);
   };
 
   const data = {
