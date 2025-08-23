@@ -4,11 +4,7 @@ import tailwindcssAnimate from 'tailwindcss-animate';
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-    './src/app/styles/index.css',
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './src/app/styles/index.css'],
   theme: {
     container: {
       center: true,
@@ -62,6 +58,7 @@ export default {
           800: '#222222',
           900: '#121212',
         },
+        kakao: '#FAE100',
       },
       fontSize: {
         'title-xl': [
@@ -107,11 +104,6 @@ export default {
           },
         ],
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
     },
   },
   plugins: [
@@ -121,7 +113,7 @@ export default {
         return Array.isArray(v) ? v.join(', ') : String(v);
       };
 
-      const resolveFont = (key) => {
+      const resolveFont = key => {
         const v = theme(`fontSize.${key}`);
         if (Array.isArray(v)) {
           // ['1.5rem', { lineHeight, letterSpacing, ... }]
