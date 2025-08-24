@@ -4,6 +4,7 @@ import CheckIcon from './check.svg?react';
 import DoubleUpIcon from './chevron-double-up.svg?react';
 import DownIcon from './chevron-down.svg?react';
 import LeftIcon from './chevron-left.svg?react';
+import RightIcon2 from './chevron-right-2.svg?url';
 import RightIcon from './chevron-right.svg?react';
 import CloseIcon from './close.svg?react';
 import ComparisonIcon from './comparison.svg?react';
@@ -25,6 +26,7 @@ export const Icons = {
   Down: DownIcon,
   Left: LeftIcon,
   Right: RightIcon,
+  Right2: RightIcon2,
   Close: CloseIcon,
   Comparison: ComparisonIcon,
   Home: HomeIcon,

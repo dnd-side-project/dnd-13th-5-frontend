@@ -25,6 +25,20 @@ export const formatDDay = (dateString: string) => {
   return `D+${Math.abs(diffDays)}`;
 };
 
+// cycleUnit을 한국어로 변환
+export const formatCycleUnit = (cycleUnit: string): string => {
+  switch (cycleUnit) {
+    case 'MONTH':
+      return '매월';
+    case 'YEAR':
+      return '매년';
+    case 'WEEK':
+      return '매주';
+    default:
+      return '매월';
+  }
+};
+
 // 한글의 받침 유무
 export const hasKoreanLastConsonantLetter = (text: string | null): boolean | undefined => {
   if (text === null) return undefined;
