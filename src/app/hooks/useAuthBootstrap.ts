@@ -1,4 +1,4 @@
-import { AxiosResponseHeaders } from 'axios';
+import type { AxiosResponseHeaders } from 'axios';
 import { useEffect, useState } from 'react';
 
 import apiClient from '@/shared/api/apiClient';
