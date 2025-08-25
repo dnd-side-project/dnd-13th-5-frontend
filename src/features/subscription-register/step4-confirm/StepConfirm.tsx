@@ -10,8 +10,10 @@ import type {
 import { BillingCycleRadio } from '@/features/subscription-edit/ui/BillingCycleRadio';
 import { PaymentDateField } from '@/features/subscription-edit/ui/PaymentDateField';
 import { PaymentMethodPicker } from '@/features/subscription-edit/ui/PaymentMethodPicker';
+import { Icons } from '@/shared/assets/icons';
 import { Button } from '@/shared/ui/button';
 import { ContentsCardStacked } from '@/shared/ui/contents-card-stacked';
+import { Icon } from '@/shared/ui/icon';
 import { Input } from '@/shared/ui/input';
 import { Tag } from '@/shared/ui/tag';
 
@@ -82,6 +84,16 @@ export const StepConfirm = ({
   const selectedPlan = watch('selectedPlan');
 
   const [isUnknownDate, setIsUnknownDate] = useState(false);
+
+  // 결제일 모름 상태 변경 핸들러
+  const handleUnknownDateChange = (checked: boolean) => {
+    setIsUnknownDate(checked);
+    if (checked) {
+      // 결제일을 모르는 경우 startDay를 null로 설정
+      setValue('startDay', null, { shouldDirty: true });
+    }
+    // checked가 false인 경우는 사용자가 직접 날짜를 선택하도록 함
+  };
 
   // 헤더에 표시할 서비스명/아이콘(직접입력 시 아이콘 없음)
   const headerTitle = useMemo(
@@ -188,18 +200,39 @@ export const StepConfirm = ({
       />
 
       {/* 결제일(다이얼로그는 내부 컴포넌트에서 처리) */}
-      <PaymentDateField
-        value={startDay ?? null}
-        onChange={d => setValue('startDay', d, { shouldDirty: true })}
-      />
-      <div className="mt-3 flex items-center gap-2">
-        <input
-          id="unknown-date"
-          type="checkbox"
-          checked={isUnknownDate}
-          onChange={e => setIsUnknownDate(e.target.checked)}
+      <div className={isUnknownDate ? 'opacity-50 pointer-events-none' : ''}>
+        <PaymentDateField
+          value={isUnknownDate ? null : (startDay ?? null)}
+          onChange={d => {
+            if (!isUnknownDate) {
+              setValue('startDay', d, { shouldDirty: true });
+            }
+          }}
         />
-        <label htmlFor="unknown-date" className="text-gray-600">
+      </div>
+      <div className="mt-3 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => handleUnknownDateChange(!isUnknownDate)}
+          className={`
+            flex items-center justify-center w-5 h-5 transition-colors
+            
+          `}
+          aria-pressed={isUnknownDate}
+          aria-label="결제 날짜를 모르겠어요"
+        >
+          <Icon
+            component={Icons.Check}
+            size="sm"
+            className={`text-white rounded
+            ${isUnknownDate ? 'bg-primary-700 border-primary-700' : 'bg-gray-300 '}
+            `}
+          />
+        </button>
+        <label
+          onClick={() => handleUnknownDateChange(!isUnknownDate)}
+          className="text-gray-500 cursor-pointer select-none typo-body-s-medium"
+        >
           결제 날짜를 모르겠어요 (결제일 없이 등록)
         </label>
       </div>

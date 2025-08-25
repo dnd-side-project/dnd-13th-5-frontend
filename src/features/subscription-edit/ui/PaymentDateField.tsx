@@ -1,7 +1,9 @@
 // features/subscription-edit/ui/PaymentDateField.tsx
 import { useState } from 'react';
 
+import { Icons } from '@/shared/assets/icons';
 import { Button } from '@/shared/ui/button';
+import { Calendar } from '@/shared/ui/calendar/Calendar';
 import {
   Dialog,
   DialogClose,
@@ -20,7 +22,7 @@ type Props = {
 
 export const PaymentDateField = ({ value, onChange }: Props) => {
   const [open, setOpen] = useState(false);
-  const [draft, setDraft] = useState<string>(value ?? '');
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   return (
     <fieldset>
@@ -31,7 +33,7 @@ export const PaymentDateField = ({ value, onChange }: Props) => {
           value={value ?? ''}
           placeholder="YYYY-MM-DD"
           readOnly
-          className="pr-12"
+          className="typo-body-s-medium text-gray-800"
           aria-describedby="payment-date-desc"
         />
         <Dialog open={open} onOpenChange={setOpen}>
@@ -41,7 +43,7 @@ export const PaymentDateField = ({ value, onChange }: Props) => {
               aria-label="달력 열기"
               className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-2 text-gray-600 hover:bg-gray-100"
             >
-              📅
+              <Icons.Calendar className="fill-gray-500" />
             </button>
           </DialogTrigger>
 
@@ -49,21 +51,24 @@ export const PaymentDateField = ({ value, onChange }: Props) => {
             <DialogHeader>
               <DialogTitle>결제일 선택</DialogTitle>
             </DialogHeader>
-
-            {/* 간단히 native datepicker 사용 (향후 캘린더로 교체 가능) */}
-            <Input type="date" value={draft} onChange={e => setDraft(e.target.value)} />
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-lg border w-full"
+            />
 
             <DialogFooter className="mt-4">
               <DialogClose asChild>
-                <Button variant="primary-fill" title="취소" />
+                <Button variant="primary-stroke" title="취소" />
               </DialogClose>
               <Button
                 variant="primary-fill"
                 onClick={() => {
-                  onChange(draft || null);
+                  onChange(date?.toISOString().split('T')[0] || null);
                   setOpen(false);
                 }}
-                title="확인"
+                title="저장"
               />
             </DialogFooter>
           </DialogContent>
