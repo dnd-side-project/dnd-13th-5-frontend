@@ -70,6 +70,7 @@ export const SubscriptionRegisterWidget = ({ methodOptions, onSubmit, step, setS
   const productId = watch('productId'); // 2단계 결과 (0 이면 직접입력)
   const NONE_ID = 0; // 직접입력 분기용 상수
 
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const goNext = () => setStep(Math.min(4, step + 1) as 1 | 2 | 3 | 4);
   const goPrev = () => setStep(Math.max(1, step - 1) as 1 | 2 | 3 | 4);
 
