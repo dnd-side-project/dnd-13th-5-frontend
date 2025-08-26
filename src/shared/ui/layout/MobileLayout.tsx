@@ -25,12 +25,12 @@ const MobileLayout = ({
   const bodyColor = bodyVariant === 'gray' ? 'bg-gray-50' : 'bg-white';
 
   return (
-    <div className="min-h-dvh bg-gray-200 flex flex-col">
-      <div className="app-shell flex flex-col flex-grow">
+    <div className="min-h-dvh bg-gray-200 flex flex-coㅣ">
+      <div className="app-shell flex flex-col flex-grow text-gray-800 ">
         {showHeader && <Header {...headerProps} />}
 
         <main
-          className={`app-body flex-grow py-4 ${bodyColor} ${showBottom ? 'pb-[calc(56px+env(safe-area-inset-bottom))]' : ''}`}
+          className={`app-body flex-grow p-5 ${bodyColor} ${showBottom ? 'pb-[calc(56px+env(safe-area-inset-bottom))]' : ''}`}
         >
           <section className="cols-6 gap-2">
             <div className="col-span-6">{children ?? <Outlet />}</div>
