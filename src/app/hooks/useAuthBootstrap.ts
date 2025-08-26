@@ -10,18 +10,12 @@ export const useAuthBootstrap = () => {
   useEffect(() => {
     (async () => {
       try {
-        console.log('auth bootstrap start');
-        console.log('Cookies before request:', document.cookie);
-
         const res = await apiClient.get('/auth/reissue', {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
           },
         });
-
-        console.log('Request headers:', res.config.headers);
-        console.log('Response:', res);
 
         const at = extractAccessFromHeaders(res.headers as AxiosResponseHeaders);
         if (at) setAccessToken(at);
