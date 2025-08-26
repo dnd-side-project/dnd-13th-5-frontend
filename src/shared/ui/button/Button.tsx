@@ -1,16 +1,21 @@
+import { motion } from 'framer-motion';
+import type { ReactNode } from 'react';
+
 import { cn } from '@/shared/lib';
 
 export interface ButtonProps {
   variant: 'primary-stroke' | 'primary-fill';
   type?: 'button' | 'submit' | 'reset';
-  title: string;
+  title?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
-  className?: string;
+  buttonClassName?: string;
+  titleClassName?: string;
+  isShaking?: boolean;
 }
 
 const baseClasses =
-  'w-full px-5 py-4 h-12 flex items-center justify-center rounded-xl typo-body-m-medium transition-colors duration-200';
+  'w-full px-5 py-4 h-12 flex items-center justify-center typo-body-m-medium rounded-xl transition-colors duration-200';
 
 const buttonStyles = {
   'primary-stroke': {
@@ -23,26 +28,45 @@ const buttonStyles = {
   },
 };
 
+const shakeVariants = {
+  idle: {
+    x: 0,
+    transition: {
+      duration: 0.4,
+    },
+  },
+  shake: {
+    x: [-5, 5, -5, 5, 0],
+    transition: {
+      duration: 0.4,
+    },
+  },
+};
+
 const Button = ({
   variant,
   type = 'button',
   title,
   onClick,
   disabled = false,
-  className,
+  buttonClassName,
+  isShaking = false,
 }: ButtonProps) => {
   const currentVariant = buttonStyles[variant];
   const stateClasses = disabled ? currentVariant.disabled : currentVariant.enabled;
 
   return (
-    <button
+    <motion.button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={cn(baseClasses, stateClasses, className)}
+      className={cn(baseClasses, stateClasses, buttonClassName)}
+      // ✨ Framer Motion 속성 적용
+      variants={shakeVariants}
+      animate={isShaking ? 'shake' : 'idle'}
     >
-      <span>{title}</span>
-    </button>
+      {title}
+    </motion.button>
   );
 };
 
