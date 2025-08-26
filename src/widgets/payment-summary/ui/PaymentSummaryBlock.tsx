@@ -5,13 +5,11 @@ import { Carousel } from '@/shared/ui/carousel/Carousel';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import { Tag } from '@/shared/ui/tag';
 
-
 import { PaymentSummaryCard } from './PaymentSummaryCard';
 
 export const PaymentSummaryBlock = () => {
   const { data, isLoading, isError } = useMyPayments();
   const { data: soonData, isLoading: soonLoading, isError: soonError } = useMyPaymentsSoon();
-  console.log('soonData', soonData);
 
   if (isLoading || soonLoading) return <div>스켈레톤</div>;
   if (isError || soonError || !data) return <div>에러 발생</div>; // TODO: empty/error UI
