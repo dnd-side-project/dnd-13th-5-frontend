@@ -1,21 +1,21 @@
+import ComparisonSelectCard from '@/features/comparison-select/ComparisonSelectCard';
 import { Icons } from '@/shared/assets/icons';
 import { cn } from '@/shared/lib';
 import { hasKoreanLastConsonantLetter } from '@/shared/lib/format';
 import { Icon } from '@/shared/ui/icon';
-import ComparisonCard from '@/widgets/comparison-card/ui/ComparisonCard';
-import type { ComparisonAddSectionProps } from '@/widgets/comparison-section/model/types';
+import type { ComparisonAddedSectionProps } from '@/widgets/comparison-section/model/types';
 
-const ComparisonAddSection = ({
+const ComparisonAddedSection = ({
   category,
   addedSubs,
   selectedSubs,
   handleSelect,
-  handleDetail,
   handleAdd,
+  handleDetail,
   handleDelete,
-}: ComparisonAddSectionProps) => {
+}: ComparisonAddedSectionProps) => {
   const disabledAddButton = addedSubs.length > 3;
-  const showDeleteButton = addedSubs.some(service => selectedSubs.includes(service.id));
+  const showDeleteButton = addedSubs.some(p => selectedSubs.includes(p.productId));
 
   return (
     <section className="py-[10px] space-y-4 mb-[18px]">
@@ -38,18 +38,15 @@ const ComparisonAddSection = ({
 
       <div className="grid grid-cols-2 gap-x-[14px] gap-y-4">
         {/* 서비스 추가 시, 보여지는 카드 */}
-        {addedSubs.map(service => (
-            <ComparisonCard
-              key={service.id}
-              serviceName={service.name}
-              imageUrl={service.imageUrl}
-              minPrice={service.minPrice}
-              maxPrice={service.maxPrice}
-              isSelected={selectedSubs.includes(service.id)}
-              setIsSelected={() => handleSelect(service.id)}
-              handleDetail={() => handleDetail(service.id)}
-            />
-          ))}
+        {addedSubs.map(p => (
+          <ComparisonSelectCard
+            key={p.productId}
+            product={p}
+            isSelected={selectedSubs.includes(p.productId)}
+            setIsSelected={() => handleSelect(p.productId)}
+            handleDetail={handleDetail}
+          />
+        ))}
 
         {/* OTT 추가 버튼 */}
         <button
@@ -71,4 +68,4 @@ const ComparisonAddSection = ({
   );
 };
 
-export default ComparisonAddSection;
+export default ComparisonAddedSection;
