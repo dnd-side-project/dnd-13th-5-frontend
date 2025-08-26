@@ -1,8 +1,5 @@
-export type PayUnit = 'MONTH' | 'YEAR' | 'WEEK';
+export type PayUnit = 'WEEK' | 'MONTH' | 'YEAR';
 export type MethodKind = 'CARD' | 'ACCOUNT' | 'EASY';
-
-export type CategoryOption = { id: number; label: string; iconUrl?: string };
-export type ServiceOption = { id: number; name: string; iconUrl: string };
 
 export type MethodOption = { id: number; label: string };
 export type MethodOptionsByKind = {
@@ -28,14 +25,13 @@ export type PlanOption = {
 };
 
 export type RegisterForm = {
-  categoryId?: number;
+  categoryName?: string; // API에 필요한 카테고리 이름 (ex. "OTT", "SHOPPING")
   productId?: number; // Step2 선택. 0이면 "직접입력" 의미
   planId?: number;
   participantCount: number;
-  payCycleNum: number;
-  payCycleUnit: 'MONTH';
-  startDay?: string | null;
-  methodKind: 'CARD' | 'ACCOUNT' | 'EASY';
+  payCycleUnit: PayUnit;
+  startedAt?: string | null; // API 스펙에 맞게 수정: "YYYY-MM-DD" 형식
+  methodKind: MethodKind;
   paymentMethodId?: number;
   memo?: string;
   selectedPlan?: SelectedPlanMeta | null; // 👈 추가
@@ -48,9 +44,8 @@ export type RegisterForm = {
 export const toRegisterPayload = (f: RegisterForm) => ({
   productId: f.productId!,
   planId: f.planId!,
-  payCycleNum: f.payCycleNum,
-  payCycleUnit: f.payCycleUnit, // 'MONTH'
-  startDay: f.startDay ? f.startDay.replaceAll('-', '.') : undefined, // 'YYYY.MM.DD'
+  payCycleUnit: f.payCycleUnit,
+  startedAt: f.startedAt || '', // 'YYYY-MM-DD' 형식
   paymentMethodId: f.paymentMethodId!,
   memo: f.memo ?? '',
   participantCount: f.participantCount,

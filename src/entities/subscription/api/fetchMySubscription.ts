@@ -1,6 +1,6 @@
 import apiClient from '@/shared/api/apiClient';
 
-import type { CategoryOption } from './fetchProducts';
+import type { CategoryOption } from '../../product/api/fetchProducts';
 
 // 개별 구독 서비스에 대한 타입
 export type SubscriptionService = {
