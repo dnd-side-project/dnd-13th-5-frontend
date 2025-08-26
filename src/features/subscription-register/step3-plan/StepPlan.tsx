@@ -29,6 +29,19 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
   const { data, isLoading, isError } = usePlans(productId || 0);
 
   /* ──────────────────────────────────────────────────────────────────────────
+   * ② 일반 모드: productId 변경 시 선택 초기화
+   * ────────────────────────────────────────────────────────────────────────── */
+  useEffect(() => {
+    if (!productId) return;
+
+    // 서비스가 바뀌면 이전 선택 초기화
+    setValue('planId', undefined, { shouldDirty: true });
+    setValue('selectedPlan', null, { shouldDirty: true });
+  }, [productId, setValue]);
+
+  const title = useMemo(() => '요금제를 선택해주세요.', []);
+
+  /* ──────────────────────────────────────────────────────────────────────────
    * ① 직접입력 모드 (productId === 0)
    *  - 서비스명만 먼저 받는다. 금액/인원은 StepConfirm에서 입력.
    * ────────────────────────────────────────────────────────────────────────── */
@@ -76,19 +89,6 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
       </section>
     );
   }
-
-  /* ──────────────────────────────────────────────────────────────────────────
-   * ② 일반 모드: productId 변경 시 선택 초기화
-   * ────────────────────────────────────────────────────────────────────────── */
-  useEffect(() => {
-    if (!productId) return;
-
-    // 서비스가 바뀌면 이전 선택 초기화
-    setValue('planId', undefined, { shouldDirty: true });
-    setValue('selectedPlan', null, { shouldDirty: true });
-  }, [productId, setValue]);
-
-  const title = useMemo(() => '요금제를 선택해주세요.', []);
 
   /* ──────────────────────────────────────────────────────────────────────────
    * ③ 뷰
