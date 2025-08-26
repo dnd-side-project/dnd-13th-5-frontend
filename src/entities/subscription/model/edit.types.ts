@@ -1,4 +1,4 @@
-import { PayUnit } from './register.types';
+import type { PayUnit } from './register.types';
 
 // entities/subscription/model/edit.types.ts
 export type PlanOption = { id: string; name: string; priceLabel: string }; // "월 7,000원" 같은 표시용

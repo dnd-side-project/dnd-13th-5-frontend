@@ -1,5 +1,6 @@
 import apiClient from '@/shared/api/apiClient';
-import { PayUnit } from '../model/register.types';
+
+import type { PayUnit } from '../model/register.types';
 
 // 구독 등록 요청 바디 타입
 export type CreateSubscriptionRequest = {

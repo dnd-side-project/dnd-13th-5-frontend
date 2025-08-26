@@ -1,6 +1,7 @@
 import apiClient from '@/shared/api/apiClient';
 import type { CategoryOption } from '@/shared/types/category.types';
-import { PayUnit } from '../model/register.types';
+
+import type { PayUnit } from '../model/register.types';
 
 // 개별 구독 서비스에 대한 타입
 export type SubscriptionService = {

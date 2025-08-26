@@ -1,6 +1,6 @@
 // features/subscription-edit/ui/BillingCycleRadio.tsx
 import type { BillingCycleOption } from '@/entities/subscription/model/edit.types';
-import { PayUnit } from '@/entities/subscription/model/register.types';
+import type { PayUnit } from '@/entities/subscription/model/register.types';
 import { cn } from '@/shared/lib';
 
 type Props = {
