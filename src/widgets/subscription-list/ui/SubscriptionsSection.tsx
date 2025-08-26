@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 
-import type { CategoryParam, SortParam, Subscription } from '@/entities/subscription/model/types';
+import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
+import type { CategoryOption } from '@/entities/subscription/api/fetchProducts';
+import { useMySubscription } from '@/entities/subscription/hooks/useMySubscription';
+import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
 import { formatKRW } from '@/shared/lib/format';
 import { ChipGroup, ChipItem } from '@/shared/ui/category';
@@ -17,7 +20,7 @@ const SORT_FILTER_OPTIONS = [
 ];
 
 const CAT_OPTIONS = [
-  { key: 'all', label: '전체' },
+  { key: 'ALL', label: '전체' },
   { key: 'OTT', label: 'OTT' },
   { key: 'SHOPPING', label: '쇼핑' },
   { key: 'MUSIC', label: '음악' },
@@ -28,7 +31,7 @@ const CAT_OPTIONS = [
   { key: 'DELIVERY', label: '배달' },
 ];
 
-const Row = ({ item }: { item: Subscription }) => {
+const Row = ({ item }: { item: SubscriptionService }) => {
   const left = (
     <div className="gap-3 flex">
       <img
@@ -54,8 +57,30 @@ const Row = ({ item }: { item: Subscription }) => {
       <div className="flex flex-col items-end">
         <p className="typo-title-m-bold">{formatKRW(item.price)}</p>
         <div className="flex items-center gap-1 typo-body-s-medium">
-          {item.paymentDate && <p className="text-secondary-300">매월</p>}
-          <p className="">{item.paymentDate}</p>
+          <p className="text-secondary-300">
+            {{
+              WEEK: '매주',
+              MONTH: '매월',
+              YEAR: '매년',
+            }[item.payCycleUnit] ?? ''}
+          </p>
+          {item.startedAt && (
+            <p>
+              {(() => {
+                const date = new Date(item.startedAt);
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+
+                if (item.payCycleUnit === 'MONTH') {
+                  return `${day}일`;
+                }
+                if (item.payCycleUnit === 'YEAR') {
+                  return `${month}월 ${day}일`;
+                }
+                return ''; // WEEK는 날짜 표시 안함
+              })()}
+            </p>
+          )}
         </div>
       </div>
       <button
@@ -91,58 +116,21 @@ const Row = ({ item }: { item: Subscription }) => {
 export const SubscriptionsSection = () => {
   // 탭/필터 로컬 상태 (URL은 변경하지 않음)
   const [tab, setTab] = useState<'ALL' | 'FAVORITES'>('ALL');
-  const [category, setCategory] = useState<CategoryParam>('all');
+  const [category, setCategory] = useState<CategoryOption>('ALL');
   const [sort, setSort] = useState<SortParam>('NAME');
 
-  // const { data, isLoading } = useMySubscriptions(category, sort);
+  const { data, isLoading } = useMySubscription({
+    category: category === 'ALL' ? undefined : category,
+    sort,
+  });
 
   const handleCategoryChange = (value: string | null) => {
-    setCategory((value ?? 'all') as CategoryParam);
+    setCategory((value ?? 'ALL') as CategoryOption);
   };
 
-  const data = {
-    userName: '예시',
-    list: [
-      {
-        id: 1,
-        name: '네이버 멤버쉽',
-        category: '쇼핑', // categoryLabel → category
-        paymentDate: 2, // paymentText → paymentDate
-        price: 14900,
-        isFavorites: true, // starred → isFavorites
-        // iconUrl → imageUrl
-        imageUrl:
-          'https://play-lh.googleusercontent.com/Op4pmx0D5G5dhIc-nhkGp6aCSVfGowkbXmikOpaXasG81KWi-icLi9DvoOGItOL2agE',
-      },
-      {
-        id: 1,
-        name: '네이버 멤버쉽fas',
-        category: '쇼핑', // categoryLabel → category
-        // paymentDate: 2, // paymentText → paymentDate
-        price: 14900,
-        isFavorites: false, // starred → isFavorites
-        // iconUrl → imageUrl
-        imageUrl:
-          'https://play-lh.googleusercontent.com/Op4pmx0D5G5dhIc-nhkGp6aCSVfGowkbXmikOpaXasG81KWi-icLi9DvoOGItOL2agE',
-      },
-      {
-        id: 1,
-        name: '네이버 멤버쉽',
-        category: '쇼핑', // categoryLabel → category
-        paymentDate: 2, // paymentText → paymentDate
-        price: 14900,
-        isFavorites: true, // starred → isFavorites
-        // iconUrl → imageUrl
-        imageUrl:
-          'https://play-lh.googleusercontent.com/Op4pmx0D5G5dhIc-nhkGp6aCSVfGowkbXmikOpaXasG81KWi-icLi9DvoOGItOL2agE',
-      },
-    ],
-  };
-  const isLoading = false;
-
-  const list: Subscription[] = useMemo(() => {
-    if (!data) return [];
-    return tab === 'ALL' ? data.list : data.list.filter(s => s.isFavorites);
+  const list: SubscriptionService[] = useMemo(() => {
+    if (!data?.services) return [];
+    return tab === 'ALL' ? data.services : data.services.filter(s => s.isFavorites);
   }, [data, tab]);
 
   return (
@@ -172,7 +160,7 @@ export const SubscriptionsSection = () => {
           />
           <ChipGroup value={category} onValueChange={handleCategoryChange}>
             {CAT_OPTIONS.map(c => (
-              <ChipItem key={c.key ?? 'all'} value={c.key ?? 'all'} color="default">
+              <ChipItem key={c.key ?? 'ALL'} value={c.key ?? 'ALL'} color="default">
                 {c.label}
               </ChipItem>
             ))}

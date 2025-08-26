@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 export type PaymentSummaryCardProps = {
   title?: string | ReactNode;
   dateText: string;
-  iconUrl?: string;
+  subCount: number;
   serviceName?: string;
   monthUsed: number;
   monthLimit: number;
