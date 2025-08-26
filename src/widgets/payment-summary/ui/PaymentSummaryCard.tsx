@@ -1,5 +1,6 @@
 import { formatKRW } from '@/shared/lib/format';
 import { ProgressBar } from '@/shared/ui/progress';
+import { SpeechBubble } from '@/shared/ui/speech-bubble/SpeechBubble';
 import { Tag } from '@/shared/ui/tag';
 
 import type { PaymentSummaryCardProps } from '../model/types';
@@ -9,8 +10,7 @@ import type { PaymentSummaryCardProps } from '../model/types';
 export const PaymentSummaryCard = ({
   title,
   dateText,
-  // iconUrl,
-  // serviceName,
+  subCount,
   monthUsed,
   monthLimit,
   progressPercent = 0, // 기본값 설정
@@ -19,20 +19,18 @@ export const PaymentSummaryCard = ({
     {title && <h2 className="typo-title-l-bold mb-10">{title}</h2>}
 
     <article className="relative rounded-[20px] bg-white px-5 pt-5 pb-3 shadow-[2px_2px_20px_0_rgba(0,0,0,0.08)]">
+      {subCount === 0 && (
+        <SpeechBubble className="absolute -top-5 rounded-xl right-0 z-10">
+          <p className="typo-label-s-medium text-gray-800">
+            구독 중인 서비스의 정보를 입력하면
+            <br />
+            이번달 남은 결제를 알려드려요!
+          </p>
+        </SpeechBubble>
+      )}
       <Tag color="gray" className="absolute -top-4 left-5 z-10">
         {dateText}
       </Tag>
-
-      {/* 서비스 아이콘 (우측) */}
-      {/* <img
-          src={iconUrl}
-          alt={`${serviceName} 아이콘`}
-          width={67}
-          height={67}
-          className="absolute -top-4 right-5 z-10 rounded-xl object-cover"
-        /> */}
-      {/* 임시 아이콘 대체 TODO: 교체 */}
-      <div className="h-[67px] w-[67px] absolute -top-8 right-5 z-10 rounded-xl bg-green-200" />
 
       {/* 카드 내부 컨텐츠 */}
       <div>
