@@ -191,10 +191,9 @@ export const StepConfirm = ({ categoryLabel, onPrev, onSubmit }: ConfirmProps) =
         <PaymentDateField
           value={isUnknownDate ? null : (startedAt ?? null)}
           onChange={d => {
-            if (!isUnknownDate) {
               setValue('startedAt', d, { shouldDirty: true });
-            }
           }}
+          disabled={isUnknownDate}
         />
       </div>
       <div className="mt-3 flex items-center gap-3">
