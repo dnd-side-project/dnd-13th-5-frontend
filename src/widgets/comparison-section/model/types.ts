@@ -1,20 +1,31 @@
-import type { Product } from '@/entities/comparison/model/types';
-import type { Subscription } from '@/entities/subscription/model/types';
+import type { Products } from '@/entities/product/api/fetchProducts';
+import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
 
-export interface ComparisonMySubSectionProps {
+export type ComparisonMySubSectionProps = {
   category: string | null;
-  mySubs: Omit<Subscription, 'isFavorites'>[];
+  mySubs: SubscriptionService[];
   selectedSubs: number[];
   handleSelect: (id: number) => void;
   handleDetail: (id: number) => void;
-}
+  addedSubs?: Products[];
+};
 
-export interface ComparisonAddSectionProps {
+export type ComparisonAddedSectionProps = {
   category: string | null;
-  addedSubs: Product[];
+  addedSubs: Products[];
   selectedSubs: number[];
   handleSelect: (id: number) => void;
   handleDetail: (id: number) => void;
   handleAdd: () => void;
   handleDelete: () => void;
-}
+};
+
+export type ComparisonResultSectionProps = {
+  selectedSubs: number[];
+  handleDetail: (id: number) => void;
+};
+
+export type RecommentSubSectionProps = {
+  category: string | null;
+  handleDetail: (id: number) => void;
+};
