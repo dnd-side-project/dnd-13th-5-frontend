@@ -1,15 +1,11 @@
 import type { UseMutationResult } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import type { CreateSubscriptionRequest } from '../api/createSubscription';
+import type {
+  CreateSubscriptionRequest,
+  CreateSubscriptionResponse,
+} from '../api/createSubscription';
 import { createSubscription } from '../api/createSubscription';
-
-// API 응답 타입 (createSubscription.ts에서 import하지 않고 여기서 정의)
-type CreateSubscriptionResponse = {
-  status: number;
-  code: string;
-  message: string;
-};
 
 /**
  * 구독 등록을 위한 React Query mutation 훅입니다.

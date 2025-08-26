@@ -14,7 +14,7 @@ export type CreateSubscriptionRequest = {
 };
 
 // API 응답 타입
-type CreateSubscriptionResponse = {
+export type CreateSubscriptionResponse = {
   status: number;
   code: string;
   message: string;
