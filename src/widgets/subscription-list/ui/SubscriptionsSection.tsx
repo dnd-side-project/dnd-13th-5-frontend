@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 
-import type { CategoryOption } from '@/entities/product/api/fetchProducts';
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
 import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
 import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
 import { formatKRW } from '@/shared/lib/format';
+import type { CategoryOption } from '@/shared/types/category.types';
 import { ChipGroup, ChipItem } from '@/shared/ui/category';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import { Filter } from '@/shared/ui/filter';

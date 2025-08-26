@@ -2,10 +2,10 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import type { CategoryOption } from '@/entities/product/api/fetchProducts';
 import { useProducts } from '@/entities/product/hook/useProducts';
 import { CATEGORY_META } from '@/entities/subscription/model/category.meta';
 import type { RegisterForm } from '@/entities/subscription/model/register.types';
+import type { CategoryOption } from '@/shared/types/category.types';
 import { Button } from '@/shared/ui/button';
 import { SelectableCard } from '@/shared/ui/selectable-card';
 
@@ -45,7 +45,10 @@ export const StepService = ({ onPrev, onNext }: { onPrev: () => void; onNext: ()
   }, [categoryName, setValue]);
 
   // 헤더에 현재 카테고리명 표시(선택 사항)
-  const categoryLabel = useMemo(() => categoryName ? (CATEGORY_META[categoryName]?.label ?? '') : '', [categoryName]);
+  const categoryLabel = useMemo(
+    () => (categoryName ? (CATEGORY_META[categoryName]?.label ?? '') : ''),
+    [categoryName],
+  );
 
   if (productLoading) {
     return (
