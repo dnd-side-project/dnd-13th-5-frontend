@@ -1,15 +1,4 @@
 // src/entities/subscription/model/types.ts
-export type CategoryParam =
-  | 'all'
-  | 'OTT'
-  | 'SHOPPING'
-  | 'MUSIC'
-  | 'CLOUD'
-  | 'AI'
-  | 'PRODUCTIVITY'
-  | 'EDUCATION'
-  | 'DELIVERY';
-
 export type SortParam = 'NAME' | 'PRICE' | 'DUESOON' | 'OLDESTFIRST';
 
 // 서버 DTO
