@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
 import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
+import { useToggleFavorite } from '@/entities/subscription/hook/useToggleFavorite';
 import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
 import { formatKRW } from '@/shared/lib/format';
@@ -32,6 +33,8 @@ const CAT_OPTIONS = [
 ];
 
 const Row = ({ item }: { item: SubscriptionService }) => {
+  const toggleFavoriteMutation = useToggleFavorite();
+
   const left = (
     <div className="gap-3 flex">
       <img
@@ -90,7 +93,7 @@ const Row = ({ item }: { item: SubscriptionService }) => {
         className="rounded-full flex h-full mt-1 align-top focus-visible:ring-2 focus-visible:ring-emerald-500/40"
         onClick={e => {
           e.stopPropagation();
-          // TODO: optimistic toggleStar(item.id)
+          toggleFavoriteMutation.mutate(item.id);
         }}
         title="즐겨찾기"
       >
