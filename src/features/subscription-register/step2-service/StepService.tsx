@@ -42,6 +42,8 @@ export const StepService = ({ onPrev, onNext }: { onPrev: () => void; onNext: ()
     // 카테고리 바뀌면 이전 선택한 서비스 초기화
     setValue('productId', undefined, { shouldDirty: true });
     setValue('customProductName', null, { shouldDirty: true });
+    setValue('productName', null, { shouldDirty: true });
+    setValue('productImgUrl', null, { shouldDirty: true });
   }, [categoryName, setValue]);
 
   // 헤더에 현재 카테고리명 표시(선택 사항)
@@ -98,6 +100,8 @@ export const StepService = ({ onPrev, onNext }: { onPrev: () => void; onNext: ()
             onSelect={() => {
               setValue('productId', s.productId, { shouldDirty: true });
               setValue('customProductName', null, { shouldDirty: true });
+              setValue('productName', s.name, { shouldDirty: true });
+              setValue('productImgUrl', s.imageUrl, { shouldDirty: true });
             }}
           >
             <img src={s.imageUrl} alt="" aria-hidden className="mx-auto size-10 rounded-xl" />
