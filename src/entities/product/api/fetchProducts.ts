@@ -1,15 +1,5 @@
 import apiClient from '@/shared/api/apiClient';
-
-export type CategoryOption =
-  | null
-  | 'OTT'
-  | 'SHOPPING'
-  | 'MUSIC'
-  | 'CLOUD'
-  | 'AI'
-  | 'EDUCATION'
-  | 'DELIVERY'
-  | 'PRODUCTIVITY';
+import type { CategoryOption } from '@/shared/types/category.types';
 
 // API 응답 전체에 대한 타입 (선택적)
 type ProductsResponse = {
@@ -40,5 +30,5 @@ export const fetchProducts = async (query: CategoryOption): Promise<Products[]> 
   const response = await apiClient.get<ProductsResponse>('/products', {
     params: { category: query },
   });
-  return response.data.data.products;
+  return response.data.data.products; // 서버 응답의 data 객체 안의 data를 반환합니다.
 };
