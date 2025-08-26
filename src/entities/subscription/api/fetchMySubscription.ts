@@ -1,6 +1,5 @@
 import apiClient from '@/shared/api/apiClient';
-
-import type { CategoryOption } from '../../product/api/fetchProducts';
+import type { CategoryOption } from '@/shared/types/category.types';
 
 // 개별 구독 서비스에 대한 타입
 export type SubscriptionService = {
@@ -40,7 +39,7 @@ export const fetchMySubscription = async ({
   category,
   sort,
 }: FetchMySubscriptionParams): Promise<MySubscriptionData> => {
-  const response = await apiClient.get<MySubscriptionResponse>('/subscriptions', {
+  const response = await apiClient.get<MySubscriptionResponse>('/subscriptions/my', {
     params: {
       category,
       sort,
