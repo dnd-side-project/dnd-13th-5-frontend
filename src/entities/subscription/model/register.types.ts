@@ -1,7 +1,6 @@
 export type PayUnit = 'MONTH' | 'YEAR' | 'WEEK';
 export type MethodKind = 'CARD' | 'ACCOUNT' | 'EASY';
 
-export type CategoryOption = { id: number; label: string; iconUrl?: string };
 export type ServiceOption = { id: number; name: string; iconUrl: string };
 
 export type MethodOption = { id: number; label: string };
