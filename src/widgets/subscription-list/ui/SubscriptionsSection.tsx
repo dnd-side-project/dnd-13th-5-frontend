@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 
+import type { CategoryOption } from '@/entities/product/api/fetchProducts';
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
-import type { CategoryOption } from '@/entities/subscription/api/fetchProducts';
-import { useMySubscription } from '@/entities/subscription/hooks/useMySubscription';
+import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
 import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
 import { formatKRW } from '@/shared/lib/format';
@@ -116,16 +116,19 @@ const Row = ({ item }: { item: SubscriptionService }) => {
 export const SubscriptionsSection = () => {
   // 탭/필터 로컬 상태 (URL은 변경하지 않음)
   const [tab, setTab] = useState<'ALL' | 'FAVORITES'>('ALL');
-  const [category, setCategory] = useState<CategoryOption>('ALL');
+  const [category, setCategory] = useState<'ALL' | CategoryOption>('ALL');
   const [sort, setSort] = useState<SortParam>('NAME');
 
+  // 'ALL'을 null로 변환하여 API 호출
+  const apiCategory = category === 'ALL' ? null : category;
+
   const { data, isLoading } = useMySubscription({
-    category: category === 'ALL' ? undefined : category,
+    category: apiCategory,
     sort,
   });
 
   const handleCategoryChange = (value: string | null) => {
-    setCategory((value ?? 'ALL') as CategoryOption);
+    setCategory((value ?? 'ALL') as 'ALL' | CategoryOption);
   };
 
   const list: SubscriptionService[] = useMemo(() => {
@@ -160,7 +163,7 @@ export const SubscriptionsSection = () => {
           />
           <ChipGroup value={category} onValueChange={handleCategoryChange}>
             {CAT_OPTIONS.map(c => (
-              <ChipItem key={c.key ?? 'ALL'} value={c.key ?? 'ALL'} color="default">
+              <ChipItem key={c.key} value={c.key} color="default">
                 {c.label}
               </ChipItem>
             ))}
