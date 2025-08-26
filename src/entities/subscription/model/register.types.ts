@@ -44,25 +44,37 @@ export type RegisterForm = {
   customPrice?: number;
 };
 
-// 서버 요청 스펙으로 변환
-export const toRegisterPayload = (f: RegisterForm) => ({
-  productId: f.productId,
-  planId: f.planId,
-  payCycleUnit: f.payCycleUnit,
-  startedAt: f.startedAt || null, // ISO 날짜 형식 또는 null
-  paymentMethodId: f.paymentMethodId,
-  memo: f.memo || '',
-  participantCount: f.participantCount,
-});
+// 서버 요청 스펙으로 변환 (필수 필드들이 있다고 가정)
+export const toRegisterPayload = (f: RegisterForm) => {
+  if (!f.productId || !f.planId || !f.paymentMethodId) {
+    throw new Error('구독 등록에 필요한 필수 정보가 누락되었습니다.');
+  }
 
-// 커스텀 구독 서버 요청 스펙으로 변환
-export const toCustomRegisterPayload = (f: RegisterForm) => ({
-  productName: f.customProductName,
-  category: f.categoryName!,
-  price: f.customPrice!,
-  participantCount: f.participantCount,
-  payCycleUnit: f.payCycleUnit,
-  startedAt: f.startedAt || null, // ISO 날짜 형식 또는 null
-  paymentMethodId: f.paymentMethodId,
-  memo: f.memo || '',
-});
+  return {
+    productId: f.productId,
+    planId: f.planId,
+    payCycleUnit: f.payCycleUnit,
+    startedAt: f.startedAt || null, // ISO 날짜 형식 또는 null
+    paymentMethodId: f.paymentMethodId,
+    memo: f.memo || '',
+    participantCount: f.participantCount,
+  };
+};
+
+// 커스텀 구독 서버 요청 스펙으로 변환 (필수 필드들이 있다고 가정)
+export const toCustomRegisterPayload = (f: RegisterForm) => {
+  if (!f.customProductName?.trim() || !f.customPrice || !f.categoryName || !f.paymentMethodId) {
+    throw new Error('커스텀 구독 등록에 필요한 필수 정보가 누락되었습니다.');
+  }
+
+  return {
+    productName: f.customProductName,
+    category: f.categoryName,
+    price: f.customPrice,
+    participantCount: f.participantCount,
+    payCycleUnit: f.payCycleUnit,
+    startedAt: f.startedAt || null, // ISO 날짜 형식 또는 null
+    paymentMethodId: f.paymentMethodId,
+    memo: f.memo || '',
+  };
+};
