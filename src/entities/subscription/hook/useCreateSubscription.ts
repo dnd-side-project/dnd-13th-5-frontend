@@ -22,8 +22,7 @@ export const useCreateSubscription = (): UseMutationResult<
     mutationFn: createSubscription,
     onSuccess: () => {
       // 구독 등록 성공 시 관련 쿼리들을 무효화하여 최신 데이터 갱신
-      queryClient.invalidateQueries({ queryKey: ['subscriptions'] });
-      queryClient.invalidateQueries({ queryKey: ['my-subscription'] });
+      queryClient.invalidateQueries({ queryKey: ['my-subscriptions'] });
       queryClient.invalidateQueries({ queryKey: ['my-payments'] });
     },
     onError: error => {
