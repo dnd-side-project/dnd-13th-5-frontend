@@ -8,11 +8,6 @@ import { SubscriptionRegisterWidget } from '@/widgets/subscription-register/Subs
 function SubscriptionRegister() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
 
-  const handleSubmit = async () => {
-    // TODO: 실제 API 호출 로직 구현
-    console.log('구독 등록:');
-  };
-
   return (
     <MobileLayout
       headerProps={{
@@ -26,7 +21,7 @@ function SubscriptionRegister() {
       }}
       showBottom={false}
     >
-      <SubscriptionRegisterWidget step={step} setStep={setStep} onSubmit={handleSubmit} />
+      <SubscriptionRegisterWidget step={step} setStep={setStep} />
     </MobileLayout>
   );
 }
