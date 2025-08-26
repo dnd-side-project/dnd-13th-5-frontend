@@ -30,7 +30,6 @@ export const StepService = ({ onPrev, onNext }: { onPrev: () => void; onNext: ()
     isError: productError,
   } = useProducts(categoryName || null);
 
-  console.log(productData, productLoading, productError);
   const productId = watch('productId');
 
   // 카테고리 변경 → 목록 로딩
