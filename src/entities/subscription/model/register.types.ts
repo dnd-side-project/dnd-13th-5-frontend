@@ -46,7 +46,8 @@ export type RegisterForm = {
 
 // 서버 요청 스펙으로 변환 (필수 필드들이 있다고 가정)
 export const toRegisterPayload = (f: RegisterForm) => {
-  if (!f.productId || !f.planId || !f.paymentMethodId) {
+  const derivedPlanId = f.planId ?? f.selectedPlan?.id;
+  if (!f.productId || !derivedPlanId || !f.paymentMethodId) {
     throw new Error('구독 등록에 필요한 필수 정보가 누락되었습니다.');
   }
 
