@@ -3,6 +3,7 @@ export const ROUTES = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   SUBSCRIPTIONS: '/subscriptions',
+  SUBSCRIPTIONS_REGISTER: '/subscriptions-register',
   SUBSCRIPTION_DETAIL: (id = ':id') => `/subscriptions/${id}`,
   SUBSCRIPTION_EDIT: (id = ':id') => `/edit/subscriptions/${id}`,
   COMPARISON: '/comparison',

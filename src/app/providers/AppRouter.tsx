@@ -11,8 +11,8 @@ import {
   SubscriptionEditPage,
   SubscriptionsPage,
 } from '@/pages/subscriptions';
+import SubscriptionRegisterPage from '@/pages/subscriptions/SubscriptionRegisterPage';
 import { ROUTES } from '@/shared/config/routes';
-
 
 export const AppRouter = () => (
   <Routes>
@@ -24,6 +24,7 @@ export const AppRouter = () => (
     <Route path={ROUTES.SUBSCRIPTION_EDIT()} element={<SubscriptionEditPage />} />
     <Route path={ROUTES.COMPARISON} element={<ComparisonPage />} />
     <Route path={ROUTES.COMPARISON_ADD} element={<ComparisonAddPage />} />
+    <Route path={ROUTES.SUBSCRIPTIONS_REGISTER} element={<SubscriptionRegisterPage />} />
 
     <Route path={ROUTES.MY_PAGE} element={<MyPage />} />
     <Route path={ROUTES.ALARM} element={<AlarmPage />} />
