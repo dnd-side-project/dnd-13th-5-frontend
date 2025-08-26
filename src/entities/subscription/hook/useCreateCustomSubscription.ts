@@ -1,0 +1,37 @@
+import type { UseMutationResult } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import type { CreateCustomSubscriptionRequest } from '../api/createCustomSubscription';
+import { createCustomSubscription } from '../api/createCustomSubscription';
+
+// API 응답 타입
+type CreateCustomSubscriptionResponse = {
+  status: number;
+  code: string;
+  message: string;
+};
+
+/**
+ * 커스텀 구독 등록을 위한 React Query mutation 훅입니다.
+ * 성공 시 관련 쿼리들을 무효화하여 최신 데이터를 다시 가져옵니다.
+ */
+export const useCreateCustomSubscription = (): UseMutationResult<
+  CreateCustomSubscriptionResponse,
+  Error,
+  CreateCustomSubscriptionRequest
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createCustomSubscription,
+    onSuccess: () => {
+      // 커스텀 구독 등록 성공 시 관련 쿼리들을 무효화하여 최신 데이터 갱신
+      queryClient.invalidateQueries({ queryKey: ['subscriptions'] });
+      queryClient.invalidateQueries({ queryKey: ['my-subscription'] });
+      queryClient.invalidateQueries({ queryKey: ['my-payments'] });
+    },
+    onError: error => {
+      console.error('커스텀 구독 등록 실패:', error);
+    },
+  });
+};

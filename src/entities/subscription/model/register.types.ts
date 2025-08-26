@@ -54,3 +54,15 @@ export const toRegisterPayload = (f: RegisterForm) => ({
   memo: f.memo || '',
   participantCount: f.participantCount,
 });
+
+// 커스텀 구독 서버 요청 스펙으로 변환
+export const toCustomRegisterPayload = (f: RegisterForm) => ({
+  productName: f.customProductName!,
+  category: f.categoryName!,
+  price: f.customPrice!,
+  participantCount: f.participantCount,
+  payCycleUnit: f.payCycleUnit,
+  startedAt: f.startedAt || null, // ISO 날짜 형식 또는 null
+  paymentMethodId: f.paymentMethodId!,
+  memo: f.memo || '',
+});

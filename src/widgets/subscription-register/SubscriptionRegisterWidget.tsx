@@ -3,9 +3,14 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import { useCreateCustomSubscription } from '@/entities/subscription/hook/useCreateCustomSubscription';
 import { useCreateSubscription } from '@/entities/subscription/hook/useCreateSubscription';
 import { CATEGORY_META } from '@/entities/subscription/model/category.meta';
-import { toRegisterPayload, type RegisterForm } from '@/entities/subscription/model/register.types';
+import {
+  toCustomRegisterPayload,
+  toRegisterPayload,
+  type RegisterForm,
+} from '@/entities/subscription/model/register.types';
 import { StepCategory } from '@/features/subscription-register/step1-category/StepCategory';
 import { StepService } from '@/features/subscription-register/step2-service/StepService';
 import { StepPlan } from '@/features/subscription-register/step3-plan/StepPlan';
@@ -34,6 +39,7 @@ export const SubscriptionRegisterWidget = ({ step, setStep }: Props) => {
 
   const { watch, handleSubmit } = methods;
   const createSubscriptionMutation = useCreateSubscription();
+  const createCustomSubscriptionMutation = useCreateCustomSubscription();
   const categoryName = watch('categoryName'); // 1단계 결과
   const productId = watch('productId'); // 2단계 결과 (0 이면 직접입력)
 
@@ -42,10 +48,20 @@ export const SubscriptionRegisterWidget = ({ step, setStep }: Props) => {
 
   const submit = handleSubmit(async form => {
     try {
-      const payload = toRegisterPayload(form);
-      const result = await createSubscriptionMutation.mutateAsync(payload);
+      const isCustom = form.productId === 0;
 
-      console.log('✅ 구독 등록 성공:', result.message);
+      if (isCustom) {
+        // 커스텀 구독 등록
+        const payload = toCustomRegisterPayload(form);
+        const result = await createCustomSubscriptionMutation.mutateAsync(payload);
+        console.log('✅ 커스텀 구독 등록 성공:', result.message);
+      } else {
+        // 일반 구독 등록
+        const payload = toRegisterPayload(form);
+        const result = await createSubscriptionMutation.mutateAsync(payload);
+        console.log('✅ 구독 등록 성공:', result.message);
+      }
+
       // /subscriptions 페이지로 리디렉션
       navigate('/subscriptions');
     } catch (error) {
