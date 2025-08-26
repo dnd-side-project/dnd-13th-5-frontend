@@ -2,6 +2,7 @@
 
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
+import qs from 'qs';
 
 import {
   errorResponseInterceptor,
@@ -19,6 +20,7 @@ const apiClient: AxiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL || ''}/api`,
   withCredentials: true, // cross-origin 환경에서 쿠키(리프레시 토큰) 전송을 위함
   timeout: 10000, // 10초 타임아웃
+  paramsSerializer: params => qs.stringify(params, { arrayFormat: 'brackets' }), // 배열 직렬화를 위함
 });
 
 // 요청/응답 인터셉터 적용
