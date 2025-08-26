@@ -38,7 +38,7 @@ const DUMMY_DATA = {
   },
 };
 
-export const SubscriptionDetailWidget = ({ subscriptionId }: Props) => {
+export const SubscriptionDetailWidget = ({ subscriptionId: _subscriptionId }: Props) => {
   const { data } = DUMMY_DATA;
   const benefit = data.benefit.split(', ').map(item => item.trim());
   if (!data) {
@@ -136,11 +136,11 @@ export const SubscriptionDetailWidget = ({ subscriptionId }: Props) => {
 
         {/* 혜택 패널, TODO: 추후 api 나오면 맞게 수정 */}
         <TabsContent value="benefit" className="bg-gray-50 min-h-[60vh]">
-          {benefit.map((group, items) => (
+          {benefit.map((group, _items) => (
             <div key={group} className="px-5 py-4">
               <p className="typo-title-s-bold mb-2">{group}</p>
               {/* <ul className="list-disc pl-4 space-y-1 text-gray-700 typo-body-s-medium">
-                {items.map((line, i) => (
+                {_items.map((line, i) => (
                   <li key={i}>{line}</li>
                 ))}
               </ul> */}

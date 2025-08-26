@@ -24,6 +24,7 @@ export const PaymentSummaryBlock = () => {
     fetch('/mock/member/total-payments.json')
       .then(response => response.json())
       .then(mockData => setData(mockData.data))
+      // eslint-disable-next-line no-console
       .catch(error => console.error('Error loading mock data:', error));
   }, []);
 

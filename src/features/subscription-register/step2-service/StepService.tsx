@@ -9,7 +9,7 @@ import { SelectableCard } from '@/shared/ui/selectable-card';
 
 const NONE_ID = 0; // 직접 입력 분기
 
-type ApiResp = {
+type _ApiResp = {
   status: number;
   code: string;
   message: string;
