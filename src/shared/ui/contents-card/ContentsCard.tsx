@@ -6,7 +6,7 @@ export interface ContentsCardProps {
   /** 왼쪽 영역(태그, 타이틀 등 복합 레이아웃 자유) */
   left: ReactNode;
   /** 오른쪽 영역(금액, 액션 등) */
-  right: ReactNode;
+  right?: ReactNode;
   /** 클릭 가능한 카드로 만들지 여부 (true면 role/키보드 핸들링 추가) */
   interactive?: boolean;
   onClick?: () => void;
