@@ -1,9 +1,11 @@
 // src/features/subscription-register/step2-service/StepService.tsx
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import type { CategoryOption } from '@/entities/product/api/fetchProducts';
+import { useProducts } from '@/entities/product/hook/useProducts';
 import { CATEGORY_META } from '@/entities/subscription/model/category.meta';
-import type { RegisterForm, ServiceOption } from '@/entities/subscription/model/register.types';
+import type { RegisterForm } from '@/entities/subscription/model/register.types';
 import { Button } from '@/shared/ui/button';
 import { SelectableCard } from '@/shared/ui/selectable-card';
 
@@ -18,58 +20,34 @@ type _ApiResp = {
   };
 };
 
-/** 임시 더미: 카테고리별 서비스 목록 */
-const DUMMY_BY_CATEGORY: Record<number, ServiceOption[]> = {
-  1: [
-    { id: 101, name: '넷플릭스', iconUrl: '/assets/netflix.png' },
-    { id: 102, name: '디즈니+', iconUrl: '/assets/disney.png' },
-    { id: 103, name: '웨이브', iconUrl: '/assets/wavve.png' },
-    { id: 104, name: '티빙', iconUrl: '/assets/tving.png' },
-  ],
-  2: [
-    { id: 201, name: '쿠팡 와우', iconUrl: '/assets/coupang.png' },
-    { id: 202, name: '네이버플러스', iconUrl: '/assets/naverplus.png' },
-  ],
-  // ...필요시 추가
-};
-
 export const StepService = ({ onPrev, onNext }: { onPrev: () => void; onNext: () => void }) => {
   const { setValue, watch } = useFormContext<RegisterForm>();
-  const categoryId = watch('categoryId');
-  const productId = watch('productId');
+  const categoryName = watch('categoryName') as CategoryOption;
 
-  const [options, setOptions] = useState<ServiceOption[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState<string | null>(null);
+  const {
+    data: productData,
+    isLoading: productLoading,
+    isError: productError,
+  } = useProducts(categoryName || null);
+
+  console.log(productData, productLoading, productError);
+  const productId = watch('productId');
 
   // 카테고리 변경 → 목록 로딩
   useEffect(() => {
-    if (!categoryId) {
-      setOptions([]);
-      setLoading(false);
+    if (!categoryName) {
       return;
     }
 
     // 카테고리 바뀌면 이전 선택한 서비스 초기화
     setValue('productId', undefined, { shouldDirty: true });
     setValue('customProductName', null, { shouldDirty: true });
-
-    // ---- (현재) 더미 데이터 사용 ----
-    setLoading(true);
-    setErr(null);
-    setOptions(DUMMY_BY_CATEGORY[categoryId] ?? []);
-    setLoading(false);
-
-    // ---- (추후) 실제 API 호출 ----
-  }, [categoryId, setValue]);
+  }, [categoryName, setValue]);
 
   // 헤더에 현재 카테고리명 표시(선택 사항)
-  const categoryLabel = useMemo(
-    () => Object.values(CATEGORY_META).find(m => m.id === categoryId)?.label ?? '',
-    [categoryId],
-  );
+  const categoryLabel = useMemo(() => categoryName ? (CATEGORY_META[categoryName]?.label ?? '') : '', [categoryName]);
 
-  if (loading) {
+  if (productLoading) {
     return (
       <section className="space-y-4">
         <header>
@@ -85,14 +63,14 @@ export const StepService = ({ onPrev, onNext }: { onPrev: () => void; onNext: ()
     );
   }
 
-  if (err) {
+  if (productError) {
     return (
       <section className="space-y-4">
         <header>
           <p className="typo-title-m-bold">어떤 서비스를 구독 중이신가요?</p>
           <p className="typo-body-s-medium text-gray-500">{categoryLabel} 카테고리</p>
         </header>
-        <p className="text-red-600">{err}</p>
+        <p className="text-red-600">서비스를 불러오는 중 오류가 발생했습니다.</p>
         <div className="mt-4">
           <button type="button" onClick={onPrev} className="rounded-2xl border py-3 px-4">
             이전
@@ -110,16 +88,16 @@ export const StepService = ({ onPrev, onNext }: { onPrev: () => void; onNext: ()
       </header>
 
       <div role="radiogroup" className="grid grid-cols-2 gap-3">
-        {(options ?? []).map(s => (
+        {productData?.map(s => (
           <SelectableCard
-            key={s.id}
-            selected={productId === s.id}
+            key={s.productId}
+            selected={productId === s.productId}
             onSelect={() => {
-              setValue('productId', s.id, { shouldDirty: true });
+              setValue('productId', s.productId, { shouldDirty: true });
               setValue('customProductName', null, { shouldDirty: true });
             }}
           >
-            <img src={s.iconUrl} alt="" aria-hidden className="mx-auto size-10 rounded-xl" />
+            <img src={s.imageUrl} alt="" aria-hidden className="mx-auto size-10 rounded-xl" />
             <span className="typo-body-s-bold">{s.name}</span>
           </SelectableCard>
         ))}
