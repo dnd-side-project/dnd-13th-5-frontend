@@ -14,7 +14,7 @@ import { Tag } from '@/shared/ui/tag';
 // Filter 컴포넌트에 맞는 형식으로 변경
 const SORT_FILTER_OPTIONS = [
   { key: 'NAME', label: '이름순' },
-  { key: 'PRICE', label: '가격순' },
+  { key: 'CHEAPEST', label: '가격순' },
   { key: 'DUESOON', label: '결제임박순' },
   { key: 'OLDESTFIRST', label: '오래된순' },
 ];

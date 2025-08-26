@@ -1,5 +1,5 @@
 // src/entities/subscription/model/types.ts
-export type SortParam = 'NAME' | 'PRICE' | 'DUESOON' | 'OLDESTFIRST';
+export type SortParam = 'NAME' | 'CHEAPEST' | 'DUESOON' | 'OLDESTFIRST';
 
 // 서버 DTO
 // TODO: 매월/매주/매년 이런 옵션 없어서 문의해야함
