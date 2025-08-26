@@ -1,12 +1,13 @@
 import apiClient from '@/shared/api/apiClient';
 import type { CategoryOption } from '@/shared/types/category.types';
+import { PayUnit } from '../model/register.types';
 
 // 개별 구독 서비스에 대한 타입
 export type SubscriptionService = {
   id: number;
   name: string;
   category: CategoryOption; // 'OTT' 외 다른 카테고리도 올 수 있으므로 string으로 지정
-  payCycleUnit: 'WEEK' | 'MONTH' | 'YEAR'; // 정해진 값만 오도록 제한
+  payCycleUnit: PayUnit; // 정해진 값만 오도록 제한
   planName: string;
   price: number;
   isFavorites: boolean;

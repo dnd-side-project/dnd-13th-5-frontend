@@ -1,10 +1,11 @@
 import apiClient from '@/shared/api/apiClient';
+import { PayUnit } from '../model/register.types';
 
 // 구독 등록 요청 바디 타입
 export type CreateSubscriptionRequest = {
   productId: number;
   planId: number;
-  payCycleUnit: 'WEEK' | 'MONTH' | 'YEAR';
+  payCycleUnit: PayUnit;
   startedAt: string | null; // ISO 날짜 형식 또는 null
   paymentMethodId: number;
   memo?: string;

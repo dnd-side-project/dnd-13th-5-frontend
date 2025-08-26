@@ -1,11 +1,12 @@
 // features/subscription-edit/ui/BillingCycleRadio.tsx
 import type { BillingCycleOption } from '@/entities/subscription/model/edit.types';
+import { PayUnit } from '@/entities/subscription/model/register.types';
 import { cn } from '@/shared/lib';
 
 type Props = {
   name: string;
-  value: number;
-  onChange: (v: number) => void;
+  value: PayUnit;
+  onChange: (v: PayUnit) => void;
   options: BillingCycleOption[];
 };
 
