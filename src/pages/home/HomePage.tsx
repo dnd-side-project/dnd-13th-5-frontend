@@ -1,16 +1,10 @@
 import { useMyInfo } from '@/entities/member/hooks/useMyInfo';
-import { useProducts } from '@/entities/subscription/hook/useProducts';
 import AlarmButton from '@/shared/ui/button/AlarmButton';
 import { MobileLayout } from '@/shared/ui/layout';
 import { ServiceIdentity } from '@/shared/ui/service-identity';
 
 export const HomePage = () => {
   const { data: _data, isLoading: _isLoading, isError: _isError } = useMyInfo();
-  const {
-    data: _productData,
-    isLoading: _productLoading,
-    isError: _productError,
-  } = useProducts('OTT');
   // console.log(_productData, _productLoading, _productError);
   // console.log(_data, _isLoading, _isError);
 
