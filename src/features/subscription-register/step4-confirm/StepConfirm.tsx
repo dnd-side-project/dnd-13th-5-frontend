@@ -2,6 +2,8 @@
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { transformToMethodOptions } from '@/entities/subscription/api/fetchPaymentMethods';
+import { usePaymentMethods } from '@/entities/subscription/hook/usePaymentMethods';
 import type {
   MethodKind,
   MethodOptionsByKind,
@@ -23,62 +25,49 @@ import { Tag } from '@/shared/ui/tag';
 const NONE_ID = 0;
 
 // 주기 옵션(값은 단순 데모용). 실서버 스펙과 맞추면 교체
-const DUMMY_CYCLE_OPTIONS: { value: number; label: string }[] = [
-  { value: 1, label: '매주' },
-  { value: 2, label: '매달' },
-  { value: 12, label: '매년' },
+const CYCLE_OPTIONS: { value: 'WEEK' | 'MONTH' | 'YEAR'; label: string }[] = [
+  { value: 'WEEK', label: '매주' },
+  { value: 'MONTH', label: '매달' },
+  { value: 'YEAR', label: '매년' },
 ];
 
-// 결제수단 옵션 더미
-const DUMMY_METHOD_OPTIONS: MethodOptionsByKind = {
-  CARD: [
-    { id: 101, label: '국민카드' },
-    { id: 102, label: '신한카드' },
-  ],
-  ACCOUNT: [
-    { id: 201, label: 'KB국민은행' },
-    { id: 202, label: '신한은행' },
-  ],
-  EASY: [
-    { id: 301, label: '네이버페이' },
-    { id: 302, label: '카카오페이' },
-  ],
-};
-
 type ConfirmProps = {
-  /** 일반 케이스에서 보여줄 이름/아이콘/카테고리 라벨(직접입력 모드에선 무시) */
-  productName: string;
-  productIcon: string;
   categoryLabel: string;
   /** onPrev/onSubmit 콜백 */
   onPrev: () => void;
   onSubmit: () => void;
-  /** 더미를 바꾸고 싶으면 외부에서 주입 가능(옵션) */
-  cycleOptions?: { value: number; label: string }[];
-  methodOptions?: MethodOptionsByKind;
 };
 
-export const StepConfirm = ({
-  productName,
-  productIcon,
-  categoryLabel,
-  onPrev,
-  onSubmit,
-  cycleOptions = DUMMY_CYCLE_OPTIONS,
-  methodOptions = DUMMY_METHOD_OPTIONS,
-}: ConfirmProps) => {
+export const StepConfirm = ({ categoryLabel, onPrev, onSubmit }: ConfirmProps) => {
   const { watch, setValue, register, formState } = useFormContext<RegisterForm>();
+
+  // 결제수단 데이터 조회
+  const { data: paymentMethodsData, isLoading: isPaymentMethodsLoading } = usePaymentMethods();
+
+  // API 응답을 기존 폼 구조에 맞게 변환
+  const methodOptions: MethodOptionsByKind = useMemo(() => {
+    if (!paymentMethodsData) {
+      // 로딩 중이거나 데이터가 없을 때 빈 배열 반환
+      return {
+        CARD: [],
+        ACCOUNT: [],
+        EASY: [],
+      };
+    }
+    return transformToMethodOptions(paymentMethodsData);
+  }, [paymentMethodsData]);
 
   // 폼 상태
   const productId = watch('productId');
   const isCustom = productId === NONE_ID;
+  const payCycleUnit = watch('payCycleUnit');
+  const productImgUrl = watch('productImgUrl');
+  const productName = isCustom ? watch('customProductName') || '' : watch('productName') || '';
 
-  const cycleMonths = watch('payCycleNum');
-  const startDay = watch('startDay'); // string|null
+  const startedAt = watch('startedAt'); // string|null
   const methodKind = watch('methodKind');
   const methodId = watch('paymentMethodId');
 
-  const customName = watch('customProductName') ?? '';
   const customPrice = watch('customPrice');
   const participantCount = watch('participantCount');
   const selectedPlan = watch('selectedPlan');
@@ -89,40 +78,38 @@ export const StepConfirm = ({
   const handleUnknownDateChange = (checked: boolean) => {
     setIsUnknownDate(checked);
     if (checked) {
-      // 결제일을 모르는 경우 startDay를 null로 설정
-      setValue('startDay', null, { shouldDirty: true });
+      // 결제일을 모르는 경우 startedAt을 null로 설정
+      setValue('startedAt', null, { shouldDirty: true });
     }
     // checked가 false인 경우는 사용자가 직접 날짜를 선택하도록 함
   };
 
-  // 헤더에 표시할 서비스명/아이콘(직접입력 시 아이콘 없음)
-  const headerTitle = useMemo(
-    () => (isCustom ? customName || '직접입력한 이름' : productName),
-    [isCustom, customName, productName],
-  );
-  const headerIcon = useMemo(() => (isCustom ? '' : productIcon), [isCustom, productIcon]);
-
   // 제출 가능 여부(직접입력 모드에선 금액 필수)
   const canSubmit = useMemo(() => {
     if (isCustom) {
-      if (!customName?.trim()) return false;
+      if (!productName?.trim()) return false;
       if (!customPrice || Number.isNaN(customPrice) || customPrice <= 0) return false;
       if (!participantCount || participantCount < 1) return false;
     }
     return true;
-  }, [isCustom, customName, customPrice, participantCount]);
+  }, [isCustom, productName, customPrice, participantCount]);
 
   return (
     <section className="space-y-6">
-      <header className="typo-title-m-bold">구독 정보를 확인하고 등록해주세요!</header>
+      <header className="typo-title-m-bold">
+        구독 정보를 확인하고
+        <br /> 등록해주세요!
+      </header>
 
       {/* 선택한 구독 서비스 요약 */}
       <ContentsCardStacked className="bg-gray-50">
         <ContentsCardStacked.Header
           title={
             <div className="flex items-center">
-              <img src={headerIcon} alt="" aria-hidden className="size-6 mr-3" />
-              <p>{headerTitle}</p>
+              {productImgUrl && (
+                <img src={productImgUrl} alt="" aria-hidden className="size-6 mr-3" />
+              )}
+              <p>{productName}</p>
             </div>
           }
           right={
@@ -138,7 +125,7 @@ export const StepConfirm = ({
               label={selectedPlan?.name || '-'}
               value={
                 <div className="flex items-center gap-2">
-                  <p>{selectedPlan?.priceLabel || '-'}</p>
+                  <p className="text-gray-800">{selectedPlan?.price || '-'}원</p>
                   {participantCount > 1 && (
                     <Tag appearance="soft" color="gray" className=" py-0.5">
                       n빵
@@ -193,19 +180,19 @@ export const StepConfirm = ({
 
       {/* 결제 주기 */}
       <BillingCycleRadio
-        name="payCycleNum"
-        value={cycleMonths}
-        onChange={v => setValue('payCycleNum', v, { shouldDirty: true })}
-        options={cycleOptions}
+        name="payCycleUnit"
+        value={payCycleUnit}
+        onChange={v => setValue('payCycleUnit', v, { shouldDirty: true })}
+        options={CYCLE_OPTIONS}
       />
 
       {/* 결제일(다이얼로그는 내부 컴포넌트에서 처리) */}
       <div className={isUnknownDate ? 'opacity-50 pointer-events-none' : ''}>
         <PaymentDateField
-          value={isUnknownDate ? null : (startDay ?? null)}
+          value={isUnknownDate ? null : (startedAt ?? null)}
           onChange={d => {
             if (!isUnknownDate) {
-              setValue('startDay', d, { shouldDirty: true });
+              setValue('startedAt', d, { shouldDirty: true });
             }
           }}
         />
