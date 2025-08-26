@@ -1,5 +1,5 @@
 // features/subscription-edit/ui/PaymentDateField.tsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Icons } from '@/shared/assets/icons';
 import { Button } from '@/shared/ui/button';
@@ -22,7 +22,32 @@ type Props = {
 
 export const PaymentDateField = ({ value, onChange }: Props) => {
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>(undefined);
+
+  // value가 변경될 때 date 상태를 동기화
+  useEffect(() => {
+    if (value) {
+      // YYYY-MM-DD 형식의 문자열을 Date 객체로 변환 (시간대 문제 방지)
+      const [year, month, day] = value.split('-').map(Number);
+      setDate(new Date(year, month - 1, day)); // month는 0부터 시작
+    } else {
+      setDate(undefined);
+    }
+  }, [value]);
+
+  const handleSave = () => {
+    if (date) {
+      // Date 객체를 YYYY-MM-DD 형식으로 변환 (시간대 문제 방지)
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}`;
+      onChange(dateString);
+    } else {
+      onChange(null);
+    }
+    setOpen(false);
+  };
 
   return (
     <fieldset>
@@ -62,14 +87,7 @@ export const PaymentDateField = ({ value, onChange }: Props) => {
               <DialogClose asChild>
                 <Button variant="primary-stroke" title="취소" />
               </DialogClose>
-              <Button
-                variant="primary-fill"
-                onClick={() => {
-                  onChange(date?.toISOString().split('T')[0] || null);
-                  setOpen(false);
-                }}
-                title="저장"
-              />
+              <Button variant="primary-fill" onClick={handleSave} title="저장" />
             </DialogFooter>
           </DialogContent>
         </Dialog>
