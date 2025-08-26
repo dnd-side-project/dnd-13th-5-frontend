@@ -37,7 +37,9 @@ export type RegisterForm = {
   paymentMethodId?: number;
   memo?: string;
   selectedPlan?: SelectedPlanMeta | null; // 👈 추가
+  productImgUrl?: string | null;
   /** Step2에서 "없어요"를 선택했을 때 입력할 서비스명 */
+  productName?: string | null;
   customProductName?: string | null;
   customPrice?: number;
 };
@@ -47,8 +49,8 @@ export const toRegisterPayload = (f: RegisterForm) => ({
   productId: f.productId!,
   planId: f.planId!,
   payCycleUnit: f.payCycleUnit,
-  startedAt: f.startedAt || '', // 'YYYY-MM-DD' 형식
+  startedAt: f.startedAt || null, // ISO 날짜 형식 또는 null
   paymentMethodId: f.paymentMethodId!,
-  memo: f.memo ?? '',
+  memo: f.memo || '',
   participantCount: f.participantCount,
 });
