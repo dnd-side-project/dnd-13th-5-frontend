@@ -171,7 +171,7 @@ export const SubscriptionsSection = () => {
         </div>
 
         {/* 리스트 */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 pb-10">
           {isLoading
             ? Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="h-[88px] rounded-2xl bg-gray-100" />
