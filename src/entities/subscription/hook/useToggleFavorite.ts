@@ -15,7 +15,7 @@ export const useToggleFavorite = (): UseMutationResult<ToggleFavoriteResponse, E
     mutationFn: toggleFavorite,
     onSuccess: () => {
       // 즐겨찾기 상태 변경 성공 시 관련 쿼리들을 무효화하여 최신 데이터 갱신
-      queryClient.invalidateQueries({ queryKey: ['mySubscriptions'] });
+      queryClient.invalidateQueries({ queryKey: ['my-subscriptions'] });
     },
     onError: error => {
       console.error('즐겨찾기 상태 변경 실패:', error);
