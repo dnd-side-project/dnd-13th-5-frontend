@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: waguwagu-client-frontend
+  S3_BUCKET_NAME: waguwagu.site
   CLOUDFRONT_DISTRIBUTION_ID: E12EB1H43ACUXJ
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
         run: pnpm run build
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
