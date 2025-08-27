@@ -46,6 +46,7 @@ export const Filter = ({
     <Dropdown>
       <DropdownTrigger asChild>
         <button
+          type="button"
           className={cn(
             'group flex items-center justify-center gap-1 w-[90px] border border-gray-100 rounded-[20px] px-3 py-2 typo-body-s-medium text-gray-800 bg-white hover:bg-gray-50 focus:outline-none  focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-300',
             sideOffset === 0 && '[state=open]:rounded-b-none data-[state=open]:border-b-0',
