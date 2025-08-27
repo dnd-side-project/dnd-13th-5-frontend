@@ -16,6 +16,8 @@ export type SubscriptionDetail = {
   participantCount: number;
   benefit: string;
   isFavorite: boolean;
+  productId: number;
+  isCustom: boolean;
 };
 
 // API 응답 타입
