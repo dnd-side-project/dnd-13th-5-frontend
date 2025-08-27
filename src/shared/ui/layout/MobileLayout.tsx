@@ -34,7 +34,8 @@ const MobileLayout = ({
 
         <main
           className={cn(
-            `app-body flex-grow p-5 ${showBottom && 'pb-[calc(56px+env(safe-area-inset-bottom))]'}`,
+            `app-body flex-grow p-5`,
+            showBottom && 'pb-[calc(56px+env(safe-area-inset-bottom))]',
             bodyColor,
             bodyClassName,
           )}
