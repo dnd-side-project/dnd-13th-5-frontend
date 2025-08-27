@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
 import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
@@ -35,6 +36,11 @@ const CAT_OPTIONS = [
 const Row = ({ item }: { item: SubscriptionService }) => {
   const toggleFavoriteMutation = useToggleFavorite();
 
+  const navigate = useNavigate();
+  const onNavigate = () => {
+    navigate(`/subscriptions/${item.id}`);
+  };
+
   const left = (
     <div className="gap-3 flex">
       <img
@@ -43,13 +49,16 @@ const Row = ({ item }: { item: SubscriptionService }) => {
         loading="lazy"
         aria-hidden
         className="size-[54px] rounded-xl object-cover"
+        onClick={onNavigate}
       />
       <div className="min-w-0">
         <div className="flex flex-col items-start gap-1">
           <Tag appearance="outline" color="red" className="py-[2px]">
             {item.category}
           </Tag>
-          <p className="typo-body-m-bold truncate">{item.name}</p>
+          <p className="typo-body-m-bold truncate" onClick={onNavigate}>
+            {item.name}
+          </p>
         </div>
       </div>
     </div>
