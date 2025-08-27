@@ -50,7 +50,7 @@ export const useDeleteMyInfo = () => {
   return useMutation({
     mutationFn: () => deleteMyInfo(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myInfo'] });
+      queryClient.removeQueries({ queryKey: ['myInfo'] });
     },
     onError: error => {
       console.error('Failed to delete my info:', error);
