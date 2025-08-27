@@ -1,6 +1,6 @@
 import type { Products } from '@/entities/product/api/fetchProducts';
 import apiClient from '@/shared/api/apiClient';
-import type { CategoryOption } from '@/shared/types/category.types';
+import type { CategoryParam } from '@/shared/types/category.types';
 
 type RecommendationsResponse = {
   data: {
@@ -8,9 +8,9 @@ type RecommendationsResponse = {
   };
 };
 
-export const fetchProductsRecommendations = async (query: CategoryOption): Promise<Products[]> => {
+export const fetchProductsRecommendations = async (query: CategoryParam): Promise<Products[]> => {
   const response = await apiClient.get<RecommendationsResponse>(`/products/recommendations`, {
-    params: { productId: query },
+    params: { category: query },
   });
 
   return response.data.data.products;
