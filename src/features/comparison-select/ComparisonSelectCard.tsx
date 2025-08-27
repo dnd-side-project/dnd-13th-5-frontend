@@ -1,29 +1,30 @@
 import React from 'react';
 
+import type { Products } from '@/entities/product/api/fetchProducts';
 import { Icons } from '@/shared/assets/icons';
 import { formatKRW } from '@/shared/lib/format';
 import { IconButton } from '@/shared/ui/button';
 import { Icon } from '@/shared/ui/icon';
-import type { ComparisonCardProps } from '@/widgets/comparison-card/model/types';
 
-const ComparisonCard = ({
-  serviceName,
-  imageUrl,
-  minPrice,
-  maxPrice,
+type Props = {
+  product: Products;
+  isSelected: boolean;
+  setIsSelected: () => void;
+  handleDetail: (id: number) => void;
+  isMySub?: boolean;
+};
+
+const ComparisonSelectCard = ({
+  product,
   isSelected,
   setIsSelected,
   handleDetail,
-  mySub,
-  myPrice,
-}: ComparisonCardProps) => {
+  isMySub,
+}: Props) => {
+  const { productId: id, name: serviceName, imageUrl, minPrice, maxPrice } = product;
+
   const handleCardClick = () => {
     setIsSelected();
-  };
-
-  const handleDetailButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    handleDetail?.();
   };
 
   const handleCheckboxClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -40,10 +41,11 @@ const ComparisonCard = ({
 
   const notMySubPriceInfo =
     maxPrice === null
-      ? `월 ${formatKRW(minPrice)}`
-      : `월 ${formatKRW(minPrice)} ~ ${formatKRW(maxPrice)}`;
+      ? `월 ${formatKRW(minPrice ?? 0)}`
+      : `월 ${formatKRW(minPrice ?? 0)} ~ ${formatKRW(maxPrice ?? 0)}`;
 
-  const mySubPriceInfo = myPrice && `요금제이름 ${formatKRW(myPrice)}`;
+  // const mySubPriceInfo = myPrice && `${planName} ${formatKRW(myPrice)}`;
+  const mySubPriceInfo = `요금제 ${formatKRW(15500)}`;
 
   return (
     <div
@@ -54,7 +56,7 @@ const ComparisonCard = ({
       aria-pressed={isSelected}
       onKeyDown={handleKeyDown}
     >
-      {!mySub && (
+      {!isMySub && (
         <div
           className="absolute top-[10px] left-[12px] h-6 w-6 cursor-pointer z-10" // 클릭 가능한 영역 추가
           onClick={handleCheckboxClick}
@@ -75,19 +77,23 @@ const ComparisonCard = ({
 
       <div className="flex items-center">
         <span className="typo-body-s-bold">{serviceName}</span>
+
         <IconButton
           icon={{ component: Icons.Right }}
           ariaLabel="자세히보기"
-          onClick={handleDetailButtonClick}
           className="hover:bg-gray-200 rounded-md transition-colors duration-300 ease-in-out"
+          onClick={e => {
+            e.stopPropagation();
+            handleDetail(id);
+          }}
         />
       </div>
 
       <span className="typo-label-s-medium text-gray-500">
-        {mySub ? mySubPriceInfo : notMySubPriceInfo}
+        {isMySub ? mySubPriceInfo : notMySubPriceInfo}
       </span>
     </div>
   );
 };
 
-export default ComparisonCard;
+export default ComparisonSelectCard;

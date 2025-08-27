@@ -1,11 +1,16 @@
-import type { Plans } from '@/entities/product/api/fetchPlans';
 import apiClient from '@/shared/api/apiClient';
+
+type ProductPlan = {
+  planId: number;
+  planName: string;
+  benefit: string;
+};
 
 export type ProductsInfo = {
   id: number;
   name: string;
   imageUrl: string;
-  plans: Plans[];
+  plans: ProductPlan[];
 };
 
 type ProductsInfoResponse = {
