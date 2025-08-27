@@ -53,7 +53,7 @@ export const toRegisterPayload = (f: RegisterForm) => {
 
   return {
     productId: f.productId,
-    planId: f.planId,
+    planId: derivedPlanId,
     payCycleUnit: f.payCycleUnit,
     startedAt: f.startedAt || null, // ISO 날짜 형식 또는 null
     paymentMethodId: f.paymentMethodId,

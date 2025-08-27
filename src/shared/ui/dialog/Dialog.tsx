@@ -7,8 +7,6 @@ import {
   Root as RadixRoot,
   Title as RadixTitle,
   Trigger as RadixTrigger,
-  type EscapeKeyDownEvent,
-  type PointerDownOutsideEvent,
 } from '@radix-ui/react-dialog';
 import type { ComponentProps } from 'react';
 import { forwardRef } from 'react';
@@ -47,10 +45,7 @@ export const DialogClose = (props: ComponentProps<typeof RadixClose>) => (
  * Overlay
  * -------------------------------------------------------------------------- */
 
-export const DialogOverlay = ({
-  className,
-  ...props
-}: ComponentProps<typeof RadixOverlay>) => (
+export const DialogOverlay = ({ className, ...props }: ComponentProps<typeof RadixOverlay>) => (
   <RadixOverlay
     data-slot="dialog-overlay"
     className={cn(
@@ -144,11 +139,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         data-slot="dialog-content"
         aria-label={ariaLabel}
         aria-describedby={describedById}
-        onPointerDownOutside={(e: PointerDownOutsideEvent) => {
+        onPointerDownOutside={e => {
           if (disableOutsideClose) e.preventDefault();
           props.onPointerDownOutside?.(e);
         }}
-        onEscapeKeyDown={(e: EscapeKeyDownEvent) => {
+        onEscapeKeyDown={e => {
           if (disableEscClose) e.preventDefault();
           props.onEscapeKeyDown?.(e);
         }}
@@ -195,10 +190,7 @@ DialogContent.displayName = 'DialogContent';
  * Header / Footer / Title / Description
  * -------------------------------------------------------------------------- */
 
-export const DialogHeader = ({
-  className,
-  ...props
-}: ComponentProps<'div'>) => (
+export const DialogHeader = ({ className, ...props }: ComponentProps<'div'>) => (
   <div
     data-slot="dialog-header"
     className={cn('flex flex-col gap-2 text-center', className)}
@@ -206,26 +198,12 @@ export const DialogHeader = ({
   />
 );
 
-export const DialogFooter = ({
-  className,
-  ...props
-}: ComponentProps<'div'>) => (
-  <div
-    data-slot="dialog-footer"
-    className={cn('flex w-full gap-2', className)}
-    {...props}
-  />
+export const DialogFooter = ({ className, ...props }: ComponentProps<'div'>) => (
+  <div data-slot="dialog-footer" className={cn('flex w-full gap-2', className)} {...props} />
 );
 
-export const DialogTitle = ({
-  className,
-  ...props
-}: ComponentProps<typeof RadixTitle>) => (
-  <RadixTitle
-    data-slot="dialog-title"
-    className={cn('typo-body-m-bold', className)}
-    {...props}
-  />
+export const DialogTitle = ({ className, ...props }: ComponentProps<typeof RadixTitle>) => (
+  <RadixTitle data-slot="dialog-title" className={cn('typo-body-m-bold', className)} {...props} />
 );
 
 export const DialogDescription = ({
@@ -243,16 +221,9 @@ export const DialogDescription = ({
  * 추가 조합 블록: Body / Actions
  * -------------------------------------------------------------------------- */
 
-export const DialogBody = ({
-  className,
-  ...props
-}: ComponentProps<'div'> & { id?: string }) => (
+export const DialogBody = ({ className, ...props }: ComponentProps<'div'> & { id?: string }) => (
   // id를 부여하고, Content의 describedById로 연결하면 스크린리더가 본문을 읽음
-  <div
-    data-slot="dialog-body"
-    className={cn('mt-1 space-y-3 text-sm', className)}
-    {...props}
-  />
+  <div data-slot="dialog-body" className={cn('mt-1 space-y-3 text-sm', className)} {...props} />
 );
 
 type ActionsAlign = 'start' | 'center' | 'end' | 'between';

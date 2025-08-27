@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import type { Product } from '@/entities/comparison/model/types';
-import type { CategoryParam, Subscription } from '@/entities/subscription/model/types';
+import type { Subscription } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
 import { ROUTES } from '@/shared/config/routes';
 import { cn } from '@/shared/lib';
 import { scrollToTop } from '@/shared/lib/scroll';
+import type { CategoryParam } from '@/shared/types/category.types';
 import { Button } from '@/shared/ui/button';
 import AlarmButton from '@/shared/ui/button/AlarmButton';
 import { ChipGroup, ChipItem } from '@/shared/ui/category';
@@ -179,7 +180,7 @@ export const ComparisonPage = () => {
         {/* 카테고리 */}
         <ChipGroup value={category} onValueChange={handleCategoryChange} className="gap-3 py-2">
           {CAT_OPTIONS.map(option => (
-            <ChipItem key={option.key} value={option.key} color="red">
+            <ChipItem key={option.key} value={option.key} color="default">
               {option.label}
             </ChipItem>
           ))}
