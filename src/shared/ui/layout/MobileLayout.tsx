@@ -25,7 +25,7 @@ const MobileLayout = ({
   const bodyColor = bodyVariant === 'gray' ? 'bg-gray-50' : 'bg-white';
 
   return (
-    <div className="min-h-dvh bg-gray-200 flex flex-coㅣ">
+    <div className="min-h-dvh bg-gray-200 flex flex-col">
       <div className="app-shell flex flex-col flex-grow text-gray-800 ">
         {showHeader && <Header {...headerProps} />}
 
