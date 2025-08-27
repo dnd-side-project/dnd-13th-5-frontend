@@ -84,9 +84,9 @@ const ComparisonCard = ({ icon, title, style }: (typeof CardContents)[number]) =
 // === 이미지 섹션 ===
 const HeroImagesSection = () => (
   <section className="space-y-[30px] mb-[30px]">
-    <img src={HomeOne} alt="info" />
-    <img src={HomeTwo} alt="info" />
-    <img src={HomeThree} alt="info" />
+    <img src={HomeOne} alt="와구와구 서비스 소개 이미지 1" />
+    <img src={HomeTwo} alt="와구와구 서비스 소개 이미지 2" />
+    <img src={HomeThree} alt="와구와구 서비스 소개 이미지 3" />
   </section>
 );
 
