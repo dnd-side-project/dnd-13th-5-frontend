@@ -4,8 +4,10 @@
   "semi": true,
   "tabWidth": 2,
   "useTabs": false,
-  "trailingComma": "es5",
-  "printWidth": 80,
+  "trailingComma": "all",
+  "printWidth": 100,
   "bracketSpacing": true,
-  "arrowParens": "always"
+  "arrowParens": "avoid",
+  "bracketSameLine": false,
+  "quoteProps": "as-needed"
 }

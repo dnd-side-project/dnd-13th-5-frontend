@@ -1,0 +1,24 @@
+'✨ Feature':
+  - head-branch: ['^feature', 'feature']
+'🐛 BugFix':
+  - head-branch: ['^hotfix', 'hotfix', '^fix', 'fix']
+'🔧 Refactor':
+  - head-branch: ['^refactor', 'refactor']
+'🧪 Test':
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.{spec,test}.{js,jsx,ts,tsx}']
+'📚 Docs':
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.md']
+'🎨 Html&css':
+  - head-branch: ['^design', 'design']
+  - changed-files:
+      - any-glob-to-any-file: ['**/*.{html,css}']
+'⚙️ Setting':
+  - changed-files:
+      - any-glob-to-any-file: ['package-lock.json', '.github/workflows/**']
+'🌎 Deploy':
+  - head-branch: ['^ci(?:/|-)cd', '^ci$', '^cd$', '^deploy', '^release']
+'📨 Api':
+  - changed-files:
+      - any-glob-to-any-file: ['src/**/api/**']
