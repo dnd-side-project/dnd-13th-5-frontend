@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useMyInfo } from '@/entities/member/hooks/useMyInfo';
 import {
   Logo,
@@ -15,7 +17,7 @@ import { Button } from '@/shared/ui/button';
 import LoginButton from '@/shared/ui/button/LoginButton';
 import { MobileLayout } from '@/shared/ui/layout';
 
-// === 카드 섹션 컴포넌트 ===
+// === 카드 내용 ===
 const CardContents = [
   {
     id: 0,
@@ -57,17 +59,19 @@ const CardContents = [
     icon: Brain,
     title: (
       <>
-        효율적인 활용으로 <br /> 서비스 극대화
+        효율적인 활용으로
+        <br />
+        서비스 극대화
       </>
     ),
     style: 'wagu',
   },
 ];
 
+// === 카드 컴포넌트 ===
 const ComparisonCard = ({ icon, title, style }: (typeof CardContents)[number]) => {
   const cardStyle =
     style === 'base' ? 'bg-primary-50 text-primary-700' : 'bg-secondary-200 text-white';
-
   return (
     <div
       className={cn(
@@ -81,16 +85,48 @@ const ComparisonCard = ({ icon, title, style }: (typeof CardContents)[number]) =
   );
 };
 
-// === 이미지 섹션 ===
-const HeroImagesSection = () => (
-  <section className="space-y-[30px] mb-[30px]">
-    <img src={HomeOne} alt="와구와구 서비스 소개 이미지 1" />
-    <img src={HomeTwo} alt="와구와구 서비스 소개 이미지 2" />
-    <img src={HomeThree} alt="와구와구 서비스 소개 이미지 3" />
+// === Hero 이미지 섹션 ===
+const HeroImagesSection = ({ onLoad }: { onLoad: () => void }) => {
+  const [loadedCount, setLoadedCount] = useState(0);
+  const images = [HomeOne, HomeTwo, HomeThree];
+
+  const handleImageLoad = () => {
+    setLoadedCount(prev => {
+      const next = prev + 1;
+      if (next === images.length) onLoad(); // 모든 이미지 로드 완료
+      return next;
+    });
+  };
+
+  return (
+    <section className="space-y-[30px] mb-[30px]">
+      {images.map((src, idx) => (
+        <img key={idx} src={src} alt={`Hero ${idx + 1}`} onLoad={handleImageLoad} />
+      ))}
+    </section>
+  );
+};
+
+// === Cards 섹션 ===
+const CardsSection = ({ visible }: { visible: boolean }) => (
+  <section
+    className={cn(
+      'bg-white mb-[30px] -mx-5 transition-opacity duration-700',
+      visible ? 'opacity-100' : 'opacity-0',
+    )}
+  >
+    <div className="px-5 py-[30px] space-y-5">
+      <h1 className="typo-title-l-bold">기존 방식 vs 와구와구</h1>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-5">
+        {CardContents.map(content => (
+          <ComparisonCard key={content.id} {...content} />
+        ))}
+      </div>
+    </div>
   </section>
 );
 
-// === 철학 섹션 ===
+// === Philosophy 섹션 ===
 const PhilosophySection = () => (
   <section className="space-y-10 pt-20">
     <div className="p-5 bg-white rounded-3xl border border-primary-700 flex justify-between items-start">
@@ -113,30 +149,18 @@ const PhilosophySection = () => (
       </h2>
       <span className="typo-body-m-medium">
         5분만 투자하면 당신의 모든 구독이
-        <br /> 체계적으로 정리됩니다
+        <br />
+        체계적으로 정리됩니다
       </span>
     </div>
     <Button variant="primary-fill" title={<>둘러보기</>} />
   </section>
 );
 
-// === 카드 목록 섹션 ===
-const CardsSection = () => (
-  <section className="bg-white mb-[30px] -mx-5">
-    <div className="px-5 py-[30px] space-y-5">
-      <h1 className="typo-title-l-bold">기존 방식 vs 와구와구</h1>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-5">
-        {CardContents.map(content => (
-          <ComparisonCard key={content.id} {...content} />
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
 // === HomePage ===
 export const HomePage = () => {
   const { data: _data } = useMyInfo();
+  const [heroLoaded, setHeroLoaded] = useState(false);
 
   const handleLogin = () => {};
 
@@ -149,8 +173,8 @@ export const HomePage = () => {
       bodyVariant="gray"
       bodyClassName="pb-52"
     >
-      <HeroImagesSection />
-      <CardsSection />
+      <HeroImagesSection onLoad={() => setHeroLoaded(true)} />
+      <CardsSection visible={heroLoaded} />
       <PhilosophySection />
 
       <footer className="fixed z-50 bottom-24 left-0 right-0 max-w-md w-full m-auto px-3">
