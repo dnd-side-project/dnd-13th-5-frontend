@@ -191,7 +191,7 @@ export const StepConfirm = ({ categoryLabel, onPrev, onSubmit }: ConfirmProps) =
         <PaymentDateField
           value={isUnknownDate ? null : (startedAt ?? null)}
           onChange={d => {
-              setValue('startedAt', d, { shouldDirty: true });
+            setValue('startedAt', d, { shouldDirty: true });
           }}
           disabled={isUnknownDate}
         />
@@ -247,7 +247,6 @@ export const StepConfirm = ({ categoryLabel, onPrev, onSubmit }: ConfirmProps) =
           variant="primary-fill"
           type="button"
           onClick={onSubmit}
-          className="w-full"
           disabled={!canSubmit}
           title="등록하기"
         />
