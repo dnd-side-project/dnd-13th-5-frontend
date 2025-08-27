@@ -82,7 +82,10 @@ const ComparisonSelectCard = ({
           icon={{ component: Icons.Right }}
           ariaLabel="자세히보기"
           className="hover:bg-gray-200 rounded-md transition-colors duration-300 ease-in-out"
-          onClick={() => handleDetail(id)}
+          onClick={e => {
+            e.stopPropagation();
+            handleDetail(id);
+          }}
         />
       </div>
 
