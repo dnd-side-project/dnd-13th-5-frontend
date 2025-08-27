@@ -84,15 +84,19 @@ export const StepConfirm = ({ categoryLabel, onPrev, onSubmit }: ConfirmProps) =
     // checked가 false인 경우는 사용자가 직접 날짜를 선택하도록 함
   };
 
-  // 제출 가능 여부(직접입력 모드에선 금액 필수)
+  // 제출 가능 여부(직접입력 모드에선 금액 필수, 결제일 미선택 시 결제일 필수)
   const canSubmit = useMemo(() => {
     if (isCustom) {
       if (!productName?.trim()) return false;
       if (!customPrice || Number.isNaN(customPrice) || customPrice <= 0) return false;
       if (!participantCount || participantCount < 1) return false;
     }
+    // 결제일 모름 체크박스가 체크되지 않은 경우, 결제일이 필수
+    if (!isUnknownDate && !startedAt) {
+      return false;
+    }
     return true;
-  }, [isCustom, productName, customPrice, participantCount]);
+  }, [isCustom, productName, customPrice, participantCount, isUnknownDate, startedAt]);
 
   return (
     <section className="space-y-6">
