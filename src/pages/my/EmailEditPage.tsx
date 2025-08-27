@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useUpdateMyInfo } from '@/entities/member/hooks/useMyInfo';
 import { ROUTES } from '@/shared/config/routes';
 import { validateEmail } from '@/shared/lib/validation';
 import { Button } from '@/shared/ui/button';
@@ -12,17 +13,22 @@ export const EmailEditPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
 
+  const { mutate: updateEmail, isPending } = useUpdateMyInfo();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const isDisabled = !validateEmail(email);
+  const isDisabled = !validateEmail(email) || isPending;
 
   const handleEditEmail = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 이메일 수정 API 호출
 
-    navigate(ROUTES.MY_PAGE);
+    updateEmail(email, {
+      onSuccess: () => {
+        navigate(ROUTES.MY_PAGE);
+      },
+    });
   };
 
   return (
@@ -43,7 +49,7 @@ export const EmailEditPage = () => {
               aria-invalid={isDisabled && email.length > 0}
               className={`focus:ring-0 transition-colors duration-200  ${isDisabled ? 'focus:border-primary-700' : ''}`}
             />
-            {isDisabled && email.length > 0 && (
+            {!validateEmail(email) && email.length > 0 && (
               <span className="typo-label-s-medium text-primary-700 p-5">
                 유효한 이메일을 입력해주세요
               </span>
