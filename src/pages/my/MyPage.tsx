@@ -34,7 +34,7 @@ export const MyPage = () => {
   const handleToggleAlarm = () => {
     const newAlarmState = !onOffAlarm;
     setOnOffAlarm(newAlarmState);
-    updateNotification(onOffAlarm, {
+    updateNotification(newAlarmState, {
       onError: () => {
         // API 요청 실패 시 UI 상태를 원래대로 되돌림
         setOnOffAlarm(!newAlarmState);
