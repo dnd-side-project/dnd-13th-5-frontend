@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -18,20 +19,30 @@ import UserInfoCard from '@/widgets/setting-card/ui/UserInfoCard';
 
 export const MyPage = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { data: user } = useMyInfo();
   const { mutate: deleteMyInfo } = useDeleteMyInfo();
-  const { mutate: updateNotification } = useUpdateMyNotification();
+  const { mutate: updateNotification, isPending: isUpdatingNotification } =
+    useUpdateMyNotification();
 
   const [onOffAlarm, setOnOffAlarm] = useState(user?.isNotificationOn ?? true);
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
   const [isWithdrawalDialogOpen, setIsWithdrawalDialogOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof user?.isNotificationOn === 'boolean') {
+      setOnOffAlarm(user.isNotificationOn);
+    }
+  }, [user?.isNotificationOn]);
 
   const handleEmailEdit = () => {
     navigate(ROUTES.EMAIL_EDIT);
   };
 
   const handleToggleAlarm = () => {
+    if (isUpdatingNotification) return;
+
     const newAlarmState = !onOffAlarm;
     setOnOffAlarm(newAlarmState);
     updateNotification(newAlarmState, {
@@ -45,6 +56,7 @@ export const MyPage = () => {
   const handleLogout = () => {
     setIsLogoutDialogOpen(false);
     clearAccessToken();
+    queryClient.clear();
     navigate(ROUTES.LOGIN);
   };
 
@@ -54,7 +66,8 @@ export const MyPage = () => {
     deleteMyInfo(undefined, {
       onSuccess: () => {
         clearAccessToken();
-        navigate(ROUTES.HOME);
+        queryClient.clear();
+        navigate(ROUTES.HOME, { replace: true });
       },
     });
   };
