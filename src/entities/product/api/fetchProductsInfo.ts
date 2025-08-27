@@ -1,6 +1,6 @@
 import apiClient from '@/shared/api/apiClient';
 
-type productPlans = {
+type ProductPlan = {
   planId: number;
   planName: string;
   benefit: string;
@@ -10,7 +10,7 @@ export type ProductsInfo = {
   id: number;
   name: string;
   imageUrl: string;
-  plans: productPlans[];
+  plans: ProductPlan[];
 };
 
 type ProductsInfoResponse = {
