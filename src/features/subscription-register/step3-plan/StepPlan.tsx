@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import type { Plans } from '@/entities/product/api/fetchPlans';
-import { usePlans } from '@/entities/product/hook/usePlans';
+import { usePlans } from '@/entities/product/hooks/usePlans';
 import type { RegisterForm } from '@/entities/subscription/model/register.types';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';

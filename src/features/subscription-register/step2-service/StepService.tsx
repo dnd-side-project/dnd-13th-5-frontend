@@ -2,7 +2,7 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useProducts } from '@/entities/product/hook/useProducts';
+import { useProducts } from '@/entities/product/hooks/useProducts';
 import { CATEGORY_META } from '@/entities/subscription/model/category.meta';
 import type { RegisterForm } from '@/entities/subscription/model/register.types';
 import type { CategoryOption } from '@/shared/types/category.types';
