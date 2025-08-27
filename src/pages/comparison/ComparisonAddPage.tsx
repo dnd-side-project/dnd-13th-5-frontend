@@ -1,68 +1,92 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ALL_SERVICES } from '@/pages/comparison/ComparisonPage';
+import { useProducts } from '@/entities/product/hooks/useProducts';
+import ComparisonAddCard from '@/features/comparison-add/ComparisonAddCard';
+import type { CategoryParam } from '@/shared/types/category.types';
 import { Button } from '@/shared/ui/button';
 import BackButton from '@/shared/ui/button/BackButton';
 import { MobileLayout } from '@/shared/ui/layout';
-import ComparisonAddCard from '@/widgets/comparison-card/ui/ComparisonAddCard';
 
 export const ComparisonAddPage = () => {
-  // 모든 서비스 가져오기
-  // const mySubs = getMySubscriptions();
-  // const allSub = getSubscriptions();
-
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const category = queryParams.get('category');
+  const category = queryParams.get('category') as CategoryParam;
   const [selectedSubs, setSelectedSubs] = useState<number[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const { data } = useProducts(category);
 
   const totalSelectedSubs = selectedSubs.length;
   const disabledButton = selectedSubs.length > 4 || selectedSubs.length < 1;
-  const selectButtonTitle = `${totalSelectedSubs < 1 ? '서비스를 선택하세요 (최대 4개 가능)' : `비교할 서비스 추가 (${totalSelectedSubs}/4)`}`;
-
-  const filteredServicesByCategory = ALL_SERVICES.filter(service => service.category === category);
 
   const handleSelectService = (id: number) => {
+    // 4개 초과 선택 시 흔들림 상태를 true로 설정
+    if (selectedSubs.length >= 4 && !selectedSubs.includes(id)) {
+      setIsDisabled(true);
+      return;
+    }
+
+    // 흔들림 상태 초기화
+    setIsDisabled(false);
+
     setSelectedSubs(prev =>
       prev.includes(id) ? prev.filter(subId => subId !== id) : [...prev, id],
     );
   };
 
   const handleAddService = () => {
-    navigate('/comparison', { state: { newSubs: selectedSubs, category } });
+    navigate(`/comparison?category=${category}`, {
+      replace: true,
+      state: { newSubs: selectedSubs, category },
+    });
   };
 
   return (
     <MobileLayout
-      // TODO: 뒤로 가기 버튼 수정 필요
       headerProps={{ leftSlot: <BackButton />, centerSlot: '서비스 선택' }}
       bodyVariant="gray"
       showBottom={false}
     >
-      <main className="py-8 space-y-4">
-        {filteredServicesByCategory.map(service => (
-          <ComparisonAddCard
-            key={service.id}
-            serviceName={service.name}
-            imageUrl={service.imageUrl}
-            minPrice={service.minPrice}
-            maxPrice={service.maxPrice}
-            isSelected={selectedSubs.includes(service.id)}
-            setIsSelected={() => handleSelectService(service.id)}
-          />
-        ))}
-      </main>
+      {data && (
+        <>
+          <main className="py-8 space-y-4 pb-[100px]">
+            {data.map(p => (
+              <ComparisonAddCard
+                key={p.productId}
+                serviceName={p.name}
+                imageUrl={p.imageUrl}
+                minPrice={p.minPrice}
+                maxPrice={p.maxPrice}
+                isSelected={selectedSubs.includes(p.productId)}
+                setIsSelected={() => handleSelectService(p.productId)}
+              />
+            ))}
+          </main>
 
-      <footer className="px-4 w-full m-auto max-w-md pb-[calc(56px+env(safe-area-inset-bottom))]">
-        <Button
-          variant="primary-fill"
-          title={selectButtonTitle}
-          disabled={disabledButton}
-          onClick={handleAddService}
-        />
-      </footer>
+          <footer className="w-full m-auto max-w-md fixed-bottom-safe fixed bottom-0 left-0 right-0 px-5">
+            <Button
+              variant="primary-fill"
+              title={
+                <>
+                  {totalSelectedSubs < 1 ? (
+                    '서비스를 선택하세요 (최대 4개 가능)'
+                  ) : (
+                    <span>
+                      비교할 서비스 추가 (
+                      <strong className="typo-body-m-bold">{totalSelectedSubs}/4</strong>)
+                    </span>
+                  )}
+                </>
+              }
+              // title={selectButtonTitle}
+              disabled={disabledButton}
+              onClick={handleAddService}
+              isShaking={isDisabled}
+            />
+          </footer>
+        </>
+      )}
     </MobileLayout>
   );
 };
