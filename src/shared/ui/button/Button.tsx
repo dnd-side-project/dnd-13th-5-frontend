@@ -9,8 +9,7 @@ export interface ButtonProps {
   title?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
-  buttonClassName?: string;
-  titleClassName?: string;
+  className?: string;
   isShaking?: boolean;
 }
 
@@ -49,7 +48,7 @@ const Button = ({
   title,
   onClick,
   disabled = false,
-  buttonClassName,
+  className,
   isShaking = false,
 }: ButtonProps) => {
   const currentVariant = buttonStyles[variant];
@@ -60,7 +59,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={cn(baseClasses, stateClasses, buttonClassName)}
+      className={cn(baseClasses, stateClasses, className)}
       // ✨ Framer Motion 속성 적용
       variants={shakeVariants}
       animate={isShaking ? 'shake' : 'idle'}
