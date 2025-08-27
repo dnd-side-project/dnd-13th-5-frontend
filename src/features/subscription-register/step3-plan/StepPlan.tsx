@@ -1,41 +1,16 @@
 // src/features/subscription-register/step3-plan/StepPlan.tsx
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import type { PlanOption, RegisterForm } from '@/entities/subscription/model/register.types';
+import type { Plans } from '@/entities/product/api/fetchPlans';
+import { usePlans } from '@/entities/product/hook/usePlans';
+import type { RegisterForm } from '@/entities/subscription/model/register.types';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import { Input } from '@/shared/ui/input';
 
 const NONE_ID = 0; // Step2에서 "구독 중인 서비스가 없어요" 선택 시 productId로 사용
-
-/** 간단한 가격 포맷터 (외부 의존 최소화) */
-const toKRW = (n: number) => `${n.toLocaleString('ko-KR')}원`;
-
-/** (임시) productId 별 요금제 더미 */
-const DUMMY_PLANS_BY_PRODUCT: Record<
-  number,
-  Array<{ id: number; name: string; price: number; benefit?: string }>
-> = {
-  101: [
-    { id: 1, name: 'basic', price: 7900, benefit: '광고o, FHD-1' },
-    { id: 2, name: 'standard', price: 13500, benefit: 'FHD-2 동시' },
-    { id: 3, name: 'premium', price: 17000, benefit: 'UHD-4 동시' },
-  ],
-  201: [
-    { id: 11, name: '와우 베이직', price: 4990, benefit: '로켓배송, 리워드' },
-    { id: 12, name: '와우 플러스', price: 8900, benefit: '영상 + 배송' },
-  ],
-  // 필요 시 추가…
-};
-
-type ApiResp = {
-  status: number;
-  code: string;
-  message: string;
-  data: { plans: Array<{ id: number; name: string; price: number; benefit?: string }> };
-};
 
 /**
  * Step3: 요금제 선택 + 인원 입력
@@ -47,14 +22,24 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
   const { setValue, watch, register, formState, trigger } = useFormContext<RegisterForm>();
 
   const productId = watch('productId');
+  const productName = watch('productName');
   const planId = watch('planId');
   const participant = watch('participantCount');
   const isCustom = productId === NONE_ID;
+  const { data, isLoading, isError } = usePlans(productId || 0);
 
-  console.log(planId, participant, formState.isValid);
-  const [options, setOptions] = useState<PlanOption[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState<string | null>(null);
+  /* ──────────────────────────────────────────────────────────────────────────
+   * ② 일반 모드: productId 변경 시 선택 초기화
+   * ────────────────────────────────────────────────────────────────────────── */
+  useEffect(() => {
+    if (!productId) return;
+
+    // 서비스가 바뀌면 이전 선택 초기화
+    setValue('planId', undefined, { shouldDirty: true });
+    setValue('selectedPlan', null, { shouldDirty: true });
+  }, [productId, setValue]);
+
+  const title = useMemo(() => '요금제를 선택해주세요.', []);
 
   /* ──────────────────────────────────────────────────────────────────────────
    * ① 직접입력 모드 (productId === 0)
@@ -106,39 +91,6 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
   }
 
   /* ──────────────────────────────────────────────────────────────────────────
-   * ② 일반 모드: productId 변경 시 요금제 로딩 & 선택 초기화
-   *    - planId, selectedPlan 모두 초기화
-   * ────────────────────────────────────────────────────────────────────────── */
-  useEffect(() => {
-    if (!productId) {
-      setOptions([]);
-      setLoading(false);
-      return;
-    }
-    // 서비스가 바뀌면 이전 선택 초기화
-    setValue('planId', undefined, { shouldDirty: true });
-    setValue('selectedPlan', null, { shouldDirty: true });
-
-    // (현재) 더미 사용
-    setLoading(true);
-    setErr(null);
-    const dummy = DUMMY_PLANS_BY_PRODUCT[productId] ?? [];
-    const mapped: PlanOption[] = dummy.map(p => ({
-      id: p.id,
-      name: p.name,
-      price: p.price, // 숫자 가격 보존
-      priceLabel: toKRW(p.price), // 표시용 라벨
-      benefit: p.benefit,
-    }));
-    setOptions(mapped);
-    setLoading(false);
-
-    // (추후) 실제 API
-  }, [productId, setValue]);
-
-  const title = useMemo(() => '요금제를 선택해주세요.', []);
-
-  /* ──────────────────────────────────────────────────────────────────────────
    * ③ 뷰
    *  - 라디오 선택 시 planId와 함께 selectedPlan 메타를 폼에 저장
    *    → StepConfirm에서 watch('selectedPlan')로 그대로 사용 가능
@@ -146,24 +98,28 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
   return (
     <section className="space-y-6">
       <header className="typo-title-m-bold">
-        구독중인 서비스의 <br />
+        구독중인 {productName}의 <br />
         {title}
       </header>
 
-      {/* 로딩/에러 핸들링 (간단 표시) */}
-      {loading && (
+      {/* 로딩/에러 핸들링 */}
+      {isLoading && (
         <div className="rounded-2xl border p-6 text-center text-gray-500">불러오는 중…</div>
       )}
-      {err && <div className="rounded-2xl border p-6 text-center text-primary-600">{err}</div>}
+      {isError && (
+        <div className="rounded-2xl border p-6 text-center text-primary-600">
+          요금제를 불러오는 중 오류가 발생했어요.
+        </div>
+      )}
 
-      {!loading && !err && (
+      {!isLoading && !isError && (
         <div className="space-y-3" role="radiogroup" aria-label="요금제 선택">
-          {(options ?? []).length === 0 ? (
+          {!data || data.length === 0 ? (
             <div className="rounded-2xl border border-dashed p-6 text-center text-gray-500">
               해당 서비스의 요금제가 없어요.
             </div>
           ) : (
-            options!.map(p => {
+            data.map((p: Plans) => {
               const selected = planId === p.id;
               return (
                 <label key={p.id} className="block">
@@ -181,7 +137,6 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
                           id: p.id!,
                           name: p.name,
                           price: p.price,
-                          priceLabel: p.priceLabel,
                           benefit: p.benefit,
                         },
                         { shouldDirty: true },
@@ -190,10 +145,10 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
                   />
                   <ContentsCard
                     left={<span className="typo-title-s-bold">{p.name}</span>}
-                    right={<span className="typo-title-s-bold text-gray-800">{p.priceLabel}</span>}
+                    right={<span className="typo-title-s-bold text-gray-800">{p.price}원</span>}
                     className={cn(
-                      'rounded-2xl bg-white',
-                      selected ? 'ring-1 ring-primary-600' : 'ring-1 ring-transparent',
+                      'rounded-2xl bg-white border box-border',
+                      selected ? 'border-primary-700' : 'border-gray-100',
                     )}
                   />
                 </label>
@@ -223,7 +178,7 @@ export const StepPlan = ({ onPrev, onNext }: { onPrev: () => void; onNext: () =>
         <Button
           variant="primary-fill"
           onClick={onNext}
-          disabled={!planId || !participant || !formState.isValid}
+          disabled={!planId || !participant}
           title="다음"
         />
       </div>

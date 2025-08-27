@@ -1,6 +1,8 @@
+import type { PayUnit } from './register.types';
+
 // entities/subscription/model/edit.types.ts
 export type PlanOption = { id: string; name: string; priceLabel: string }; // "월 7,000원" 같은 표시용
-export type BillingCycleOption = { value: number; label: string }; // 1/3/6/12달 등
+export type BillingCycleOption = { value: PayUnit; label: string }; // 1/3/6/12달 등
 
 export type MethodKind = 'CARD' | 'ACCOUNT' | 'EASY';
 export type MethodOption = { id: number; label: string };

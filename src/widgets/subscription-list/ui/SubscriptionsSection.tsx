@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
 
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
-import type { CategoryOption } from '@/entities/subscription/api/fetchProducts';
-import { useMySubscription } from '@/entities/subscription/hooks/useMySubscription';
+import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
+import { useToggleFavorite } from '@/entities/subscription/hook/useToggleFavorite';
 import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
 import { formatKRW } from '@/shared/lib/format';
+import type { CategoryOption } from '@/shared/types/category.types';
 import { ChipGroup, ChipItem } from '@/shared/ui/category';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import { Filter } from '@/shared/ui/filter';
@@ -14,7 +15,7 @@ import { Tag } from '@/shared/ui/tag';
 // Filter 컴포넌트에 맞는 형식으로 변경
 const SORT_FILTER_OPTIONS = [
   { key: 'NAME', label: '이름순' },
-  { key: 'PRICE', label: '가격순' },
+  { key: 'CHEAPEST', label: '가격순' },
   { key: 'DUESOON', label: '결제임박순' },
   { key: 'OLDESTFIRST', label: '오래된순' },
 ];
@@ -32,6 +33,8 @@ const CAT_OPTIONS = [
 ];
 
 const Row = ({ item }: { item: SubscriptionService }) => {
+  const toggleFavoriteMutation = useToggleFavorite();
+
   const left = (
     <div className="gap-3 flex">
       <img
@@ -90,7 +93,7 @@ const Row = ({ item }: { item: SubscriptionService }) => {
         className="rounded-full flex h-full mt-1 align-top focus-visible:ring-2 focus-visible:ring-emerald-500/40"
         onClick={e => {
           e.stopPropagation();
-          // TODO: optimistic toggleStar(item.id)
+          toggleFavoriteMutation.mutate(item.id);
         }}
         title="즐겨찾기"
       >
@@ -116,16 +119,19 @@ const Row = ({ item }: { item: SubscriptionService }) => {
 export const SubscriptionsSection = () => {
   // 탭/필터 로컬 상태 (URL은 변경하지 않음)
   const [tab, setTab] = useState<'ALL' | 'FAVORITES'>('ALL');
-  const [category, setCategory] = useState<CategoryOption>('ALL');
+  const [category, setCategory] = useState<'ALL' | CategoryOption>('ALL');
   const [sort, setSort] = useState<SortParam>('NAME');
 
+  // 'ALL'을 null로 변환하여 API 호출
+  const apiCategory = category === 'ALL' ? null : category;
+
   const { data, isLoading } = useMySubscription({
-    category: category === 'ALL' ? undefined : category,
+    category: apiCategory,
     sort,
   });
 
   const handleCategoryChange = (value: string | null) => {
-    setCategory((value ?? 'ALL') as CategoryOption);
+    setCategory((value ?? 'ALL') as 'ALL' | CategoryOption);
   };
 
   const list: SubscriptionService[] = useMemo(() => {
@@ -160,7 +166,7 @@ export const SubscriptionsSection = () => {
           />
           <ChipGroup value={category} onValueChange={handleCategoryChange}>
             {CAT_OPTIONS.map(c => (
-              <ChipItem key={c.key ?? 'ALL'} value={c.key ?? 'ALL'} color="default">
+              <ChipItem key={c.key} value={c.key} color="default">
                 {c.label}
               </ChipItem>
             ))}
@@ -168,7 +174,7 @@ export const SubscriptionsSection = () => {
         </div>
 
         {/* 리스트 */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 pb-10">
           {isLoading
             ? Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="h-[88px] rounded-2xl bg-gray-100" />

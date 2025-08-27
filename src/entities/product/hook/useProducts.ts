@@ -1,10 +1,12 @@
+import type { UseQueryResult } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
 import type { CategoryOption } from '@/shared/types/category.types';
 
+import type { Products } from '../api/fetchProducts';
 import { fetchProducts } from '../api/fetchProducts';
 
-export const useProducts = (category: CategoryOption) =>
+export const useProducts = (category: CategoryOption): UseQueryResult<Products[], Error> =>
   useQuery({
     queryKey: ['products', category],
     queryFn: () => fetchProducts(category),

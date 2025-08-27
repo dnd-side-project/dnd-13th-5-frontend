@@ -3,9 +3,12 @@ import type { CategoryOption } from '@/shared/types/category.types';
 
 // API 응답 전체에 대한 타입 (선택적)
 type ProductsResponse = {
+  status: number;
+  code: string;
+  message: string;
   data: {
-    products: Products[];
-  }; // 실제 데이터는 data 객체 안에 있습니다.
+    products: Products[]; // 실제 데이터는 data.products 배열 안에 있습니다.
+  };
 };
 
 // 실제 사용자 정보 데이터에 대한 타입

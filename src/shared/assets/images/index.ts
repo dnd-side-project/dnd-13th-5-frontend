@@ -7,6 +7,7 @@ import CategoryMusic from './category-music.webp';
 import CategoryOTT from './category-ott.webp';
 import CategoryProductivity from './category-productivity.webp';
 import CategoryShopping from './category-shopping.webp';
+import Logo from './logo_4x.webp';
 
 export const CategoryImages = {
   OTT: CategoryOTT,
@@ -19,3 +20,5 @@ export const CategoryImages = {
   Delivery: CategoryDelivery,
   Default: CategoryEtc,
 };
+
+export { Logo };
