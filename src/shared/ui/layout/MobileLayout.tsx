@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import { cn } from '@/shared/lib';
 import BottomNavigation from '@/shared/ui/bottom-navigation/BottomNavigation';
 import type { HeaderProps } from '@/shared/ui/header/Header';
 import Header from '@/shared/ui/header/Header';
@@ -13,6 +14,7 @@ interface MobileLayoutProps {
   showBottom?: boolean;
   headerProps?: HeaderProps;
   bodyVariant?: BodyVariant;
+  bodyClassName?: string;
 }
 
 const MobileLayout = ({
@@ -21,6 +23,7 @@ const MobileLayout = ({
   showBottom = true,
   headerProps,
   bodyVariant = 'white',
+  bodyClassName,
 }: MobileLayoutProps) => {
   const bodyColor = bodyVariant === 'gray' ? 'bg-gray-50' : 'bg-white';
 
@@ -30,7 +33,11 @@ const MobileLayout = ({
         {showHeader && <Header {...headerProps} />}
 
         <main
-          className={`app-body flex-grow p-5 ${bodyColor} ${showBottom ? 'pb-[calc(56px+env(safe-area-inset-bottom))]' : ''}`}
+          className={cn(
+            `app-body flex-grow p-5 ${showBottom && 'pb-[calc(56px+env(safe-area-inset-bottom))]'}`,
+            bodyColor,
+            bodyClassName,
+          )}
         >
           <section className="cols-6 gap-2">
             <div className="col-span-6">{children ?? <Outlet />}</div>
