@@ -7,7 +7,21 @@ import type { RecommentSubSectionProps } from '@/widgets/comparison-section/mode
 const RecommendSubSection = ({ category, handleDetail }: RecommentSubSectionProps) => {
   const { data: products, isLoading } = useProductsRecommendations(category as CategoryParam);
 
-  console.log('random services: ', products);
+  if (!category) return null; // 카테고리 미선택 시 비노출
+
+  if (isLoading) {
+    return (
+      <section>
+        <header className="flex items-center gap-5 mb-[18px] ">
+          <h1 className="typo-title-l-bold">이런 서비스는 어때요?</h1>
+        </header>
+        <div className="bg-gray-50 rounded-[10px] px-[15px] py-[30px] space-y-4">
+          <div className="h-[84px] bg-white rounded-[10px] animate-pulse" />
+          <div className="h-[84px] bg-white rounded-[10px] animate-pulse" />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section>
