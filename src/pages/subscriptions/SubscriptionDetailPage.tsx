@@ -6,9 +6,20 @@ import { useToggleFavorite } from '@/entities/subscription';
 import { useSubscriptionDetail } from '@/entities/subscription/hook/useSubscriptionDetail';
 import { Icons } from '@/shared/assets/icons';
 import { ROUTES } from '@/shared/config/routes';
-import BackButton from '@/shared/ui/button/BackButton';
+import { IconButton } from '@/shared/ui/button';
 import { MobileLayout } from '@/shared/ui/layout';
 import { SubscriptionDetailWidget } from '@/widgets/subscription-detail/ui/SubscriptionDetailWidget';
+
+const CustomBackButton = () => {
+  const navigate = useNavigate();
+  return (
+    <IconButton
+      icon={{ component: Icons.Left }}
+      ariaLabel="뒤로가기"
+      onClick={() => navigate(ROUTES.SUBSCRIPTIONS)}
+    />
+  );
+};
 
 const SubscriptionRightSlot = ({ id, isFavorite }: { id: string; isFavorite?: boolean }) => {
   const navigate = useNavigate();
@@ -64,7 +75,7 @@ export const SubscriptionDetailPage = () => {
       <MobileLayout
         showBottom={false}
         headerProps={{
-          leftSlot: <BackButton />,
+          leftSlot: <CustomBackButton />,
         }}
       >
         <div className="flex justify-center items-center h-32">
@@ -79,7 +90,7 @@ export const SubscriptionDetailPage = () => {
       <MobileLayout
         showBottom={false}
         headerProps={{
-          leftSlot: <BackButton />,
+          leftSlot: <CustomBackButton />,
         }}
       >
         <div className="flex justify-center items-center h-32">
@@ -93,7 +104,7 @@ export const SubscriptionDetailPage = () => {
     <MobileLayout
       showBottom={false}
       headerProps={{
-        leftSlot: <BackButton />,
+        leftSlot: <CustomBackButton />,
         rightSlot: (
           <SubscriptionRightSlot id={id ?? '0'} isFavorite={subscriptionDetail?.isFavorite} />
         ),
