@@ -84,7 +84,7 @@ export const ServiceIdentity = ({
         </h3>
 
         {/* 기존 Tag 컴포넌트 활용 (outline 스타일 가정) */}
-        <Tag appearance="outline" color="red" className="py-[2px]">
+        <Tag appearance="outline" color="red" className={cn('py-0.5', tagClassName)}>
           {category ? CATEGORY_META[category]?.label || CATEGORY_FALLBACK(category).label : '기타'}
         </Tag>
       </figcaption>
