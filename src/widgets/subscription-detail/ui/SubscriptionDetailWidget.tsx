@@ -1,4 +1,4 @@
-import type { SubscriptionDetail } from '@/entities/subscription';
+import type { SubscriptionDetail } from '@/entities/subscription/api/fetchSubscriptionDetail';
 import { Icons } from '@/shared/assets/icons';
 import { formatCycleUnit, formatKRW } from '@/shared/lib/format';
 import { parseBenefit } from '@/shared/lib/parseBenefit';
@@ -9,25 +9,6 @@ import { ServiceIdentity } from '@/shared/ui/service-identity';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tab';
 import { Tag } from '@/shared/ui/tag';
 
-/*
-export type SubscriptionDetail = {
-  id: number;
-  productName: string;
-  category: string;
-  imageUrl: string;
-  payCycleUnit: string;
-  startedAt: string;
-  totalPaymentCount: number;
-  price: number;
-  planName: string;
-  paymentMethodId: number;
-  memo: string;
-  participantCount: number;
-  benefit: string;
-  isFavorite: boolean;
-};
-
-*/
 export const SubscriptionDetailWidget = ({
   subscriptionDetail,
 }: {
@@ -149,7 +130,7 @@ export const SubscriptionDetailWidget = ({
             <Button
               variant="primary-fill"
               title="삭제하기"
-              buttonClassName="bg-white border-gray-100 text-gray-500"
+              className="bg-white border-gray-100 text-gray-500"
             />
             <Button variant="primary-stroke" title="해지하기" />
           </div>
