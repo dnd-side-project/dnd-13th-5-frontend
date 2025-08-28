@@ -116,13 +116,9 @@ export const SubscriptionDetailWidget = ({
               right={<img src={Icons.Right2} alt="메모 수정하기" className="w-6 h-[21px]" />}
             />
             <ContentsCardStacked.Divider />
-            {data.memo && (
-              <ContentsCardStacked.Note>
-                {data.memo.length === 0
-                  ? '메모가 없습니다. 구독에 대한 메모를 남겨보세요.'
-                  : data.memo}
-              </ContentsCardStacked.Note>
-            )}
+            <ContentsCardStacked.Note>
+              {data.memo.length > 0 ? data.memo : '메모가 없습니다. 구독에 대한 메모를 남겨보세요.'}
+            </ContentsCardStacked.Note>
           </ContentsCardStacked>
 
           {/* 하단 액션 버튼 */}
