@@ -13,10 +13,8 @@ type PlansResponse = {
   };
 };
 
-export const fetchPlans = async (query: number): Promise<Plans[]> => {
-  const response = await apiClient.get<PlansResponse>(`/products/${query}/plans`, {
-    params: { productId: query },
-  });
+export const fetchPlans = async (productId: number): Promise<Plans[]> => {
+  const response = await apiClient.get<PlansResponse>(`/products/${productId}/plans`);
 
   return response.data.data.plans;
 };
