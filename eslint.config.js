@@ -181,4 +181,8 @@ export default [
       '@typescript-eslint/no-unused-vars': 'off',
     },
   },
+
+  {
+    ignores: ['dist/', 'build/', 'node_modules/'],
+  },
 ];

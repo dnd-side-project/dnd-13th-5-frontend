@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchProductsRecommendations } from '@/entities/product/api/fetchProductsRecommendations';
-import type { CategoryOption } from '@/shared/types/category.types';
+import type { CategoryParam } from '@/shared/types/category.types';
 
-
-export const useProductsRecommendations = (category: CategoryOption) =>
+export const useProductsRecommendations = (category: CategoryParam) =>
   useQuery({
     queryKey: ['productsRecommendations', category],
     queryFn: () => fetchProductsRecommendations(category),

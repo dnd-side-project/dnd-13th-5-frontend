@@ -6,6 +6,8 @@ import type {
   InternalAxiosRequestConfig,
 } from 'axios';
 
+import { ROUTES } from '@/shared/config/routes';
+
 import {
   clearAccessToken,
   extractAccessFromHeaders,
@@ -53,7 +55,8 @@ interface AuthRequestConfig extends InternalAxiosRequestConfig {
  */
 export const requestInterceptor = (config: AuthRequestConfig): AuthRequestConfig => {
   // 'skipAuth' 플래그가 true이면 인증 헤더를 추가하지 않습니다. (예: 토큰 재발급 요청)
-  if (config.skipAuth) {
+  const isPublicRoute = config.url === ROUTES.HOME;
+  if (config.skipAuth || isPublicRoute) {
     return config;
   }
 

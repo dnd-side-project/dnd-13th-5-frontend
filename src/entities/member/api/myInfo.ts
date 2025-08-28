@@ -23,3 +23,29 @@ export const fetchMyInfo = async (): Promise<MyInfo> => {
   const response = await apiClient.get<MyInfoResponse>('/member/my/info');
   return response.data.data; // 서버 응답의 data 객체 안의 data를 반환합니다.
 };
+
+/**
+ * 현재 로그인된 사용자의 정보를 수정하는 API 함수입니다.
+ * @param {string} email - 변경할 이메일 주소입니다.
+ */
+export const updateMyInfo = async (email: string): Promise<MyInfo> => {
+  const response = await apiClient.patch<MyInfoResponse>('/member/my/info', { email });
+  return response.data.data; // 서버 응답의 data 객체 안의 data를 반환합니다.
+};
+
+/**
+ * 내 이메일 알람 상태를 수정하는 API 함수입니다.
+ */
+export const updateMyNotification = async (isNotificationOn: boolean): Promise<MyInfo> => {
+  const response = await apiClient.patch<MyInfoResponse>('/member/my/notification', {
+    isNotificationOn,
+  });
+  return response.data.data; // 서버 응답의 data 객체 안의 data를 반환합니다.
+};
+
+/**
+ * 회원 탈퇴하는 API 함수입니다.
+ */
+export const deleteMyInfo = async (): Promise<void> => {
+  await apiClient.delete('/member/withdraw');
+};
