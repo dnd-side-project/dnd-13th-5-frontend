@@ -4,8 +4,21 @@ import type { CategoryParam } from '@/shared/types/category.types';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import type { RecommentSubSectionProps } from '@/widgets/comparison-section/model/types';
 
+// const getRandomPlan = (plans = []) => {
+//   if (plans.length === 0) {
+//     return null;
+//   }
+
+//   const randomIndex = Math.floor(Math.random() * plans.length);
+//   return plans[randomIndex];
+// };
+
 const RecommendSubSection = ({ category, handleDetail }: RecommentSubSectionProps) => {
-  const { data: products, isLoading } = useProductsRecommendations(category as CategoryParam);
+  const { data: products = [], isLoading } = useProductsRecommendations(category as CategoryParam);
+
+  // const productsIds = products?.map(product => product.productId);
+  // const { data: firstPlans } = usePlans(productsIds[0]);
+  // const { data: secontPlans } = usePlans(productsIds[1]);
 
   if (!category) return null; // 카테고리 미선택 시 비노출
 
@@ -34,28 +47,54 @@ const RecommendSubSection = ({ category, handleDetail }: RecommentSubSectionProp
 
         {/* 랜덤으로 카테고리에 해당하는 2개 서비스 보여주기 */}
         <div className="space-y-4">
-          {products?.map(p => (
-            <ContentsCard
-              key={p.productId}
-              left={
-                <div className="flex items-center gap-5">
-                  <img src={p.imageUrl} alt={p.name} className="h-9 w-9 rounded-lg" />
+          {products?.map(p => {
+            // const radomPlan = getRandomPlan(p.plans);
+            const priceInfo =
+              p.maxPrice === null ? (
+                `월 ${formatKRW(p.minPrice)}`
+              ) : (
+                <>
+                  월 {formatKRW(p.minPrice)} <br /> ~ {formatKRW(p.maxPrice)}
+                </>
+              );
+            return (
+              // <ContentsCard
+              //   key={p.productId}
+              //   left={
+              //     <div className="flex items-center gap-5">
+              //       <img src={p.imageUrl} alt={p.name} className="h-9 w-9 rounded-lg" />
 
-                  <div className="flex flex-col gap-1">
-                    <span className="typo-body-m-bold">{p.name}</span>
-                    <div className="space-x-1 text-gray-700">
-                      {/* <span className="typo-body-m-bold">{p.plans[0].planName}</span> */}
-                      <span className="typo-body-m-bold">요금제 이름</span>
-                      <span className="typo-body-m-medium">월 {formatKRW(15500)}</span>
-                    </div>
+              //       <div className="flex flex-col gap-1">
+              //         <span className="typo-body-m-bold">{p.name}</span>
+              //         <div className="space-x-1 text-gray-700">
+              //           {/* <span className="typo-body-m-bold">{p.plans[0].planName}</span> */}
+              //           <span className="typo-body-m-bold">요금제</span>
+              //           <span className="typo-body-m-medium">월 {formatKRW(15500)}</span>
+              //         </div>
+              //       </div>
+              //     </div>
+              //   }
+              //   className="bg-white rounded-[10px] h-[84px]"
+              //   interactive={true}
+              //   onClick={() => handleDetail(p.productId)}
+              // />
+
+              <ContentsCard
+                key={p.productId}
+                left={
+                  <div className="flex items-center gap-[22px]">
+                    <img src={p.imageUrl} alt={p.name} className="h-12 w-12 rounded-lg" />
+                    <span className="typo-title-m-bold flex-grow">{p.name}</span>
                   </div>
-                </div>
-              }
-              className="bg-white rounded-[10px] h-[84px]"
-              interactive={true}
-              onClick={() => handleDetail(p.productId)}
-            />
-          ))}
+                }
+                right={<span className="typo-body-m-medium text-right">{priceInfo}</span>}
+                className={`bg-white`}
+                interactive={true}
+                onClick={() => handleDetail(p.productId)}
+                ariaLabel="추천 서비스 카드"
+              />
+            );
+          })}
         </div>
       </div>
     </section>

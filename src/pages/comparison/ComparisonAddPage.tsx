@@ -15,7 +15,11 @@ export const ComparisonAddPage = () => {
   const category = queryParams.get('category') as CategoryParam;
   const [selectedSubs, setSelectedSubs] = useState<number[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
-  const { data } = useProducts(category);
+  const { data: products, isLoading, isError } = useProducts(category);
+  // const { data: mySubs = { services: [] } } = useMySubscription({ category, sort: 'NAME' });
+
+  // const filteredMySubsName = mySubs.services?.map(service => service.name);
+  // const filteredProducts = products?.filter(product => !filteredMySubsName.includes(product.name));
 
   const totalSelectedSubs = selectedSubs.length;
   const disabledButton = selectedSubs.length > 4 || selectedSubs.length < 1;
@@ -42,16 +46,62 @@ export const ComparisonAddPage = () => {
     });
   };
 
+  if (isLoading) {
+    return (
+      <MobileLayout
+        headerProps={{ leftSlot: <BackButton />, centerSlot: '서비스 선택' }}
+        bodyVariant="gray"
+        showBottom={false}
+      >
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-60px-80px)] space-y-2">
+          <p className="typo-body-m-medium text-gray-500">불러오는 중…</p>
+        </div>
+      </MobileLayout>
+    );
+  }
+
+  // 에러
+  if (isError) {
+    return (
+      <MobileLayout
+        headerProps={{ leftSlot: <BackButton />, centerSlot: '서비스 선택' }}
+        bodyVariant="gray"
+        showBottom={false}
+      >
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-60px-80px)] space-y-2">
+          <p className="typo-body-m-bold text-gray-700">문제가 발생했어요</p>
+          <p className="typo-body-m-medium text-gray-500">잠시 후 다시 시도해주세요.</p>
+        </div>
+      </MobileLayout>
+    );
+  }
+
+  // 데이터가 없을 경우 (products가 null이거나 빈 배열일 때)
+  if (products?.length === 0) {
+    return (
+      <MobileLayout
+        headerProps={{ leftSlot: <BackButton />, centerSlot: '서비스 선택' }}
+        bodyVariant="gray"
+        showBottom={false}
+      >
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-60px-80px)] space-y-2">
+          <p className="typo-body-m-bold text-gray-700">등록된 서비스가 없어요</p>
+          <p className="typo-body-m-medium text-gray-500">나중에 다시 방문해주세요!</p>
+        </div>
+      </MobileLayout>
+    );
+  }
+
   return (
     <MobileLayout
       headerProps={{ leftSlot: <BackButton />, centerSlot: '서비스 선택' }}
       bodyVariant="gray"
       showBottom={false}
     >
-      {data && (
+      {products && (
         <>
           <main className="py-8 space-y-4 pb-[100px]">
-            {data.map(p => (
+            {products.map(p => (
               <ComparisonAddCard
                 key={p.productId}
                 serviceName={p.name}

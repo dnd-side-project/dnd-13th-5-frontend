@@ -4,8 +4,8 @@ export type CategoryParam =
   | 'MUSIC'
   | 'CLOUD'
   | 'AI'
-  | 'EDUCATION'
-  | 'DELIVERY'
-  | 'PRODUCTIVITY';
+  // | 'EDUCATION'
+  | 'DELIVERY';
+// | 'PRODUCTIVITY';
 
 export type CategoryOption = CategoryParam | null;

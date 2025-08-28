@@ -19,7 +19,7 @@ export const TabsList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={cn('flex', className)} // cx로 기본 스타일 적용
+    className={cn('flex text-center break-keep', className)} // cx로 기본 스타일 적용
     {...props}
   />
 ));
