@@ -1,7 +1,7 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import type { UpdateSubscriptionPayload as ApiUpdateSubscriptionPayload } from '@/entities/subscription/api/updateSubscription';
 import { useSubscriptionDetail } from '@/entities/subscription/hook/useSubscriptionDetail';
 import { useUpdateSubscription } from '@/entities/subscription/hook/useUpdateSubscription';
 import type { PayUnit } from '@/entities/subscription/model/register.types';
@@ -22,20 +22,10 @@ type SubscriptionEditForm = {
   memo: string;
 };
 
-// 서버 업데이트 요청 스펙
-type UpdateSubscriptionPayload = {
-  planId: number;
-  productName: string;
-  price: number;
-  participantCount: number;
-  payCycleUnit: PayUnit;
-  startedAt: string | null;
-  paymentMethodId: number;
-  memo: string;
-};
-
 // 폼 데이터를 서버 요청 스펙으로 변환
-const toUpdatePayload = (formData: SubscriptionEditForm): UpdateSubscriptionPayload => ({
+const toUpdatePayload = (
+  formData: SubscriptionEditForm,
+): Omit<ApiUpdateSubscriptionPayload, 'subscriptionId'> => ({
   planId: formData.planId,
   productName: formData.productName,
   price: formData.price,
@@ -50,7 +40,6 @@ export const SubscriptionEditPage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(false);
-  const queryClient = useQueryClient();
 
   const updateSubscriptionMutation = useUpdateSubscription();
 
@@ -101,7 +90,7 @@ export const SubscriptionEditPage = () => {
   };
 
   const handleCancel = () => {
-    navigate(-1);
+    navigate(`/subscriptions/${subscriptionId}`);
   };
 
   // 구독 상세 정보에서 defaultValues 추출
