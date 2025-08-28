@@ -11,9 +11,11 @@ import { useForm } from 'react-hook-form';
 // API 관련 타입 및 훅 imports
 import type { Plans } from '@/entities/product/api/fetchPlans';
 import { usePlans } from '@/entities/product/hooks/usePlans';
-import { transformToMethodOptions, usePaymentMethods } from '@/entities/subscription';
-import type { MethodKind, MethodOptionsByKind } from '@/entities/subscription/model';
 // UI 컴포넌트 imports
+import { transformToMethodOptions } from '@/entities/subscription/api/fetchPaymentMethods';
+import { usePaymentMethods } from '@/entities/subscription/hook/usePaymentMethods';
+import type { MethodKind } from '@/entities/subscription/model/edit.types';
+import type { MethodOptionsByKind } from '@/entities/subscription/model/register.types';
 import { BillingCycleRadio } from '@/features/subscription-edit/ui/BillingCycleRadio';
 import { PaymentDateField } from '@/features/subscription-edit/ui/PaymentDateField';
 import { PaymentMethodPicker } from '@/features/subscription-edit/ui/PaymentMethodPicker';

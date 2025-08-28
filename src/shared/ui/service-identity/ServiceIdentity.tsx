@@ -1,6 +1,6 @@
 import { useEffect, useId, useState } from 'react';
 
-import { CATEGORY_FALLBACK, CATEGORY_META } from '@/entities/subscription/model';
+import { CATEGORY_FALLBACK, CATEGORY_META } from '@/entities/subscription/model/category.meta';
 import { cn } from '@/shared/lib/utils'; // clsx + tailwind-merge 유틸
 import { Tag } from '@/shared/ui/tag';
 

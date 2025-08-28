@@ -2,8 +2,8 @@ import type { MouseEvent } from 'react';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useToggleFavorite } from '@/entities/subscription';
 import { useSubscriptionDetail } from '@/entities/subscription/hook/useSubscriptionDetail';
+import { useToggleFavorite } from '@/entities/subscription/hook/useToggleFavorite';
 import { Icons } from '@/shared/assets/icons';
 import { ROUTES } from '@/shared/config/routes';
 import { IconButton } from '@/shared/ui/button';

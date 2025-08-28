@@ -2,8 +2,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useSubscriptionDetail, useUpdateSubscription } from '@/entities/subscription/hook';
-import type { PayUnit } from '@/entities/subscription/model';
+import { useSubscriptionDetail } from '@/entities/subscription/hook/useSubscriptionDetail';
+import { useUpdateSubscription } from '@/entities/subscription/hook/useUpdateSubscription';
+import type { PayUnit } from '@/entities/subscription/model/register.types';
 import { Icons } from '@/shared/assets/icons';
 import { ROUTES } from '@/shared/config/routes';
 import { IconButton } from '@/shared/ui/button';
