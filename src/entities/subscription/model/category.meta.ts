@@ -7,8 +7,8 @@ export const CATEGORY_META: Record<string, { label: string; iconUrl: string }> =
   MUSIC: { label: '음악', iconUrl: CategoryImages.Music },
   CLOUD: { label: '클라우드', iconUrl: CategoryImages.Cloud },
   AI: { label: 'AI', iconUrl: CategoryImages.AI },
-  PRODUCTIVITY: { label: '생산성', iconUrl: CategoryImages.Productivity },
-  EDUCATION: { label: '교육', iconUrl: CategoryImages.Education },
+  // PRODUCTIVITY: { label: '생산성', iconUrl: CategoryImages.Productivity },
+  // EDUCATION: { label: '교육', iconUrl: CategoryImages.Education },
   DELIVERY: { label: '배달', iconUrl: CategoryImages.Delivery },
 };
 

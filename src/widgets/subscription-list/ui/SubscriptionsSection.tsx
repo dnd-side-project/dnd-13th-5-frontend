@@ -29,8 +29,8 @@ const CAT_OPTIONS = [
   { key: 'MUSIC', label: '음악' },
   { key: 'CLOUD', label: '클라우드' },
   { key: 'AI', label: 'AI' },
-  { key: 'PRODUCTIVITY', label: '생산성' },
-  { key: 'EDUCATION', label: '교육' },
+  // { key: 'PRODUCTIVITY', label: '생산성' },
+  // { key: 'EDUCATION', label: '교육' },
   { key: 'DELIVERY', label: '배달' },
 ];
 
