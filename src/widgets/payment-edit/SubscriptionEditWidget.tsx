@@ -317,7 +317,7 @@ const SubscriptionEditWidget = ({
                       className="sr-only"
                       checked={selected}
                       onChange={() => {
-                        setValue('planId', p.id!, { shouldDirty: true });
+                        setValue('planId', p.id, { shouldDirty: true });
                         // ✅ 선택 요금제 요약 메타 저장: StepConfirm에서 재조회 없이 사용
                         setValue(
                           'selectedPlan',
@@ -329,6 +329,7 @@ const SubscriptionEditWidget = ({
                           },
                           { shouldDirty: true },
                         );
+                        setValue('price', p.price, { shouldDirty: true });
                       }}
                     />
                     <ContentsCard
