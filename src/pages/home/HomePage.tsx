@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useMyInfo } from '@/entities/member/hooks/useMyInfo';
 import {
@@ -14,7 +14,7 @@ import {
 } from '@/shared/assets/images';
 import { cn } from '@/shared/lib';
 import { Button } from '@/shared/ui/button';
-import LoginButton from '@/shared/ui/button/LoginButton';
+import KakaoLoginButton from '@/shared/ui/button/KakaoLoginButton';
 import { MobileLayout } from '@/shared/ui/layout';
 
 // === 카드 내용 ===
@@ -89,6 +89,12 @@ const ComparisonCard = ({ icon, title, style }: (typeof CardContents)[number]) =
 const HeroImagesSection = ({ onLoad }: { onLoad: () => void }) => {
   const [loadedCount, setLoadedCount] = useState(0);
   const images = [HomeOne, HomeTwo, HomeThree];
+
+  useEffect(() => {
+    if (loadedCount === images.length) {
+      onLoad(); // ✅ 모든 이미지 로드 완료 후 안전하게 부모에 알림
+    }
+  }, [loadedCount, images.length, onLoad]);
 
   const handleImageLoad = () => {
     setLoadedCount(prev => {
@@ -178,7 +184,7 @@ export const HomePage = () => {
       <PhilosophySection />
 
       <footer className="fixed z-50 bottom-24 left-0 right-0 max-w-md w-full m-auto px-3">
-        <LoginButton onClick={handleLogin} />
+        <KakaoLoginButton onClick={handleLogin} />
       </footer>
     </MobileLayout>
   );
