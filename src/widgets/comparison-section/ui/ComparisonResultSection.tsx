@@ -100,6 +100,28 @@ const ComparisonResultSection = ({ selectedSubs, handleDetail }: ComparisonResul
 
       <div className={cn('grid gap-4', 'grid-flow-col auto-cols-[minmax(150px,1fr)]')}>
         {selectedProducts?.map(p => {
+          if (!p.plans || p.plans.length === 0) {
+            return (
+              <div key={p.id} className="flex flex-col gap-6">
+                <ContentsCard
+                  left={
+                    <div className="flex flex-col items-start">
+                      <img src={p.imageUrl} className="w-10 h-10 rounded-lg mb-3" />
+                      <button
+                        className="typo-body-m-bold text-gray-600 mb-2"
+                        onClick={() => handleDetail(p.id)}
+                      >
+                        자세히보기
+                      </button>
+                      <span className="typo-body-m-bold">-</span>
+                    </div>
+                  }
+                  className="bg-white p-4"
+                />
+              </div>
+            );
+          }
+
           const selectedPlan = p.plans?.find(plan => plan.planId === selectedPlans[p.id]);
 
           return (
@@ -146,9 +168,7 @@ const ComparisonResultSection = ({ selectedSubs, handleDetail }: ComparisonResul
                 <ContentsCard
                   key={p.id}
                   left={
-                    <span className="typo-body-m-bold whitespace-pre-wrap">
-                      {benefitsMap[key] ?? '-'}
-                    </span>
+                    <span className="typo-body-m-bold break-keep">{benefitsMap[key] ?? '-'}</span>
                   }
                   className="bg-white p-4"
                 />
