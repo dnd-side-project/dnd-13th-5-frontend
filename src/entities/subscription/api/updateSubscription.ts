@@ -10,6 +10,7 @@ export type UpdateSubscriptionPayload = {
   payCycleUnit: 'WEEK' | 'MONTH' | 'YEAR';
   startedAt: string | null;
   paymentMethodId: number;
+  memo: string;
 };
 
 export type UpdateSubscriptionResponse = {
