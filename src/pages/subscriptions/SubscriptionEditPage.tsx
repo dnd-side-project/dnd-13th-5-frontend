@@ -60,7 +60,6 @@ export const SubscriptionEditPage = () => {
     isLoading: isSubscriptionLoading,
     error: subscriptionError,
   } = useSubscriptionDetail(subscriptionId);
-  console.log('subscriptionDetail', subscriptionDetail);
 
   useEffect(() => {
     if (!id || Number.isNaN(subscriptionId)) {
@@ -83,13 +82,13 @@ export const SubscriptionEditPage = () => {
         ...payload,
       });
 
-      // 관련 쿼리들을 무효화하여 최신 데이터 반영
-      await queryClient.invalidateQueries({
-        queryKey: ['subscription-detail', subscriptionId],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ['my-subscriptions'],
-      });
+      // 관련 쿼리들을 무효화하여 최신 데이터 반영 -> 훅 안에서 처리중
+      // await queryClient.invalidateQueries({
+      //   queryKey: ['subscription-detail', subscriptionId],
+      // });
+      // await queryClient.invalidateQueries({
+      //   queryKey: ['my-subscriptions'],
+      // });
 
       // 성공 후 상세 페이지로 이동
       navigate(`/subscriptions/${subscriptionId}`);
