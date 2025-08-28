@@ -1,5 +1,6 @@
 import { useEffect, useId, useState } from 'react';
 
+import { CATEGORY_FALLBACK, CATEGORY_META } from '@/entities/subscription/model';
 import { cn } from '@/shared/lib/utils'; // clsx + tailwind-merge 유틸
 import { Tag } from '@/shared/ui/tag';
 
@@ -83,8 +84,8 @@ export const ServiceIdentity = ({
         </h3>
 
         {/* 기존 Tag 컴포넌트 활용 (outline 스타일 가정) */}
-        <Tag appearance="outline" color="red" className={tagClassName}>
-          {category}
+        <Tag appearance="outline" color="red" className="py-[2px]">
+          {category ? CATEGORY_META[category]?.label || CATEGORY_FALLBACK(category).label : '기타'}
         </Tag>
       </figcaption>
     </figure>

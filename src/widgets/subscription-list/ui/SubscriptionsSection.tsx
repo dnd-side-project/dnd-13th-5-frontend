@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
 import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
 import { useToggleFavorite } from '@/entities/subscription/hook/useToggleFavorite';
+import { CATEGORY_FALLBACK, CATEGORY_META } from '@/entities/subscription/model/category.meta';
 import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
 import { formatKRW } from '@/shared/lib/format';
@@ -54,7 +55,9 @@ const Row = ({ item }: { item: SubscriptionService }) => {
       <div className="min-w-0">
         <div className="flex flex-col items-start gap-1">
           <Tag appearance="outline" color="red" className="py-[2px]">
-            {item.category}
+            {item.category
+              ? CATEGORY_META[item.category]?.label || CATEGORY_FALLBACK(item.category).label
+              : '기타'}
           </Tag>
           <p className="typo-body-m-bold truncate" onClick={onNavigate}>
             {item.name}
