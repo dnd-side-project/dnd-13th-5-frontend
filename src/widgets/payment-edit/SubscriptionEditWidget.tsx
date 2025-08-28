@@ -116,8 +116,7 @@ const SubscriptionEditWidget = ({
   // ============================================================================
 
   /** 해당 제품의 모든 요금제 정보 조회 */
-  const { data: plansData, isLoading: isPlansLoading, isError: isPlan } = usePlans(productId);
-  console.log(plansData);
+  const { data: plansData, isLoading: isPlansLoading, isError: isPlansError } = usePlans(productId);
 
   // ============================================================================
   // 2. 폼 상태 관리 (react-hook-form)
@@ -134,8 +133,6 @@ const SubscriptionEditWidget = ({
       ...defaultValues,
     },
   });
-
-  console.log('defaultValues', defaultValues);
 
   // ============================================================================
   // 3. 폼 필드 실시간 감시
@@ -158,8 +155,6 @@ const SubscriptionEditWidget = ({
 
   /** 🔍 실시간 폼 데이터 확인 - 개발 모드에서만 */
   const watchedData = watch();
-  console.log('📋 실시간 폼 데이터:', watchedData);
-  console.log(defaultValues?.startedAt);
 
   // ============================================================================
   // 4. 로컬 상태 관리
@@ -189,7 +184,6 @@ const SubscriptionEditWidget = ({
 
   /** 결제수단 목록 조회 (카드, 계좌, 간편결제) */
   const { data: paymentMethodsData, isLoading: isPaymentMethodsLoading } = usePaymentMethods();
-  console.log('paymentMethodsData', paymentMethodsData);
 
   /**
    * API 응답을 폼에서 사용할 수 있는 구조로 변환
@@ -256,11 +250,11 @@ const SubscriptionEditWidget = ({
     if (planName && plansData && !planId) {
       const matchedPlan = plansData.find((p: Plans) => p.name === planName);
       if (matchedPlan) {
-        setValue('planId', matchedPlan.id!, { shouldDirty: false });
+        setValue('planId', matchedPlan.id, { shouldDirty: false });
         setValue(
           'selectedPlan',
           {
-            id: matchedPlan.id!,
+            id: matchedPlan.id,
             name: matchedPlan.name,
             price: matchedPlan.price,
             benefit: matchedPlan.benefit,
@@ -511,7 +505,7 @@ const SubscriptionEditWidget = ({
             variant="primary-fill"
             disabled={!canSubmit || isLoading}
             title={isLoading ? '저장 중...' : '저장하기'}
-            buttonClassName={!onCancel ? 'col-span-2' : ''}
+            className={!onCancel ? 'col-span-2' : ''}
           />
         </div>
       </form>
