@@ -11,13 +11,16 @@ export const useUpdateSubscription = () => {
     onSuccess: (data, variables) => {
       // 구독 목록과 구독 상세 쿼리를 무효화하여 최신 데이터를 다시 가져오도록 함
       queryClient.invalidateQueries({
-        queryKey: ['subscriptions'],
+        queryKey: ['my-subscriptions'],
       });
       queryClient.invalidateQueries({
-        queryKey: ['subscription', variables.subscriptionId],
+        queryKey: ['subscription-detail', variables.subscriptionId],
       });
       queryClient.invalidateQueries({
-        queryKey: ['mySubscription'],
+        queryKey: ['my-payments'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['my-payments-soon'],
       });
     },
     onError: error => {
