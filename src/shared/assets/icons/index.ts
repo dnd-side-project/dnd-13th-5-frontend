@@ -10,6 +10,7 @@ import CloseIcon from './close.svg?react';
 import ComparisonIcon from './comparison.svg?react';
 import HomeIcon from './home.svg?react';
 import KaKaoIcon from './kakao.svg?react';
+import LinkIcon from './link.svg?react';
 import PlusIcon from './plus.svg?react';
 import QuestionIcon from './question-circle.svg?react';
 import FilledStarIcon from './star-filled.svg?react';
@@ -38,4 +39,5 @@ export const Icons = {
   Sub: SubIcon,
   User: UserIcon,
   KaKao: KaKaoIcon,
+  Link: LinkIcon,
 };

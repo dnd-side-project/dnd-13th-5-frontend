@@ -7,13 +7,9 @@ import type {
 } from 'axios';
 
 import { ROUTES } from '@/shared/config/routes';
+import { useAuthStore } from '@/shared/store/authStore';
 
-import {
-  clearAccessToken,
-  extractAccessFromHeaders,
-  getAccessToken,
-  setAccessToken,
-} from './tokenManager';
+import { extractAccessFromHeaders, getAccessToken, setAccessToken } from './tokenManager';
 
 // 토큰 재발급 API 호출 함수
 // 순환 참조를 방지하기 위해 apiClient를 직접 사용하지 않고, 새로운 요청을 만듭니다.
@@ -89,14 +85,11 @@ export const successResponseInterceptor = (response: AxiosResponse) => {
 export const errorResponseInterceptor = async (apiClient: AxiosInstance, error: AxiosError) => {
   const originalRequest = error.config as AuthRequestConfig;
 
-  // 401 에러가 아니거나, 이미 재시도한 요청이면 에러를 그대로 반환
   if (error.response?.status !== 401 || originalRequest.isRetry) {
     return Promise.reject(error);
   }
 
-  // 현재 토큰 재발급이 진행 중인 경우
   if (isRefreshing) {
-    // 현재 요청을 대기열에 추가하고, 토큰이 재발급되면 원래 요청을 다시 시도
     return new Promise(resolve => {
       addSubscriber(newAccessToken => {
         if (originalRequest.headers) {
@@ -107,8 +100,7 @@ export const errorResponseInterceptor = async (apiClient: AxiosInstance, error: 
     });
   }
 
-  // 첫 401 에러 발생 시 토큰 재발급 시작
-  const retryRequest = { ...originalRequest, isRetry: true }; // 재시도 요청임을 표시
+  const retryRequest = { ...originalRequest, isRetry: true };
   isRefreshing = true;
 
   try {
@@ -116,20 +108,17 @@ export const errorResponseInterceptor = async (apiClient: AxiosInstance, error: 
 
     if (newAccessToken) {
       setAccessToken(newAccessToken);
-      onRefreshed(newAccessToken); // 대기 중인 모든 요청 재개
+      onRefreshed(newAccessToken);
 
-      // 원래 실패했던 요청을 새 토큰으로 다시 시도
       if (retryRequest.headers) {
         retryRequest.headers.Authorization = `Bearer ${newAccessToken}`;
       }
       return apiClient(retryRequest);
     }
-    // 새 토큰 발급 실패 시, 토큰을 비우고 로그인 페이지로 이동
     throw new Error('Failed to refresh token');
   } catch (refreshError) {
-    clearAccessToken();
-    // 로그인 페이지로 리디렉션 (실제 프로덕션에서는 router.push 등을 사용)
-    window.location.href = '/login';
+    // ✅ 수정된 부분: 강제 리디렉션 대신 전역 상태를 업데이트합니다.
+    useAuthStore.getState().logout();
     return Promise.reject(refreshError);
   } finally {
     isRefreshing = false;

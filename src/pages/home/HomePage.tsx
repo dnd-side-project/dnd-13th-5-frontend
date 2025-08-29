@@ -1,20 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { useMyInfo } from '@/entities/member/hooks/useMyInfo';
 import {
-  Logo,
-  HomeOne,
-  HomeTwo,
-  HomeThree,
-  Sad,
-  Smile,
-  Scissor,
   Brain,
+  HomeOne,
+  HomeThree,
+  HomeTwo,
+  Logo,
   Money,
+  Sad,
+  Scissor,
+  Smile,
 } from '@/shared/assets/images';
 import { cn } from '@/shared/lib';
-import { Button } from '@/shared/ui/button';
-import LoginButton from '@/shared/ui/button/LoginButton';
+import KakaoLoginButton from '@/shared/ui/button/KakaoLoginButton';
 import { MobileLayout } from '@/shared/ui/layout';
 
 // === 카드 내용 ===
@@ -90,13 +89,11 @@ const HeroImagesSection = ({ onLoad }: { onLoad: () => void }) => {
   const [loadedCount, setLoadedCount] = useState(0);
   const images = [HomeOne, HomeTwo, HomeThree];
 
-  const handleImageLoad = () => {
-    setLoadedCount(prev => {
-      const next = prev + 1;
-      if (next === images.length) onLoad(); // 모든 이미지 로드 완료
-      return next;
-    });
-  };
+  const handleImageLoad = () => setLoadedCount(prev => prev + 1);
+
+  useEffect(() => {
+    if (loadedCount === images.length) onLoad();
+  }, [loadedCount, images.length, onLoad]);
 
   return (
     <section className="space-y-[30px] mb-[30px]">
@@ -153,16 +150,12 @@ const PhilosophySection = () => (
         체계적으로 정리됩니다
       </span>
     </div>
-    <Button variant="primary-fill" title={<>둘러보기</>} />
   </section>
 );
 
 // === HomePage ===
 export const HomePage = () => {
-  const { data: _data } = useMyInfo();
   const [heroLoaded, setHeroLoaded] = useState(false);
-
-  const handleLogin = () => {};
 
   return (
     <MobileLayout
@@ -178,7 +171,9 @@ export const HomePage = () => {
       <PhilosophySection />
 
       <footer className="fixed z-50 bottom-24 left-0 right-0 max-w-md w-full m-auto px-3">
-        <LoginButton onClick={handleLogin} />
+        <Link to="/login">
+          <KakaoLoginButton />
+        </Link>
       </footer>
     </MobileLayout>
   );

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // import { MY_SUBS } from '@/entities/comparison/constants/Products';
 import type { Products } from '@/entities/product/api/fetchProducts';
 import { useProducts } from '@/entities/product/hooks/useProducts';
+import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
 import { CATEGORY_META } from '@/entities/subscription/model/category.meta';
 import { Icons } from '@/shared/assets/icons';
 import { ROUTES } from '@/shared/config/routes';
@@ -16,6 +17,7 @@ import { ChipGroup, ChipItem } from '@/shared/ui/category';
 import { Icon } from '@/shared/ui/icon';
 import { MobileLayout } from '@/shared/ui/layout';
 import ComparisonAddedSection from '@/widgets/comparison-section/ui/ComparisonAddedSection';
+import { ComparisonMySubSection } from '@/widgets/comparison-section/ui/ComparisonMySubSection';
 import ComparisonResultSection from '@/widgets/comparison-section/ui/ComparisonResultSection';
 import RecommendSubSection from '@/widgets/comparison-section/ui/RecommendSubSection';
 
@@ -37,6 +39,7 @@ export const ComparisonPage = () => {
   const currentCategoryLabel = CATEGORY_META[category]?.label ?? null;
 
   const { data: products } = useProducts(category);
+  const { data: mySubs = { services: [] } } = useMySubscription({ category, sort: 'NAME' });
 
   /** --- 쿼리 파라미터 없는 경우 초기 카테고리 적용 --- * */
   useEffect(() => {
@@ -148,15 +151,15 @@ export const ComparisonPage = () => {
 
         {/* 내가 구독 중인 서비스 섹션 */}
         <section aria-labelledby="my-subs">
-          {/* {filteredMySubs.length > 0 && (
+          {mySubs?.services?.length > 0 && (
             <ComparisonMySubSection
               category={currentCategoryLabel}
-              mySubs={filteredMySubs}
+              mySubs={mySubs.services}
               selectedSubs={selectedSubs}
               handleSelect={handleSelectSub}
               handleDetail={handleShowDetail}
             />
-          )} */}
+          )}
         </section>
 
         {/* 비교할 서비스 추가하기 섹션 */}

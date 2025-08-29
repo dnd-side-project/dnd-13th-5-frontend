@@ -6,9 +6,9 @@ export const parseBenefit = (benefitString: string): BenefitMap => {
   return benefitString
     .split('#')
     .map(s => s.trim())
-    .filter(s => s.length > 0 && s.includes('-')) // 형식 불량 세그먼트 무시
+    .filter(s => s.length > 0 && s.includes('$')) // 형식 불량 세그먼트 무시
     .reduce<BenefitMap>((acc, item) => {
-      const [rawKey, ...rawValues] = item.split('-');
+      const [rawKey, ...rawValues] = item.split('$');
       const key = rawKey.trim();
       const values = rawValues.map(v => v.trim()).filter(v => v.length > 0);
       if (key.length === 0 || values.length === 0) return acc;

@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 
-import { setAccessToken } from '@/shared/api/tokenManager';
+import { Logo } from '@/shared/assets/images';
 import { ROUTES } from '@/shared/config/routes';
-import LoginButton from '@/shared/ui/button/LoginButton';
+import KakaoLoginButton from '@/shared/ui/button/KakaoLoginButton';
 import { Header } from '@/shared/ui/header';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const KAKAO_LOGIN_URL = `${API_BASE}/oauth2/authorization/kakao`;
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -13,19 +14,13 @@ export const LoginPage = () => {
   const handleLookAround = () => {
     navigate(ROUTES.HOME);
   };
-  const KAKAO_LOGIN_URL = `${API_BASE}/oauth2/authorization/kakao`;
-
-  const handleDevLogin = () => {
-    setAccessToken(import.meta.env.VITE_FAKE_ACCESS_TOKEN_KEY);
-    navigate(ROUTES.SUBSCRIPTIONS);
-  };
 
   return (
     <div className="min-h-dvh max-w-md m-auto flex flex-col justify-between">
       <Header rightSlot={<button onClick={handleLookAround}>둘러보기</button>} />
 
       <main className="flex flex-col items-center justify-center space-y-20">
-        <h1 className="typo-title-xl-bold">LOGO</h1>
+        <img src={Logo} alt="와구와구 로고" className="h-12" />
 
         <div className="text-center space-y-5">
           <h2 className="typo-title-xl-bold text-gray-800">
@@ -37,8 +32,9 @@ export const LoginPage = () => {
       </main>
 
       <footer className="pb-[calc(56px+env(safe-area-inset-bottom))] px-5">
-        <LoginButton onClick={handleDevLogin} />
-        <a href={KAKAO_LOGIN_URL}>카카오 로그인</a>
+        <a href={KAKAO_LOGIN_URL}>
+          <KakaoLoginButton />
+        </a>
       </footer>
     </div>
   );

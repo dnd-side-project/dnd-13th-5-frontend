@@ -3,7 +3,7 @@ export type MethodKind = 'CARD' | 'ACCOUNT' | 'EASY';
 
 export type ServiceOption = { id: number; name: string; iconUrl: string };
 
-export type MethodOption = { id: number; label: string };
+export type MethodOption = { id: number; label: string; imageUrl: string };
 export type MethodOptionsByKind = {
   CARD: MethodOption[];
   ACCOUNT: MethodOption[];

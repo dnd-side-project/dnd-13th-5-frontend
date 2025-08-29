@@ -99,6 +99,11 @@ export const PaymentMethodPicker = ({
             {curr.map((method, index) => (
               <div key={method.id}>
                 <DropdownItem onSelect={() => onChangeMethod(method.id.toString())}>
+                  <img
+                    src={method.imageUrl}
+                    alt={method.label}
+                    className="w-6 h-6 mr-1 rounded-md"
+                  />
                   <span className="truncate">{method.label}</span>
                 </DropdownItem>
                 {index < curr.length - 1 && <DropdownSeparator />}

@@ -33,9 +33,17 @@ export type PaymentMethodsByType = {
  * API 응답을 기존 폼 구조에 맞는 형태로 변환합니다.
  */
 export const transformToMethodOptions = (data: PaymentMethodsByType): MethodOptionsByKind => ({
-  CARD: data.card.map(method => ({ id: method.id, label: method.name })),
-  ACCOUNT: data.account.map(method => ({ id: method.id, label: method.name })),
-  EASY: data.easyPay.map(method => ({ id: method.id, label: method.name })),
+  CARD: data.card.map(method => ({ id: method.id, label: method.name, imageUrl: method.imageUrl })),
+  ACCOUNT: data.account.map(method => ({
+    id: method.id,
+    label: method.name,
+    imageUrl: method.imageUrl,
+  })),
+  EASY: data.easyPay.map(method => ({
+    id: method.id,
+    label: method.name,
+    imageUrl: method.imageUrl,
+  })),
 });
 
 /**
