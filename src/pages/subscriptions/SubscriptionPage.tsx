@@ -9,11 +9,12 @@ export const SubscriptionsPage = () => (
     headerProps={{
       leftSlot: <img src={Logo} alt="Logo" className="h-7" />,
     }}
+    sectionClassName="min-h-[85dvh]"
   >
-    <div className="-mx-5 -mt-4 relative">
+    <div className="-mx-5 -mt-4 min-h-full bg-gray-50">
       <PaymentSummaryBlock />
       <SubscriptionsSection />
-      <FloatingButton href="/subscriptions-register" className="bottom-10 right-5" />
+      <FloatingButton href="/subscriptions-register" />
     </div>
   </MobileLayout>
 );

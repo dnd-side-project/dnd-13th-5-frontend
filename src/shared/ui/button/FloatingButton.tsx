@@ -12,7 +12,7 @@ const FloatingButton = ({ href, className }: FloatingButtonProps) => (
   <Link
     to={href}
     className={cn(
-      'absolute bottom-[100px] right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary-700 text-white shadow-lg transition-colors',
+      'fixed bottom-[100px] right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary-700 text-white shadow-lg transition-colors',
       className,
     )}
   >
