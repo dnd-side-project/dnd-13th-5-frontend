@@ -31,10 +31,21 @@ export const LoginPage = () => {
         </div>
       </main>
 
-      <footer className="pb-[calc(56px+env(safe-area-inset-bottom))] px-5">
-        <a href={KAKAO_LOGIN_URL}>
+      <footer className="pb-[calc(56px+env(safe-area-inset-bottom))] px-5 flex flex-col justify-center items-center">
+        <a href={KAKAO_LOGIN_URL} className="w-full">
           <KakaoLoginButton />
         </a>
+        <p>
+          로그인 및 회원가입시{' '}
+          <a
+            href="https://relieved-thing-54d.notion.site/25e4c9705e268045aa7dc70e122a3b1e?source=copy_link"
+            className="text-primary-700 underline cursor-pointer"
+            target="_blank"
+          >
+            필수 약관
+          </a>
+          에 동의한 것으로 간주합니다
+        </p>
       </footer>
     </div>
   );
