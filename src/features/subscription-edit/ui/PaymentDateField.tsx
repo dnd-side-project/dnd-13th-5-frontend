@@ -85,7 +85,7 @@ export const PaymentDateField = ({ value, onChange, disabled }: PaymentDateField
               <DialogTitle>결제일 선택</DialogTitle>
             </DialogHeader>
 
-            <div className="flex-1 overflow-auto">
+            <div className="flex-1 overflow-auto min-h-0">
               <Calendar
                 mode="single"
                 selected={date}
