@@ -36,7 +36,7 @@ export const LoginPage = () => {
           <KakaoLoginButton />
         </a>
         <p className="typo-label-m-bold mt-1">
-          로그인 및 회원가입시{' '}
+          {'회원가입시 '}
           <a
             href="https://relieved-thing-54d.notion.site/25e4c9705e268045aa7dc70e122a3b1e?source=copy_link"
             className="text-primary-700 underline cursor-pointer typo-label-m-bold"
