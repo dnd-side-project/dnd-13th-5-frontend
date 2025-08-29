@@ -10,10 +10,10 @@ export const SubscriptionsPage = () => (
       leftSlot: <img src={Logo} alt="Logo" className="h-7" />,
     }}
   >
-    <div className="-mx-5 -mt-4">
+    <div className="-mx-5 -mt-4 relative">
       <PaymentSummaryBlock />
       <SubscriptionsSection />
+      <FloatingButton href="/subscriptions-register" className="bottom-10 right-5" />
     </div>
-    <FloatingButton href="/subscriptions-register" />
   </MobileLayout>
 );
