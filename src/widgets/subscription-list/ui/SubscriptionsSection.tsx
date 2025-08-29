@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
 import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
@@ -7,6 +8,7 @@ import { useToggleFavorite } from '@/entities/subscription/hook/useToggleFavorit
 import { CATEGORY_FALLBACK, CATEGORY_META } from '@/entities/subscription/model/category.meta';
 import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
+import { CategoryImages } from '@/shared/assets/images';
 import { formatKRW } from '@/shared/lib/format';
 import type { CategoryOption } from '@/shared/types/category.types';
 import { ChipGroup, ChipItem } from '@/shared/ui/category';
@@ -36,18 +38,40 @@ const CAT_OPTIONS = [
 
 const Row = ({ item }: { item: SubscriptionService }) => {
   const toggleFavoriteMutation = useToggleFavorite();
+  const [imageError, setImageError] = useState(false);
 
   const navigate = useNavigate();
 
+  // 카테고리별 fallback 이미지 결정
+  const getFallbackImage = () => {
+    if (item.category && CATEGORY_META[item.category]) {
+      return CATEGORY_META[item.category].iconUrl;
+    }
+    return CategoryImages.Default;
+  };
+
+  const shouldShowFallback = !item.imageUrl || imageError;
+  const fallbackImageUrl = getFallbackImage();
+
   const left = (
     <div className="gap-3 flex">
-      <img
-        src={item.imageUrl}
-        alt=""
-        loading="lazy"
-        aria-hidden
-        className="size-[54px] rounded-xl object-cover"
-      />
+      {shouldShowFallback ? (
+        <img
+          src={fallbackImageUrl}
+          alt={`${item.category ? CATEGORY_META[item.category]?.label || item.category : '기타'} 카테고리 아이콘`}
+          loading="lazy"
+          className="size-[54px] rounded-xl object-cover"
+        />
+      ) : (
+        <img
+          src={item.imageUrl}
+          alt=""
+          loading="lazy"
+          aria-hidden
+          className="size-[54px] rounded-xl object-cover"
+          onError={() => setImageError(true)}
+        />
+      )}
       <div className="min-w-0">
         <div className="flex flex-col items-start gap-1">
           <Tag appearance="outline" color="red" className="py-[2px]">
@@ -99,7 +123,13 @@ const Row = ({ item }: { item: SubscriptionService }) => {
         className="rounded-full flex h-full mt-1 align-top focus-visible:ring-2 focus-visible:ring-emerald-500/40"
         onClick={e => {
           e.stopPropagation();
-          toggleFavoriteMutation.mutate(item.id);
+          toggleFavoriteMutation.mutate(item.id, {
+            onSuccess: () => {
+              if (!item.isFavorites) {
+                toast.message('즐겨찾기에 추가되었습니다');
+              }
+            },
+          });
         }}
         title="즐겨찾기"
       >
@@ -149,7 +179,11 @@ export const SubscriptionsSection = () => {
   return (
     <section aria-label="내 구독 목록" className="h-full">
       {/* 탭(전체/즐겨찾기) — radiogroup 시맨틱 */}
-      <div role="radiogroup" aria-label="보기 선택" className="flex gap-3 py-3 px-5 bg-white">
+      <div
+        role="radiogroup"
+        aria-label="보기 선택"
+        className="flex gap-3 py-3 bg-white rounded-b-3xl -mx-5 px-5"
+      >
         {(['ALL', 'FAVORITES'] as const).map(t => (
           <button
             key={t}
@@ -162,7 +196,7 @@ export const SubscriptionsSection = () => {
           </button>
         ))}
       </div>
-      <div className="flex flex-col py-5 gap-4 px-5 bg-gray-50 h-full">
+      <div className="flex flex-col py-5 gap-4 bg-gray-50 h-full -mx-5 px-5">
         {/* 정렬 + 카테고리 (Filter 컴포넌트 적용) */}
         <div className="flex items-center gap-2">
           <Filter

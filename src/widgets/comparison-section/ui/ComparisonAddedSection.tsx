@@ -36,7 +36,7 @@ const ComparisonAddedSection = ({
         )}
       </header>
 
-      <div className="grid grid-cols-2 gap-x-[14px] gap-y-4">
+      <div className="grid grid-cols-2 gap-x-[14px] gap-y-4 place-content-center justify-items-center">
         {/* 서비스 추가 시, 보여지는 카드 */}
         {addedSubs.map(p => (
           <ComparisonSelectCard
@@ -51,7 +51,7 @@ const ComparisonAddedSection = ({
         {/* OTT 추가 버튼 */}
         <button
           className={cn(
-            `px-5 py-4 border-[1.5px] rounded-lg w-full flex flex-col justify-center border-dashed h-[125px] gap-[2px] text-gray-500`,
+            `px-5 py-4 border-[1.5px] rounded-lg w-full flex flex-col justify-center items-center border-dashed h-[125px] gap-[2px] text-gray-500`,
             `bg-gray-50 border-gray-200 hover:text-primary-700 hover:border-primary-700`,
             `disabled:bg-gray-100 disabled:border-gray-300 disabled:pointer-events-none`,
             `transition-colors duration-200 ease-in-out`,

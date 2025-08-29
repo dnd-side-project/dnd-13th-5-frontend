@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import type { SubscriptionDetail } from '@/entities/subscription/api/fetchSubscriptionDetail';
 import { useDeleteSubscription } from '@/entities/subscription/hook/useDeleteSubscription';
@@ -43,6 +44,8 @@ export const SubscriptionDetailWidget = ({
       await deleteSubscriptionMutation.mutateAsync(data.id);
       setIsDeleteDialogOpen(false);
       navigate('/subscriptions');
+      toast.success('삭제되었습니다');
+
       // 삭제 후 이전 페이지로 이동하거나 리다이렉트하는 로직 추가 가능
     } catch (error) {
       console.error('구독 삭제 실패:', error);

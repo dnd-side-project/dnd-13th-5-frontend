@@ -8,6 +8,7 @@ import {
   useUpdateMyNotification,
 } from '@/entities/member/hooks/useMyInfo';
 import { Icons } from '@/shared/assets/icons';
+import { Logo } from '@/shared/assets/images';
 import { ROUTES } from '@/shared/config/routes';
 import { IconButton } from '@/shared/ui/button';
 import ToggleButton from '@/shared/ui/button/ToggleButton';
@@ -71,7 +72,7 @@ export const MyPage = () => {
   return (
     <MobileLayout
       headerProps={{
-        leftSlot: 'Logo',
+        leftSlot: <img src={Logo} alt="Logo" className="h-7" />,
       }}
     >
       {/* 내 정보 */}
