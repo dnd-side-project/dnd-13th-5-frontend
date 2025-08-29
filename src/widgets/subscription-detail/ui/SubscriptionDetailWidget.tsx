@@ -149,7 +149,7 @@ export const SubscriptionDetailWidget = ({
             <ContentsCardStacked.Header title="메모" />
             <ContentsCardStacked.Divider />
             <ContentsCardStacked.Note>
-              {data.memo.length > 0 ? data.memo : '메모가 없습니다. 구독에 대한 메모를 남겨보세요.'}
+              {data.memo?.trim() ? data.memo : '메모가 없습니다. 구독에 대한 메모를 남겨보세요.'}
             </ContentsCardStacked.Note>
           </ContentsCardStacked>
 
