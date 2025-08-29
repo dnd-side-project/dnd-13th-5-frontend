@@ -61,7 +61,7 @@ export const SubscriptionDetailWidget = ({
   }
 
   return (
-    <section className="">
+    <section>
       {/* 상단 아이덴티티 */}
       <ServiceIdentity
         serviceName={data.productName}
@@ -81,7 +81,8 @@ export const SubscriptionDetailWidget = ({
         {/* 상세정보 패널 */}
         <TabsContent
           value="info"
-          className="bg-gray-50 gap-4 flex flex-col pb-10 data-[state=inactive]:!hidden"
+          className="bg-gray-50 gap-4 flex flex-col pb-10 data-[state=inactive]:!hidden
+          min-h-[70vh]"
         >
           {/* 상단 강조 문구 + 누적 횟수 */}
           <ContentsCardStacked>
@@ -215,10 +216,7 @@ export const SubscriptionDetailWidget = ({
         </TabsContent>
 
         {/* 혜택 패널 */}
-        <TabsContent
-          value="benefit"
-          className="bg-gray-50 min-h-[60vh] pb-10 data-[state=inactive]:!hidden"
-        >
+        <TabsContent value="benefit" className="bg-gray-50 pb-10 data-[state=inactive]:!hidden">
           <div className="flex flex-col gap-4">
             {parsedBenefit && Object.keys(parsedBenefit).length > 0 ? (
               Object.entries(parsedBenefit).map(([category, benefits]) => (
