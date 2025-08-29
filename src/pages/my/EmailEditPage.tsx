@@ -28,7 +28,7 @@ export const EmailEditPage = () => {
     e.preventDefault();
 
     if (sameEmail) {
-      toast.success('기존과 다른 이메일을 입력해주세요');
+      toast.error('기존과 다른 이메일을 입력해주세요');
       return;
     }
 

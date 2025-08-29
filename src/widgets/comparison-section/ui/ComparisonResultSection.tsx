@@ -162,22 +162,31 @@ const ComparisonResultSection = ({ selectedSubs, handleDetail }: ComparisonResul
           <div className={cn('grid gap-4', 'grid-flow-col auto-cols-[minmax(150px,1fr)]')}>
             {selectedProducts.map(p => {
               const selectedPlan = p.plans.find(plan => plan.planId === selectedPlans[p.id]);
+
               const benefitsMap = parseBenefit(selectedPlan?.benefit ?? '');
-              const benefitValues = benefitsMap[key] ?? [];
+              const raw = benefitsMap[key];
+              const benefitValues = (() => {
+                if (Array.isArray(raw)) return raw;
+                if (raw != null) return [raw];
+                return [];
+              })();
 
               return (
                 <ContentsCard
                   key={p.id}
                   left={
                     <>
-                      <ul className="typo-body-m-bold">
-                        {benefitValues.map((value, index) => (
-                          <li key={index} className="whitespace-pre-wrap">
-                            {value}
-                          </li>
-                        ))}
-                      </ul>
-                      {/* <span className="typo-body-m-bold break-keep">{benefitsMap[key] ?? '-'}</span> */}
+                      {benefitValues.length > 0 ? (
+                        <ul className="typo-body-m-bold">
+                          {benefitValues.map((value, index) => (
+                            <li key={index} className="whitespace-pre-wrap">
+                              {value}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span className="typo-body-m-bold">-</span>
+                      )}
                     </>
                   }
                   className="bg-white p-4"
