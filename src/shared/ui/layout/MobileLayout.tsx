@@ -30,20 +30,20 @@ const MobileLayout = ({
   const bodyColor = bodyVariant === 'gray' ? 'bg-gray-50' : 'bg-white';
 
   return (
-    <div className="min-h-dvh bg-gray-200 flex flex-col">
-      <div className="app-shell flex flex-col flex-grow text-gray-800 ">
+    <div className="bg-gray-200 min-h-dvh flex flex-col">
+      <div className="app-shell flex flex-col flex-grow text-gray-800">
         {showHeader && <Header {...headerProps} />}
 
         <main
           className={cn(
-            `app-body flex-grow p-5`,
+            `app-body flex-grow p-5 overflow-auto`,
             showBottom && 'pb-[calc(56px+env(safe-area-inset-bottom))]',
             bodyColor,
             bodyClassName,
           )}
         >
           <section className={cn('cols-6 gap-2', sectionClassName)}>
-            <div className="col-span-6">{children ?? <Outlet />}</div>
+            <div className="col-span-6 ">{children ?? <Outlet />}</div>
           </section>
         </main>
 

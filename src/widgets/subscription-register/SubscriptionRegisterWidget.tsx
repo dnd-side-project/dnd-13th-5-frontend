@@ -2,6 +2,7 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import { useCreateCustomSubscription } from '@/entities/subscription/hook/useCreateCustomSubscription';
 import { useCreateSubscription } from '@/entities/subscription/hook/useCreateSubscription';
@@ -64,6 +65,7 @@ export const SubscriptionRegisterWidget = ({ step, setStep }: Props) => {
 
       // /subscriptions 페이지로 리디렉션
       navigate('/subscriptions');
+      toast.success('등록되었습니다');
     } catch (error) {
       console.error('구독 등록 실패:', error);
     }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import type { UpdateSubscriptionPayload as ApiUpdateSubscriptionPayload } from '@/entities/subscription/api/updateSubscription';
 import { useSubscriptionDetail } from '@/entities/subscription/hook/useSubscriptionDetail';
@@ -81,6 +82,7 @@ export const SubscriptionEditPage = () => {
 
       // 성공 후 상세 페이지로 이동
       navigate(`/subscriptions/${subscriptionId}`);
+      toast.success('수정되었습니다');
     } catch (error) {
       console.error('구독 정보 수정 실패:', error);
       // TODO: 에러 토스트 표시

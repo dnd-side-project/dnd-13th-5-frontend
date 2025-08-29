@@ -32,7 +32,7 @@ export const PaymentSummaryBlock = () => {
     );
 
   return (
-    <div className="px-5 py-3 bg-white">
+    <div className="py-3 -m-5 px-5 bg-white">
       {data && (
         <>
           <PaymentSummaryCard
@@ -43,7 +43,7 @@ export const PaymentSummaryBlock = () => {
             monthLimit={data.totalAmount}
             progressPercent={data.progressPercent}
           />
-          <div className="mt-3">
+          <div className="mt-3 px-3 w-full mb-5">
             <Carousel ariaLabel="다가오는 결제 목록 캐러셀">
               {soonData?.services.map(it => (
                 <ContentsCard
@@ -56,7 +56,7 @@ export const PaymentSummaryBlock = () => {
                     </>
                   }
                   right={<p className="typo-body-m-bold text-gray-800">{formatKRW(it.price)}</p>}
-                  className="mx-3 max-w-[640px] shadow-[2px_2px_20px_0px_rgba(0,0,0,0.08)] " // 필요 시 폭 제한
+                  className="max-w-[640px] " // 필요 시 폭 제한
                 />
               ))}
             </Carousel>

@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { queryClient } from '@/shared/api/queryClient';
 import { useAuthStore } from '@/shared/store/authStore';
+import { Toaster } from '@/shared/ui/toast/Toaster';
 
 import { AppRouter } from './providers/AppRouter';
 
@@ -27,6 +28,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AppRouter />
+        <Toaster position="top-center" />
       </BrowserRouter>
     </QueryClientProvider>
   );

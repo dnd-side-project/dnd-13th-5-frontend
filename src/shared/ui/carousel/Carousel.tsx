@@ -82,7 +82,7 @@ export const Carousel = ({
       <div
         ref={containerRef}
         className={cn(
-          'flex gap-8 pb-3 px-3 -mx-3 overflow-x-auto snap-x snap-mandatory scroll-smooth',
+          'flex gap-8 -mx-3 mb-3 rounded-lg overflow-x-auto snap-x snap-mandatory scroll-smooth shadow-[2px_2px_20px_0px_rgba(0,0,0,0.08)]',
           // 스크롤바 숨김(웹킷/파폭/IE)
           '[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
           // 좌우 패딩이 있으면 시작점 정렬이 자연스러움
