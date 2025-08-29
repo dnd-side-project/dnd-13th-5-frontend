@@ -24,6 +24,7 @@ export const useCreateSubscription = (): UseMutationResult<
       // 구독 등록 성공 시 관련 쿼리들을 무효화하여 최신 데이터 갱신
       queryClient.invalidateQueries({ queryKey: ['my-subscriptions'] });
       queryClient.invalidateQueries({ queryKey: ['my-payments'] });
+      queryClient.invalidateQueries({ queryKey: ['my-payments-soon'] });
     },
     onError: error => {
       console.error('구독 등록 실패:', error);
