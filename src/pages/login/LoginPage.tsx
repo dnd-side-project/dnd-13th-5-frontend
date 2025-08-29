@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { setAccessToken } from '@/shared/api/tokenManager';
+import { useAuth } from '@/app/hooks/useAuth';
 import { Logo } from '@/shared/assets/images';
 import { ROUTES } from '@/shared/config/routes';
 import KakaoLoginButton from '@/shared/ui/button/KakaoLoginButton';
@@ -11,6 +11,7 @@ const KAKAO_LOGIN_URL = `${API_BASE}/oauth2/authorization/kakao`;
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const { setAccessToken } = useAuth();
 
   const handleLookAround = () => {
     navigate(ROUTES.HOME);

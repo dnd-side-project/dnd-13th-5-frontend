@@ -1,13 +1,12 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useLogout } from '@/app/hooks/useLogout';
 import {
   useDeleteMyInfo,
   useMyInfo,
   useUpdateMyNotification,
 } from '@/entities/member/hooks/useMyInfo';
-import { clearAccessToken } from '@/shared/api/tokenManager';
 import { Icons } from '@/shared/assets/icons';
 import { ROUTES } from '@/shared/config/routes';
 import { IconButton } from '@/shared/ui/button';
@@ -19,12 +18,12 @@ import UserInfoCard from '@/widgets/setting-card/ui/UserInfoCard';
 
 export const MyPage = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const { data: user } = useMyInfo();
   const { mutate: deleteMyInfo } = useDeleteMyInfo();
   const { mutate: updateNotification, isPending: isUpdatingNotification } =
     useUpdateMyNotification();
+  const { mutate: doLogout } = useLogout();
 
   const [onOffAlarm, setOnOffAlarm] = useState(user?.isNotificationOn ?? true);
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -55,9 +54,7 @@ export const MyPage = () => {
 
   const handleLogout = () => {
     setIsLogoutDialogOpen(false);
-    clearAccessToken();
-    queryClient.clear();
-    navigate(ROUTES.LOGIN);
+    doLogout();
   };
 
   const handleWithdrawal = () => {
@@ -65,9 +62,7 @@ export const MyPage = () => {
 
     deleteMyInfo(undefined, {
       onSuccess: () => {
-        clearAccessToken();
-        queryClient.clear();
-        navigate(ROUTES.HOME, { replace: true });
+        doLogout();
       },
     });
   };
