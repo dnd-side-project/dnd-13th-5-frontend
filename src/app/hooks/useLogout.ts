@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import apiClient from '@/shared/api/apiClient';
+import { queryClient } from '@/shared/api/queryClient';
 import { ROUTES } from '@/shared/config/routes';
 import { useAuthStore } from '@/shared/store/authStore';
 
@@ -22,6 +23,7 @@ export const useLogout = () => {
     onError: () => {
       // 로그아웃 실패 시에도 로컬 상태는 정리
       logoutLocal();
+      queryClient.clear();
       navigate(ROUTES.HOME, { replace: true });
     },
   });
