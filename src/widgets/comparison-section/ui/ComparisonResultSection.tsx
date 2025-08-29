@@ -163,12 +163,22 @@ const ComparisonResultSection = ({ selectedSubs, handleDetail }: ComparisonResul
             {selectedProducts.map(p => {
               const selectedPlan = p.plans.find(plan => plan.planId === selectedPlans[p.id]);
               const benefitsMap = parseBenefit(selectedPlan?.benefit ?? '');
+              const benefitValues = benefitsMap[key] ?? [];
 
               return (
                 <ContentsCard
                   key={p.id}
                   left={
-                    <span className="typo-body-m-bold break-keep">{benefitsMap[key] ?? '-'}</span>
+                    <>
+                      <ul className="typo-body-m-bold">
+                        {benefitValues.map((value, index) => (
+                          <li key={index} className="whitespace-pre-wrap">
+                            {value}
+                          </li>
+                        ))}
+                      </ul>
+                      {/* <span className="typo-body-m-bold break-keep">{benefitsMap[key] ?? '-'}</span> */}
+                    </>
                   }
                   className="bg-white p-4"
                 />
