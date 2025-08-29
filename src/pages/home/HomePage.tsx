@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { useMyInfo } from '@/entities/member/hooks/useMyInfo';
 import {
   Logo,
   HomeOne,
@@ -90,19 +89,11 @@ const HeroImagesSection = ({ onLoad }: { onLoad: () => void }) => {
   const [loadedCount, setLoadedCount] = useState(0);
   const images = [HomeOne, HomeTwo, HomeThree];
 
-  useEffect(() => {
-    if (loadedCount === images.length) {
-      onLoad(); // ✅ 모든 이미지 로드 완료 후 안전하게 부모에 알림
-    }
-  }, [loadedCount, images.length, onLoad]);
+  const handleImageLoad = () => setLoadedCount(prev => prev + 1);
 
-  const handleImageLoad = () => {
-    setLoadedCount(prev => {
-      const next = prev + 1;
-      if (next === images.length) onLoad(); // 모든 이미지 로드 완료
-      return next;
-    });
-  };
+  useEffect(() => {
+    if (loadedCount === images.length) onLoad();
+  }, [loadedCount, images.length, onLoad]);
 
   return (
     <section className="space-y-[30px] mb-[30px]">
@@ -165,7 +156,6 @@ const PhilosophySection = () => (
 
 // === HomePage ===
 export const HomePage = () => {
-  const { data: _data } = useMyInfo();
   const [heroLoaded, setHeroLoaded] = useState(false);
 
   const handleLogin = () => {};
