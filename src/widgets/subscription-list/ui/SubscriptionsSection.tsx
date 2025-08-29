@@ -7,6 +7,7 @@ import { useToggleFavorite } from '@/entities/subscription/hook/useToggleFavorit
 import { CATEGORY_FALLBACK, CATEGORY_META } from '@/entities/subscription/model/category.meta';
 import type { SortParam } from '@/entities/subscription/model/types';
 import { Icons } from '@/shared/assets/icons';
+import { CategoryImages } from '@/shared/assets/images';
 import { formatKRW } from '@/shared/lib/format';
 import type { CategoryOption } from '@/shared/types/category.types';
 import { ChipGroup, ChipItem } from '@/shared/ui/category';
@@ -40,14 +41,26 @@ const Row = ({ item }: { item: SubscriptionService }) => {
 
   const navigate = useNavigate();
 
+  // 카테고리별 fallback 이미지 결정
+  const getFallbackImage = () => {
+    if (item.category && CATEGORY_META[item.category]) {
+      return CATEGORY_META[item.category].iconUrl;
+    }
+    return CategoryImages.Default;
+  };
+
+  const shouldShowFallback = !item.imageUrl || imageError;
+  const fallbackImageUrl = getFallbackImage();
+
   const left = (
     <div className="gap-3 flex">
-      {!item.imageUrl || imageError ? (
-        <div className="size-[54px] rounded-xl bg-gray-100 flex items-center justify-center">
-          <span className="text-gray-600 typo-title-m-bold">
-            {item.name?.[0]?.toUpperCase() || '?'}
-          </span>
-        </div>
+      {shouldShowFallback ? (
+        <img
+          src={fallbackImageUrl}
+          alt={`${item.category ? CATEGORY_META[item.category]?.label || item.category : '기타'} 카테고리 아이콘`}
+          loading="lazy"
+          className="size-[54px] rounded-xl object-cover"
+        />
       ) : (
         <img
           src={item.imageUrl}

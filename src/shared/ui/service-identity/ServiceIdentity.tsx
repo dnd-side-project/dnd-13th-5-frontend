@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from 'react';
 
 import { CATEGORY_FALLBACK, CATEGORY_META } from '@/entities/subscription/model/category.meta';
+import { CategoryImages } from '@/shared/assets/images';
 import { cn } from '@/shared/lib/utils'; // clsx + tailwind-merge 유틸
 import { Tag } from '@/shared/ui/tag';
 
@@ -49,22 +50,31 @@ export const ServiceIdentity = ({
     setImgError(false);
   }, [imageUrl]);
 
+  // 카테고리별 fallback 이미지 결정
+  const getFallbackImage = () => {
+    if (category && CATEGORY_META[category]) {
+      return CATEGORY_META[category].iconUrl;
+    }
+    return CategoryImages.Default;
+  };
+
+  const shouldShowFallback = !imageUrl || imgError;
+  const fallbackImageUrl = getFallbackImage();
+
   return (
     // figure/figcaption 시맨틱으로 제목과 시각자료를 묶음
     <figure aria-labelledby={titleId} className={cn('flex flex-col items-center gap-3', className)}>
       {/* 아이콘 */}
-      {!imageUrl || imgError ? (
-        // 이미지 URL이 없거나 로딩 실패 시 이니셜 fallback (접근성: 장식 처리)
-        <div
-          aria-hidden
-          className={cn(
-            'grid place-items-center bg-gray-100 text-gray-400 typo-title-l-bold',
-            'select-none',
-            ICON_SIZE[size],
-          )}
-        >
-          {serviceName?.[0]?.toUpperCase() ?? '?'}
-        </div>
+      {shouldShowFallback ? (
+        // imageUrl이 없거나 로딩 실패 시 카테고리 이미지 사용
+        <img
+          src={fallbackImageUrl}
+          alt={`${category ? CATEGORY_META[category]?.label || category : '기타'} 카테고리 아이콘`}
+          loading="lazy"
+          width={{ md: 48, lg: 64, xl: 82 }[size]}
+          height={{ md: 64, lg: 64, xl: 82 }[size]}
+          className={cn('object-cover', ICON_SIZE[size])}
+        />
       ) : (
         <img
           src={imageUrl}
