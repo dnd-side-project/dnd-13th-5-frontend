@@ -75,19 +75,27 @@ export const PaymentDateField = ({ value, onChange, disabled }: PaymentDateField
             </button>
           </DialogTrigger>
 
-          <DialogContent ariaLabel="결제일 선택">
+          <DialogContent
+            ariaLabel="결제일 선택"
+            align="top"
+            scroll="auto"
+            className="max-h-[75dvh]"
+          >
             <DialogHeader>
               <DialogTitle>결제일 선택</DialogTitle>
             </DialogHeader>
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              disabled={currentDate => currentDate > new Date()}
-              className="rounded-lg border w-full"
-            />
 
-            <DialogFooter className="mt-4">
+            <div className="flex-1 overflow-auto">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                disabled={currentDate => currentDate > new Date()}
+                className="rounded-lg border w-full mx-auto max-w-[270px] text-sm [&_table]:text-sm [&_button]:h-8 [&_button]:w-8 [&_button]:text-sm [&_.rdp-caption]:text-sm [&_.rdp-nav]:scale-90"
+              />
+            </div>
+
+            <DialogFooter className="mt-3 sm:mt-4 flex-shrink-0">
               <DialogClose asChild>
                 <Button variant="primary-stroke" title="취소" />
               </DialogClose>
