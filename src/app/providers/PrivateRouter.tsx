@@ -1,17 +1,24 @@
+import { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAuth } from '@/app/hooks/useAuth';
-import { useAuthBootstrap } from '@/app/hooks/useAuthBootstrap';
+import { useAuthStore } from '@/app/store/useAuthStore';
+import { ROUTES } from '@/shared/config/routes';
 
 const PrivateRouter = () => {
-  const isReady = useAuthBootstrap();
+  const ready = useAuthStore(state => state.ready);
+  const bootstrap = useAuthStore(state => state.bootstrap);
   const { isAuthenticated } = useAuth();
 
-  if (!isReady) {
+  useEffect(() => {
+    bootstrap();
+  }, [bootstrap]);
+
+  if (!ready) {
     return <div>Loading...</div>; // 준비 중일 때 로딩 표시
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.LOGIN} replace />;
 };
 
 export default PrivateRouter;

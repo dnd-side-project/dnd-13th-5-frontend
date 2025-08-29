@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import PrivateRouter from '@/app/providers/PrivateRouter';
+import PublicRouter from '@/app/providers/PublicRouter';
 import { AlarmPage } from '@/pages/alarm';
 import { ComparisonAddPage, ComparisonPage } from '@/pages/comparison';
 import { HomePage } from '@/pages/home';
@@ -19,10 +20,14 @@ import { ROUTES } from '@/shared/config/routes';
 export const AppRouter = () => (
   <>
     <Routes>
-      <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-      <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
-      <Route path={ROUTES.HOME} element={<HomePage />} />
+      {/* 로그인하지 않아도 접근 가능 */}
+      <Route element={<PublicRouter />}>
+        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+        <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+        <Route path={ROUTES.HOME} element={<HomePage />} />
+      </Route>
 
+      {/* 로그인해야 접근 가능 */}
       <Route element={<PrivateRouter />}>
         <Route path={ROUTES.SUBSCRIPTIONS} element={<SubscriptionsPage />} />
         <Route path={ROUTES.SUBSCRIPTION_DETAIL()} element={<SubscriptionDetailPage />} />

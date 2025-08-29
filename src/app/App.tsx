@@ -3,12 +3,20 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { queryClient } from '@/shared/api/queryClient';
 
-import { useAuthBootstrap } from './hooks/useAuthBootstrap';
 import { AppRouter } from './providers/AppRouter';
+
 import './styles/index.css';
 
 function App() {
-  useAuthBootstrap();
+  // const bootstrap = useAuthStore(state => state.bootstrap);
+  // const ready = useAuthStore(state => state.ready);
+
+  // useEffect(() => {
+  //   if (!ready) {
+  //     bootstrap();
+  //   }
+  // }, [bootstrap, ready]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
