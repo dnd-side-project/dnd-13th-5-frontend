@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
-  Logo,
-  HomeOne,
-  HomeTwo,
-  HomeThree,
-  Sad,
-  Smile,
-  Scissor,
   Brain,
+  HomeOne,
+  HomeThree,
+  HomeTwo,
+  Logo,
   Money,
+  Sad,
+  Scissor,
+  Smile,
 } from '@/shared/assets/images';
 import { cn } from '@/shared/lib';
-import { Button } from '@/shared/ui/button';
 import KakaoLoginButton from '@/shared/ui/button/KakaoLoginButton';
 import { MobileLayout } from '@/shared/ui/layout';
 
@@ -150,15 +150,12 @@ const PhilosophySection = () => (
         체계적으로 정리됩니다
       </span>
     </div>
-    <Button variant="primary-fill" title={<>둘러보기</>} />
   </section>
 );
 
 // === HomePage ===
 export const HomePage = () => {
   const [heroLoaded, setHeroLoaded] = useState(false);
-
-  const handleLogin = () => {};
 
   return (
     <MobileLayout
@@ -174,7 +171,9 @@ export const HomePage = () => {
       <PhilosophySection />
 
       <footer className="fixed z-50 bottom-24 left-0 right-0 max-w-md w-full m-auto px-3">
-        <KakaoLoginButton onClick={handleLogin} />
+        <Link to="/login">
+          <KakaoLoginButton />
+        </Link>
       </footer>
     </MobileLayout>
   );
