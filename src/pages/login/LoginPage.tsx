@@ -35,11 +35,11 @@ export const LoginPage = () => {
         <a href={KAKAO_LOGIN_URL} className="w-full">
           <KakaoLoginButton />
         </a>
-        <p>
+        <p className="typo-label-m-bold mt-1">
           로그인 및 회원가입시{' '}
           <a
             href="https://relieved-thing-54d.notion.site/25e4c9705e268045aa7dc70e122a3b1e?source=copy_link"
-            className="text-primary-700 underline cursor-pointer"
+            className="text-primary-700 underline cursor-pointer typo-label-m-bold"
             target="_blank"
           >
             필수 약관
