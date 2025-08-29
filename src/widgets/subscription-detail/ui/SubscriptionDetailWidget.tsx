@@ -1,5 +1,4 @@
 import type { SubscriptionDetail } from '@/entities/subscription/api/fetchSubscriptionDetail';
-import { Icons } from '@/shared/assets/icons';
 import { formatCycleUnit, formatKRW } from '@/shared/lib/format';
 import { parseBenefit } from '@/shared/lib/parseBenefit';
 import { Button } from '@/shared/ui/button';
@@ -111,10 +110,7 @@ export const SubscriptionDetailWidget = ({
 
           {/* 메모 */}
           <ContentsCardStacked>
-            <ContentsCardStacked.Header
-              title="메모"
-              right={<img src={Icons.Right2} alt="메모 수정하기" className="w-6 h-[21px]" />}
-            />
+            <ContentsCardStacked.Header title="메모" />
             <ContentsCardStacked.Divider />
             <ContentsCardStacked.Note>
               {data.memo.length > 0 ? data.memo : '메모가 없습니다. 구독에 대한 메모를 남겨보세요.'}
