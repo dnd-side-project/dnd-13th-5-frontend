@@ -15,6 +15,7 @@ interface MobileLayoutProps {
   headerProps?: HeaderProps;
   bodyVariant?: BodyVariant;
   bodyClassName?: string;
+  sectionClassName?: string;
 }
 
 const MobileLayout = ({
@@ -24,6 +25,7 @@ const MobileLayout = ({
   headerProps,
   bodyVariant = 'white',
   bodyClassName,
+  sectionClassName,
 }: MobileLayoutProps) => {
   const bodyColor = bodyVariant === 'gray' ? 'bg-gray-50' : 'bg-white';
 
@@ -40,7 +42,7 @@ const MobileLayout = ({
             bodyClassName,
           )}
         >
-          <section className="cols-6 gap-2">
+          <section className={cn('cols-6 gap-2', sectionClassName)}>
             <div className="col-span-6">{children ?? <Outlet />}</div>
           </section>
         </main>
