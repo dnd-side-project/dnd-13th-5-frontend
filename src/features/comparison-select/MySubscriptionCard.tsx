@@ -10,7 +10,7 @@ type Props = {
 };
 
 const MySubscriptionCard = ({ subscription }: Props) => {
-  const { id, name, imageUrl, planName, price } = subscription;
+  const { name, imageUrl, planName, price } = subscription;
 
   // const handleCardClick = () => {
   //   setIsSelected();
