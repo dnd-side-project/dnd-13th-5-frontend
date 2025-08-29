@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/app/store/useAuthStore';
 
+// store 이용해 인증 상태 확인 및 토큰 관리
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const accessToken = useAuthStore(state => state.accessToken);
+  const setAccessToken = useAuthStore(state => state.setAccessToken);
+  const clearAccessToken = useAuthStore(state => state.clearAccessToken);
 
-  useEffect(() => {
-    // API 호출이나 토큰 존재 여부를 확인하여 인증 상태를 설정합니다.
-    const token = localStorage.getItem('access_token');
-    setIsAuthenticated(!!token);
-  }, []);
+  const isAuthenticated = !!accessToken;
 
-  return { isAuthenticated };
+  return { accessToken, setAccessToken, clearAccessToken, isAuthenticated };
 };
