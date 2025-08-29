@@ -85,7 +85,7 @@ export const SubscriptionDetailWidget = ({
         <TabsContent
           value="info"
           className="bg-gray-50 gap-4 flex flex-col pb-10 data-[state=inactive]:!hidden
-          min-h-[70vh]"
+          min-h-[75dvh]"
         >
           {/* 상단 강조 문구 + 누적 횟수 */}
           <ContentsCardStacked>
@@ -219,7 +219,10 @@ export const SubscriptionDetailWidget = ({
         </TabsContent>
 
         {/* 혜택 패널 */}
-        <TabsContent value="benefit" className="bg-gray-50 pb-10 data-[state=inactive]:!hidden">
+        <TabsContent
+          value="benefit"
+          className="bg-gray-50 min-h-[75dvh] pb-10 data-[state=inactive]:!hidden"
+        >
           <div className="flex flex-col gap-4">
             {parsedBenefit && Object.keys(parsedBenefit).length > 0 ? (
               Object.entries(parsedBenefit).map(([category, benefits]) => (
