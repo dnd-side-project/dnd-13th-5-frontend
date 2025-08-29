@@ -55,6 +55,7 @@ export const MyPage = () => {
   const handleLogout = () => {
     setIsLogoutDialogOpen(false);
     doLogout();
+    navigate(ROUTES.HOME);
   };
 
   const handleWithdrawal = () => {
