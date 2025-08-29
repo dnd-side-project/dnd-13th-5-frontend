@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import type { SubscriptionService } from '@/entities/subscription/api/fetchMySubscription';
 import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
@@ -99,7 +100,13 @@ const Row = ({ item }: { item: SubscriptionService }) => {
         className="rounded-full flex h-full mt-1 align-top focus-visible:ring-2 focus-visible:ring-emerald-500/40"
         onClick={e => {
           e.stopPropagation();
-          toggleFavoriteMutation.mutate(item.id);
+          toggleFavoriteMutation.mutate(item.id, {
+            onSuccess: () => {
+              if (!item.isFavorites) {
+                toast.message('즐겨찾기에 추가되었습니다');
+              }
+            },
+          });
         }}
         title="즐겨찾기"
       >
@@ -149,7 +156,11 @@ export const SubscriptionsSection = () => {
   return (
     <section aria-label="내 구독 목록" className="h-full">
       {/* 탭(전체/즐겨찾기) — radiogroup 시맨틱 */}
-      <div role="radiogroup" aria-label="보기 선택" className="flex gap-3 py-3 px-5 bg-white">
+      <div
+        role="radiogroup"
+        aria-label="보기 선택"
+        className="flex gap-3 py-3 bg-white rounded-b-3xl -mx-5 px-5"
+      >
         {(['ALL', 'FAVORITES'] as const).map(t => (
           <button
             key={t}
@@ -162,7 +173,7 @@ export const SubscriptionsSection = () => {
           </button>
         ))}
       </div>
-      <div className="flex flex-col py-5 gap-4 px-5 bg-gray-50 h-full">
+      <div className="flex flex-col py-5 gap-4 bg-gray-50 h-full -mx-5 px-5">
         {/* 정렬 + 카테고리 (Filter 컴포넌트 적용) */}
         <div className="flex items-center gap-2">
           <Filter

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
-// import { MY_SUBS } from '@/entities/comparison/constants/Products';
 import type { Products } from '@/entities/product/api/fetchProducts';
 import { useProducts } from '@/entities/product/hooks/useProducts';
 import { useMySubscription } from '@/entities/subscription/hook/useMySubscription';
@@ -12,7 +12,6 @@ import { cn } from '@/shared/lib';
 import { scrollToTop } from '@/shared/lib/scroll';
 import type { CategoryParam } from '@/shared/types/category.types';
 import { Button } from '@/shared/ui/button';
-import AlarmButton from '@/shared/ui/button/AlarmButton';
 import { ChipGroup, ChipItem } from '@/shared/ui/category';
 import { Icon } from '@/shared/ui/icon';
 import { MobileLayout } from '@/shared/ui/layout';
@@ -92,6 +91,7 @@ export const ComparisonPage = () => {
       .map(s => s.productId);
     setAddedSubs(prev => prev.filter(s => !filteredIds.includes(s.productId)));
     setSelectedSubs([]);
+    toast.success('삭제되었습니다');
   };
 
   const handleCompare = () => setResultSubs(selectedSubs);
@@ -122,7 +122,7 @@ export const ComparisonPage = () => {
     <MobileLayout
       headerProps={{
         centerSlot: '비교하기',
-        rightSlot: <AlarmButton />,
+        // rightSlot: <AlarmButton />,
       }}
     >
       <nav aria-label="카테고리 선택" className="mb-2">

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import { useProducts } from '@/entities/product/hooks/useProducts';
 import ComparisonAddCard from '@/features/comparison-add/ComparisonAddCard';
@@ -44,7 +45,13 @@ export const ComparisonAddPage = () => {
       replace: true,
       state: { newSubs: selectedSubs, category },
     });
+    toast.success('추가되었습니다');
   };
+
+  // 페이지 로드 시 스크롤을 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading) {
     return (

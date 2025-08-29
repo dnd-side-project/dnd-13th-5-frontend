@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
-import { useUpdateMyInfo } from '@/entities/member/hooks/useMyInfo';
+import { useMyInfo, useUpdateMyInfo } from '@/entities/member/hooks/useMyInfo';
 import { ROUTES } from '@/shared/config/routes';
 import { validateEmail } from '@/shared/lib/validation';
 import { Button } from '@/shared/ui/button';
@@ -13,20 +14,28 @@ export const EmailEditPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
 
+  const { data: myInfo } = useMyInfo();
   const { mutate: updateEmail, isPending } = useUpdateMyInfo();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
+  const sameEmail = email === myInfo?.email;
   const isDisabled = !validateEmail(email) || isPending;
 
   const handleEditEmail = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (sameEmail) {
+      toast.success('기존과 다른 이메일을 입력해주세요');
+      return;
+    }
+
     updateEmail(email, {
       onSuccess: () => {
         navigate(ROUTES.MY_PAGE);
+        toast.success('수정되었습니다');
       },
     });
   };
