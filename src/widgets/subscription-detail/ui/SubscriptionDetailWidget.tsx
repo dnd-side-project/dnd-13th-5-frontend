@@ -1,10 +1,24 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import type { SubscriptionDetail } from '@/entities/subscription/api/fetchSubscriptionDetail';
+import { useDeleteSubscription } from '@/entities/subscription/hook/useDeleteSubscription';
+import { useUnsubscriptionUrl } from '@/entities/subscription/hook/useUnsubscriptionUrl';
 import { Icons } from '@/shared/assets/icons';
 import { formatCycleUnit, formatKRW } from '@/shared/lib/format';
 import { parseBenefit } from '@/shared/lib/parseBenefit';
+import { getPaymentMethodName } from '@/shared/lib/paymentMethod';
 import { Button } from '@/shared/ui/button';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import { ContentsCardStacked } from '@/shared/ui/contents-card-stacked';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/shared/ui/dialog';
 import { ServiceIdentity } from '@/shared/ui/service-identity';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tab';
 import { Tag } from '@/shared/ui/tag';
@@ -14,9 +28,27 @@ export const SubscriptionDetailWidget = ({
 }: {
   subscriptionDetail: SubscriptionDetail;
 }) => {
+  const navigate = useNavigate();
   const data = subscriptionDetail;
   const { benefit } = data;
   const parsedBenefit = parseBenefit(benefit);
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const deleteSubscriptionMutation = useDeleteSubscription();
+  const { data: unsubscriptionData } = useUnsubscriptionUrl(data.id);
+
+  const handleDelete = async () => {
+    try {
+      await deleteSubscriptionMutation.mutateAsync(data.id);
+      setIsDeleteDialogOpen(false);
+      navigate('/subscriptions');
+      // 삭제 후 이전 페이지로 이동하거나 리다이렉트하는 로직 추가 가능
+    } catch (error) {
+      console.error('구독 삭제 실패:', error);
+      // 에러 처리 로직 추가 가능 (토스트 메시지 등)
+    }
+  };
 
   if (!data) {
     return (
@@ -29,7 +61,7 @@ export const SubscriptionDetailWidget = ({
   }
 
   return (
-    <section className="">
+    <section>
       {/* 상단 아이덴티티 */}
       <ServiceIdentity
         serviceName={data.productName}
@@ -49,7 +81,8 @@ export const SubscriptionDetailWidget = ({
         {/* 상세정보 패널 */}
         <TabsContent
           value="info"
-          className="bg-gray-50 gap-4 flex flex-col pb-10 data-[state=inactive]:!hidden"
+          className="bg-gray-50 gap-4 flex flex-col pb-10 data-[state=inactive]:!hidden
+          min-h-[70vh]"
         >
           {/* 상단 강조 문구 + 누적 횟수 */}
           <ContentsCardStacked>
@@ -104,17 +137,16 @@ export const SubscriptionDetailWidget = ({
               className="bg-white"
               left={<span className="typo-body-s-medium text-gray-800">결제수단</span>}
               right={
-                <span className="typo-body-s-medium text-gray-500">{data.paymentMethodId}</span>
+                <span className="typo-body-s-medium text-gray-500">
+                  {getPaymentMethodName(data.paymentMethodId)}
+                </span>
               }
             />
           )}
 
           {/* 메모 */}
           <ContentsCardStacked>
-            <ContentsCardStacked.Header
-              title="메모"
-              right={<img src={Icons.Right2} alt="메모 수정하기" className="w-6 h-[21px]" />}
-            />
+            <ContentsCardStacked.Header title="메모" />
             <ContentsCardStacked.Divider />
             <ContentsCardStacked.Note>
               {data.memo.length > 0 ? data.memo : '메모가 없습니다. 구독에 대한 메모를 남겨보세요.'}
@@ -122,37 +154,87 @@ export const SubscriptionDetailWidget = ({
           </ContentsCardStacked>
 
           {/* 하단 액션 버튼 */}
-          <div className="grid grid-cols-2 gap-3 pt-1">
+          <div className="pt-1">
             <Button
               variant="primary-fill"
               title="삭제하기"
-              className="bg-white border-gray-100 text-gray-500"
+              // className="bg-white"
+              onClick={() => setIsDeleteDialogOpen(true)}
             />
-            <Button variant="primary-stroke" title="해지하기" />
+            {/* <Button
+              variant="primary-stroke"
+              title="해지하기"
+              onClick={() => setIsCancelDialogOpen(true)}
+            /> */}
           </div>
+
+          {/* 삭제 확인 다이얼로그 */}
+          <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+            <DialogContent className="bg-white rounded-xl p-0 max-w-[90vw]">
+              <DialogHeader className="px-5 pt-5">
+                <DialogTitle className="typo-body-m-bold text-center">
+                  정말 삭제하시겠어요?
+                </DialogTitle>
+              </DialogHeader>
+
+              <div className="px-5 text-center">
+                <p className="typo-body-m-medium text-gray-800">삭제하면 외구와구에 저장된</p>
+                <p className="typo-body-m-medium text-gray-800">
+                  결제 이력과 메모가 모두 사라져요.
+                </p>
+                {unsubscriptionData?.unsubscribeUrl && (
+                  <a
+                    href={unsubscriptionData.unsubscribeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="typo-body-m-medium text-primary-700 flex text-center justify-center items-center mt-1"
+                  >
+                    해지 사이트로 이동하기
+                    <Icons.Link className="text-primary-700 fill-primary-700" />
+                  </a>
+                )}
+              </div>
+
+              <DialogFooter className="flex border-t border-gray-100 p-0">
+                <DialogClose asChild>
+                  <button type="button" className="flex-1 py-4 typo-body-m-medium text-gray-800">
+                    취소
+                  </button>
+                </DialogClose>
+                <div className="w-px bg-gray-100" />
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  disabled={deleteSubscriptionMutation.isPending}
+                  className="flex-1 py-4 typo-body-m-medium text-primary-700 disabled:opacity-50"
+                >
+                  {deleteSubscriptionMutation.isPending ? '삭제 중...' : '삭제하기'}
+                </button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </TabsContent>
 
         {/* 혜택 패널 */}
-        <TabsContent
-          value="benefit"
-          className="bg-gray-50 min-h-[60vh] pb-10 data-[state=inactive]:!hidden"
-        >
+        <TabsContent value="benefit" className="bg-gray-50 pb-10 data-[state=inactive]:!hidden">
           <div className="flex flex-col gap-4">
             {parsedBenefit && Object.keys(parsedBenefit).length > 0 ? (
               Object.entries(parsedBenefit).map(([category, benefits]) => (
-                <ContentsCard
-                  className="bg-white rounded-xl"
-                  left={
-                    <div className="flex flex-col gap-3 w-full">
-                      <span className="typo-body-s-medium text-gray-800">{category}</span>
-                      {benefits.map(content => (
-                        <span key={content} className="typo-body-s-medium text-gray-500 flex-1">
-                          · {content}
-                        </span>
-                      ))}
-                    </div>
-                  }
-                />
+                <div key={category}>
+                  <ContentsCard
+                    className="bg-white rounded-xl"
+                    left={
+                      <div className="flex flex-col gap-3 w-full">
+                        <span className="typo-body-s-medium text-gray-800">{category}</span>
+                        {benefits.map(content => (
+                          <span key={content} className="typo-body-s-medium text-gray-500 flex-1">
+                            · {content}
+                          </span>
+                        ))}
+                      </div>
+                    }
+                  />
+                </div>
               ))
             ) : (
               <div className="flex justify-center items-center h-40">

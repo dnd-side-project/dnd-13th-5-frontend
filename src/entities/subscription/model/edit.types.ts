@@ -5,7 +5,7 @@ export type PlanOption = { id: string; name: string; priceLabel: string }; // "�
 export type BillingCycleOption = { value: PayUnit; label: string }; // 1/3/6/12달 등
 
 export type MethodKind = 'CARD' | 'ACCOUNT' | 'EASY';
-export type MethodOption = { id: number; label: string };
+export type MethodOption = { id: number; label: string; imageUrl: string };
 
 export type PaymentMethodOptions = {
   CARD: MethodOption[];

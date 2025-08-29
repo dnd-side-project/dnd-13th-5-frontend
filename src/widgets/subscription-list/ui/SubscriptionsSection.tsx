@@ -38,9 +38,6 @@ const Row = ({ item }: { item: SubscriptionService }) => {
   const toggleFavoriteMutation = useToggleFavorite();
 
   const navigate = useNavigate();
-  const onNavigate = () => {
-    navigate(`/subscriptions/${item.id}`);
-  };
 
   const left = (
     <div className="gap-3 flex">
@@ -50,7 +47,6 @@ const Row = ({ item }: { item: SubscriptionService }) => {
         loading="lazy"
         aria-hidden
         className="size-[54px] rounded-xl object-cover"
-        onClick={onNavigate}
       />
       <div className="min-w-0">
         <div className="flex flex-col items-start gap-1">
@@ -59,9 +55,7 @@ const Row = ({ item }: { item: SubscriptionService }) => {
               ? CATEGORY_META[item.category]?.label || CATEGORY_FALLBACK(item.category).label
               : '기타'}
           </Tag>
-          <p className="typo-body-m-bold truncate" onClick={onNavigate}>
-            {item.name}
-          </p>
+          <p className="typo-body-m-bold truncate">{item.name}</p>
         </div>
       </div>
     </div>
@@ -123,7 +117,8 @@ const Row = ({ item }: { item: SubscriptionService }) => {
       left={left}
       right={right}
       className="rounded-xl bg-white"
-      // interactive onClick={() => navigate(`/subscriptions/${item.id}`)}
+      interactive
+      onClick={() => navigate(`/subscriptions/${item.id}`)}
     />
   );
 };
@@ -152,7 +147,7 @@ export const SubscriptionsSection = () => {
   }, [data, tab]);
 
   return (
-    <section aria-label="내 구독 목록">
+    <section aria-label="내 구독 목록" className="h-full">
       {/* 탭(전체/즐겨찾기) — radiogroup 시맨틱 */}
       <div role="radiogroup" aria-label="보기 선택" className="flex gap-3 py-3 px-5 bg-white">
         {(['ALL', 'FAVORITES'] as const).map(t => (
@@ -167,7 +162,7 @@ export const SubscriptionsSection = () => {
           </button>
         ))}
       </div>
-      <div className="flex flex-col py-5 gap-4 px-5 bg-gray-50">
+      <div className="flex flex-col py-5 gap-4 px-5 bg-gray-50 h-full">
         {/* 정렬 + 카테고리 (Filter 컴포넌트 적용) */}
         <div className="flex items-center gap-2">
           <Filter
