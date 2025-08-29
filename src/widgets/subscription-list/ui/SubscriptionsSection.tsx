@@ -36,18 +36,28 @@ const CAT_OPTIONS = [
 
 const Row = ({ item }: { item: SubscriptionService }) => {
   const toggleFavoriteMutation = useToggleFavorite();
+  const [imageError, setImageError] = useState(false);
 
   const navigate = useNavigate();
 
   const left = (
     <div className="gap-3 flex">
-      <img
-        src={item.imageUrl}
-        alt=""
-        loading="lazy"
-        aria-hidden
-        className="size-[54px] rounded-xl object-cover"
-      />
+      {!item.imageUrl || imageError ? (
+        <div className="size-[54px] rounded-xl bg-gray-100 flex items-center justify-center">
+          <span className="text-gray-600 typo-title-m-bold">
+            {item.name?.[0]?.toUpperCase() || '?'}
+          </span>
+        </div>
+      ) : (
+        <img
+          src={item.imageUrl}
+          alt=""
+          loading="lazy"
+          aria-hidden
+          className="size-[54px] rounded-xl object-cover"
+          onError={() => setImageError(true)}
+        />
+      )}
       <div className="min-w-0">
         <div className="flex flex-col items-start gap-1">
           <Tag appearance="outline" color="red" className="py-[2px]">

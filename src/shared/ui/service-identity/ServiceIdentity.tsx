@@ -53,8 +53,8 @@ export const ServiceIdentity = ({
     // figure/figcaption 시맨틱으로 제목과 시각자료를 묶음
     <figure aria-labelledby={titleId} className={cn('flex flex-col items-center gap-3', className)}>
       {/* 아이콘 */}
-      {imgError ? (
-        // 이미지 실패 시 이니셜 fallback (접근성: 장식 처리)
+      {!imageUrl || imgError ? (
+        // 이미지 URL이 없거나 로딩 실패 시 이니셜 fallback (접근성: 장식 처리)
         <div
           aria-hidden
           className={cn(
@@ -63,7 +63,7 @@ export const ServiceIdentity = ({
             ICON_SIZE[size],
           )}
         >
-          {serviceName?.[0] ?? '?'}
+          {serviceName?.[0]?.toUpperCase() ?? '?'}
         </div>
       ) : (
         <img
