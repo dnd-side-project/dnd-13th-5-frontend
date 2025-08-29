@@ -83,6 +83,7 @@ export const PaymentDateField = ({ value, onChange, disabled }: PaymentDateField
               mode="single"
               selected={date}
               onSelect={setDate}
+              disabled={currentDate => currentDate > new Date()}
               className="rounded-lg border w-full"
             />
 
