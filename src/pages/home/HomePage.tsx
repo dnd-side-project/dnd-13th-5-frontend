@@ -13,6 +13,7 @@ import {
   Smile,
 } from '@/shared/assets/images';
 import { cn } from '@/shared/lib';
+import { useAuthStore } from '@/shared/store/authStore';
 import KakaoLoginButton from '@/shared/ui/button/KakaoLoginButton';
 import { MobileLayout } from '@/shared/ui/layout';
 
@@ -156,6 +157,7 @@ const PhilosophySection = () => (
 // === HomePage ===
 export const HomePage = () => {
   const [heroLoaded, setHeroLoaded] = useState(false);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
 
   return (
     <MobileLayout
@@ -169,12 +171,13 @@ export const HomePage = () => {
       <HeroImagesSection onLoad={() => setHeroLoaded(true)} />
       <CardsSection visible={heroLoaded} />
       <PhilosophySection />
-
-      <footer className="fixed z-50 bottom-24 left-0 right-0 max-w-md w-full m-auto px-3">
-        <Link to="/login">
-          <KakaoLoginButton />
-        </Link>
-      </footer>
+      {!isAuthenticated && (
+        <footer className="fixed z-50 bottom-24 left-0 right-0 max-w-md w-full m-auto px-3">
+          <Link to="/login">
+            <KakaoLoginButton />
+          </Link>
+        </footer>
+      )}
     </MobileLayout>
   );
 };
