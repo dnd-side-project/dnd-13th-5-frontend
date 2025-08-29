@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/app/hooks/useAuth';
 import { Logo } from '@/shared/assets/images';
 import { ROUTES } from '@/shared/config/routes';
 import KakaoLoginButton from '@/shared/ui/button/KakaoLoginButton';
@@ -11,19 +10,9 @@ const KAKAO_LOGIN_URL = `${API_BASE}/oauth2/authorization/kakao`;
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { setAccessToken } = useAuth();
 
   const handleLookAround = () => {
     navigate(ROUTES.HOME);
-  };
-
-  const handleKakaoLogin = () => {
-    window.location.assign(KAKAO_LOGIN_URL);
-  };
-
-  const handleDevLogin = () => {
-    setAccessToken(import.meta.env.VITE_FAKE_ACCESS_TOKEN_KEY);
-    navigate(ROUTES.SUBSCRIPTIONS);
   };
 
   return (
@@ -43,11 +32,9 @@ export const LoginPage = () => {
       </main>
 
       <footer className="pb-[calc(56px+env(safe-area-inset-bottom))] px-5">
-        {import.meta.env.MODE === 'development' ? (
-          <KakaoLoginButton onClick={handleDevLogin} />
-        ) : (
-          <KakaoLoginButton onClick={handleKakaoLogin} />
-        )}
+        <a href={KAKAO_LOGIN_URL}>
+          <KakaoLoginButton />
+        </a>
       </footer>
     </div>
   );
