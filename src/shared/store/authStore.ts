@@ -1,3 +1,4 @@
+import type { AxiosResponseHeaders } from 'axios';
 import { create } from 'zustand';
 
 import apiClient from '@/shared/api/apiClient';
@@ -21,11 +22,11 @@ export const useAuthStore = create<AuthState>(set => ({
         withCredentials: true,
         // 이 요청은 인터셉터에서 토큰을 자동으로 주입하면 안 되므로 skipAuth 플래그 추가
         // (authInterceptors.ts의 requestInterceptor가 이 플래그를 인식하도록 설정 필요)
-        // @ts-ignore - 사용자 정의 속성 추가
+        // @ts-expect-error - 사용자 정의 속성 추가
         skipAuth: true,
       });
 
-      const newAccessToken = extractAccessFromHeaders(res.headers as any);
+      const newAccessToken = extractAccessFromHeaders(res.headers as AxiosResponseHeaders);
       if (newAccessToken) {
         setAccessToken(newAccessToken);
         set({ isAuthenticated: true });
@@ -33,7 +34,6 @@ export const useAuthStore = create<AuthState>(set => ({
         throw new Error('No access token received');
       }
     } catch (error) {
-      console.error('Authentication check failed:', error);
       set({ isAuthenticated: false });
     } finally {
       set({ isLoading: false });
