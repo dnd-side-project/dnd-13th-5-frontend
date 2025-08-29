@@ -1,6 +1,7 @@
 import type { SubscriptionDetail } from '@/entities/subscription/api/fetchSubscriptionDetail';
 import { formatCycleUnit, formatKRW } from '@/shared/lib/format';
 import { parseBenefit } from '@/shared/lib/parseBenefit';
+import { getPaymentMethodName } from '@/shared/lib/paymentMethod';
 import { Button } from '@/shared/ui/button';
 import { ContentsCard } from '@/shared/ui/contents-card';
 import { ContentsCardStacked } from '@/shared/ui/contents-card-stacked';
@@ -103,7 +104,9 @@ export const SubscriptionDetailWidget = ({
               className="bg-white"
               left={<span className="typo-body-s-medium text-gray-800">결제수단</span>}
               right={
-                <span className="typo-body-s-medium text-gray-500">{data.paymentMethodId}</span>
+                <span className="typo-body-s-medium text-gray-500">
+                  {getPaymentMethodName(data.paymentMethodId)}
+                </span>
               }
             />
           )}
@@ -136,19 +139,21 @@ export const SubscriptionDetailWidget = ({
           <div className="flex flex-col gap-4">
             {parsedBenefit && Object.keys(parsedBenefit).length > 0 ? (
               Object.entries(parsedBenefit).map(([category, benefits]) => (
-                <ContentsCard
-                  className="bg-white rounded-xl"
-                  left={
-                    <div className="flex flex-col gap-3 w-full">
-                      <span className="typo-body-s-medium text-gray-800">{category}</span>
-                      {benefits.map(content => (
-                        <span key={content} className="typo-body-s-medium text-gray-500 flex-1">
-                          · {content}
-                        </span>
-                      ))}
-                    </div>
-                  }
-                />
+                <div key={category}>
+                  <ContentsCard
+                    className="bg-white rounded-xl"
+                    left={
+                      <div className="flex flex-col gap-3 w-full">
+                        <span className="typo-body-s-medium text-gray-800">{category}</span>
+                        {benefits.map(content => (
+                          <span key={content} className="typo-body-s-medium text-gray-500 flex-1">
+                            · {content}
+                          </span>
+                        ))}
+                      </div>
+                    }
+                  />
+                </div>
               ))
             ) : (
               <div className="flex justify-center items-center h-40">
