@@ -2,7 +2,7 @@ import { Icons } from '@/shared/assets/icons';
 import { Icon } from '@/shared/ui/icon';
 
 type Props = {
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const KakaoLoginButton = ({ onClick }: Props) => (
