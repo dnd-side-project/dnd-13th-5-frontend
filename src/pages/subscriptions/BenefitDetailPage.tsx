@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { usePlans } from '@/entities/product/hooks/usePlans';
@@ -34,6 +35,11 @@ export const BenefitDetailPage = () => {
       navigate(-1); // 일반 브라우저 뒤로가기
     }
   };
+
+  // 페이지 로드 시 스크롤을 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // 로딩 상태 처리: 두 훅 중 하나라도 로딩 중이면 로딩 UI를 표시합니다.
   if (isProductsLoading || isPlansLoading) {
@@ -87,22 +93,22 @@ export const BenefitDetailPage = () => {
           <IconButton icon={{ component: Icons.Left }} ariaLabel="뒤로가기" onClick={handleBack} />
         ),
       }}
+      bodyVariant="gray"
     >
-      <section className="py-3 flex flex-col items-center gap-2">
-        <ServiceIdentity
-          serviceName={filteredProduct?.name ?? ''}
-          category={filteredProduct?.category ?? ''}
-          imageUrl={filteredProduct?.imageUrl ?? ''}
-          size="xl"
-          tagClassName="py-1"
-        />
-      </section>
+      <ServiceIdentity
+        serviceName={filteredProduct?.name ?? ''}
+        category={filteredProduct?.category ?? ''}
+        imageUrl={filteredProduct?.imageUrl ?? ''}
+        size="xl"
+        tagClassName="py-1"
+        className="bg-white -m-5 py-8"
+      />
 
-      <section className="-mx-5 -mb-5">
+      <section className="-mx-5">
         <Tabs defaultValue={`plan-${plans[0].id}`}>
           <TabsList className={cn('grid w-full', `grid-cols-${plans.length}`)}>
             {plans.map(plan => (
-              <TabsTrigger key={plan.id} value={`plan-${plan.id}`}>
+              <TabsTrigger key={plan.id} value={`plan-${plan.id}`} className="bg-white">
                 {plan.name}
               </TabsTrigger>
             ))}
@@ -111,7 +117,11 @@ export const BenefitDetailPage = () => {
           {plans.map(plan => {
             const benefitsMap = parseBenefit(plan.benefit ?? '');
             return (
-              <TabsContent key={plan.id} value={`plan-${plan.id}`} className="bg-gray-50 p-5">
+              <TabsContent
+                key={plan.id}
+                value={`plan-${plan.id}`}
+                className="bg-gray-50 p-5 min-h-full"
+              >
                 <BenefitList benefitsMap={benefitsMap} uniqueBenefitKeys={uniqueBenefitKeys} />
               </TabsContent>
             );

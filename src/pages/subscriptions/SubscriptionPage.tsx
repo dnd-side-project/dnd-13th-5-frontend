@@ -10,8 +10,9 @@ export const SubscriptionsPage = () => (
       leftSlot: <img src={Logo} alt="Logo" className="h-7" />,
     }}
     sectionClassName="min-h-[85dvh]"
+    bodyVariant="gray"
   >
-    <div className="-mx-5 -mt-4 min-h-full bg-gray-50">
+    <div className="min-h-full bg-gray-50 relative max-w-md ">
       <PaymentSummaryBlock />
       <SubscriptionsSection />
       <FloatingButton href="/subscriptions-register" />

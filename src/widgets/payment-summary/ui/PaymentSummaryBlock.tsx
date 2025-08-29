@@ -32,7 +32,7 @@ export const PaymentSummaryBlock = () => {
     );
 
   return (
-    <div className="px-5 py-3 bg-white">
+    <div className="py-3 -m-5 px-5 bg-white">
       {data && (
         <>
           <PaymentSummaryCard
