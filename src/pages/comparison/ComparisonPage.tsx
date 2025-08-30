@@ -40,6 +40,8 @@ export const ComparisonPage = () => {
   const { data: products } = useProducts(category);
   const { data: mySubs = { services: [] } } = useMySubscription({ category, sort: 'NAME' });
 
+  const filteredNotCustom = mySubs.services.filter(sub => !sub.isCustom);
+
   /** --- 쿼리 파라미터 없는 경우 초기 카테고리 적용 --- * */
   useEffect(() => {
     if (!queryParams.get('category')) {
@@ -154,7 +156,7 @@ export const ComparisonPage = () => {
           {mySubs?.services?.length > 0 && (
             <ComparisonMySubSection
               category={currentCategoryLabel}
-              mySubs={mySubs.services}
+              mySubs={filteredNotCustom}
               selectedSubs={selectedSubs}
               handleSelect={handleSelectSub}
               handleDetail={handleShowDetail}
