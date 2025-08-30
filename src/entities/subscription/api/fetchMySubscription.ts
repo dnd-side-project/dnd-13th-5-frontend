@@ -14,6 +14,7 @@ export type SubscriptionService = {
   isFavorites: boolean;
   imageUrl: string;
   startedAt?: string; // 날짜 형식이므로 string
+  isCustom?: boolean;
 };
 
 // API 응답의 data 객체에 대한 타입
