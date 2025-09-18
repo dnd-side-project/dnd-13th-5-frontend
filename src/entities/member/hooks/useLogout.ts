@@ -1,14 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import apiClient from '@/shared/api/apiClient';
+import { logout } from '@/entities/member/api/logout';
 import { queryClient } from '@/shared/api/queryClient';
 import { ROUTES } from '@/shared/config/routes';
 import { useAuthStore } from '@/shared/store/authStore';
-
-export const logout = async (): Promise<void> => {
-  await apiClient.post(`/auth/logout`, {}, { withCredentials: true });
-};
 
 export const useLogout = () => {
   const logoutLocal = useAuthStore(state => state.logout);
