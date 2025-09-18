@@ -44,8 +44,10 @@ export const MyPage = () => {
   };
 
   const handleLogout = () => {
-    setIsLogoutDialogOpen(false);
-    logout();
+    logout(undefined, {
+      onSettled: () => setIsLogoutDialogOpen(false),
+    });
+
     navigate(ROUTES.HOME);
   };
 
