@@ -35,7 +35,7 @@ export const useUpdateMyNotification = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['myInfo'], context.previousData);
       }
-      console.error('즐겨찾기 상태 변경 실패:', error);
+      console.error('알림 상태 변경 실패:', error);
     },
     // 성공 시 콜백 무효화
     onSettled: () => {
