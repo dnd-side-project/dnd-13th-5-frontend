@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import { useMyInfo, useUpdateMyInfo } from '@/entities/member/hooks/useMyInfo';
+import { useMyInfo } from '@/entities/member/hooks/useMyInfo';
+import { useUpdateMyEmail } from '@/entities/member/hooks/useUpdateMyEmail';
 import { ROUTES } from '@/shared/config/routes';
 import { validateEmail } from '@/shared/lib/validation';
 import { Button } from '@/shared/ui/button';
@@ -12,25 +13,19 @@ import { MobileLayout } from '@/shared/ui/layout';
 
 export const EmailEditPage = () => {
   const navigate = useNavigate();
+  const { data: myInfo } = useMyInfo();
+  const { mutate: updateEmail, isPending } = useUpdateMyEmail();
   const [email, setEmail] = useState<string>('');
 
-  const { data: myInfo } = useMyInfo();
-  const { mutate: updateEmail, isPending } = useUpdateMyInfo();
+  const sameEmail = email === myInfo?.email;
+  const isDisabled = !validateEmail(email) || sameEmail || isPending;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const sameEmail = email === myInfo?.email;
-  const isDisabled = !validateEmail(email) || isPending;
-
   const handleEditEmail = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (sameEmail) {
-      toast.error('기존과 다른 이메일을 입력해주세요');
-      return;
-    }
 
     updateEmail(email, {
       onSuccess: () => {
@@ -59,8 +54,13 @@ export const EmailEditPage = () => {
               className={`focus:ring-0 transition-colors duration-200  ${isDisabled ? 'focus:border-primary-700' : ''}`}
             />
             {!validateEmail(email) && email.length > 0 && (
-              <span className="typo-label-s-medium text-primary-700 p-5">
-                유효한 이메일을 입력해주세요
+              <span className="typo-label-s-medium text-primary-700 py-5">
+                이메일 형식이 올바르지 않습니다
+              </span>
+            )}
+            {sameEmail && (
+              <span className="typo-label-s-medium text-primary-700 py-5">
+                기존과 다른 이메일을 입력해주세요
               </span>
             )}
           </div>

@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useLogout } from '@/app/hooks/useLogout';
-import {
-  useDeleteMyInfo,
-  useMyInfo,
-  useUpdateMyNotification,
-} from '@/entities/member/hooks/useMyInfo';
+import { useDeleteMyInfo } from '@/entities/member/hooks/useDeleteMyInfo';
+import { useLogout } from '@/entities/member/hooks/useLogout';
+import { useMyInfo } from '@/entities/member/hooks/useMyInfo';
+import { useUpdateMyNotification } from '@/entities/member/hooks/useUpdateMyNotification';
+import { queryClient } from '@/shared/api/queryClient';
 import { Icons } from '@/shared/assets/icons';
 import { Logo } from '@/shared/assets/images';
 import { ROUTES } from '@/shared/config/routes';
+import { useAuthStore } from '@/shared/store/authStore';
 import { IconButton } from '@/shared/ui/button';
 import ToggleButton from '@/shared/ui/button/ToggleButton';
 import { ConfirmDialog } from '@/shared/ui/dialog';
@@ -19,22 +19,16 @@ import UserInfoCard from '@/widgets/setting-card/ui/UserInfoCard';
 
 export const MyPage = () => {
   const navigate = useNavigate();
+  const logoutLocal = useAuthStore(state => state.logout);
 
-  const { data: user } = useMyInfo();
+  const { data: user, isLoading } = useMyInfo();
   const { mutate: deleteMyInfo } = useDeleteMyInfo();
   const { mutate: updateNotification, isPending: isUpdatingNotification } =
     useUpdateMyNotification();
-  const { mutate: doLogout } = useLogout();
+  const { mutate: logout } = useLogout();
 
-  const [onOffAlarm, setOnOffAlarm] = useState(user?.isNotificationOn ?? true);
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
   const [isWithdrawalDialogOpen, setIsWithdrawalDialogOpen] = useState(false);
-
-  useEffect(() => {
-    if (typeof user?.isNotificationOn === 'boolean') {
-      setOnOffAlarm(user.isNotificationOn);
-    }
-  }, [user?.isNotificationOn]);
 
   const handleEmailEdit = () => {
     navigate(ROUTES.EMAIL_EDIT);
@@ -43,19 +37,17 @@ export const MyPage = () => {
   const handleToggleAlarm = () => {
     if (isUpdatingNotification) return;
 
-    const newAlarmState = !onOffAlarm;
-    setOnOffAlarm(newAlarmState);
-    updateNotification(newAlarmState, {
-      onError: () => {
-        // API 요청 실패 시 UI 상태를 원래대로 되돌림
-        setOnOffAlarm(!newAlarmState);
-      },
-    });
+    if (typeof user?.isNotificationOn === 'boolean') {
+      const newAlarmState = !user.isNotificationOn; // 현재 상태 반전
+      updateNotification(newAlarmState); // 서버와 캐시에 반영
+    }
   };
 
   const handleLogout = () => {
-    setIsLogoutDialogOpen(false);
-    doLogout();
+    logout(undefined, {
+      onSettled: () => setIsLogoutDialogOpen(false),
+    });
+
     navigate(ROUTES.HOME);
   };
 
@@ -63,8 +55,10 @@ export const MyPage = () => {
     setIsWithdrawalDialogOpen(false);
 
     deleteMyInfo(undefined, {
-      onSuccess: () => {
-        doLogout();
+      onSuccess: async () => {
+        logoutLocal(); // zustand에서 토큰, isAuthenticated 초기화
+        await queryClient.clear();
+        navigate(ROUTES.HOME, { replace: true });
       },
     });
   };
@@ -102,11 +96,14 @@ export const MyPage = () => {
                 구독하는 서비스의 결제를 5일 전 미리 알려드려요!
               </span>
             </div>
-            <ToggleButton
-              enabled={onOffAlarm}
-              onToggle={handleToggleAlarm}
-              ariaLabel="알림 토글 버튼"
-            />
+
+            {!isLoading && user && (
+              <ToggleButton
+                enabled={user.isNotificationOn}
+                onToggle={handleToggleAlarm}
+                ariaLabel="알림 토글 버튼"
+              />
+            )}
           </SettingCard>
 
           <SettingCard
